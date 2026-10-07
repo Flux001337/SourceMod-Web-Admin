@@ -1,0 +1,24 @@
+{
+    "name": {"en": "Sounds", "de": "Sounds"},
+    "description": {"en": "SourceMod plugin sounds", "de": "SourceMod-Plugin sounds"},
+    "order": 140,
+    "requires": "sounds.smx",
+    "buttons": [
+        {
+            "label": {"en": "Play sound", "de": "Sound abspielen"},
+            "command": "sm_play {target} {file}",
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                },
+                "file": {
+                    "label": {"en": "Sound file", "de": "Sound-Datei"},
+                    "placeholder": "ambient/misc/brass_bell_C.wav"
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "name": "MapChooser",
+    "description": {"en": "SourceMod plugin mapchooser", "de": "SourceMod-Plugin mapchooser"},
+    "order": 100,
+    "requires": "mapchooser.smx",
+    "buttons": [
+        {
+            "label": {"en": "Start map vote", "de": "Map-Abstimmung starten"},
+            "command": "sm_mapvote",
+            "confirm": {"en": "Start the map vote now?", "de": "Die Map-Abstimmung jetzt starten?"}
+        },
+        {
+            "label": {"en": "Set next map", "de": "Nächste Map festlegen"},
+            "command": "sm_setnextmap {map}",
+            "args": {
+                "map": {
+                    "label": "Map",
+                    "placeholder": "de_dust2"
+                }
+            }
+        }
+    ]
+}

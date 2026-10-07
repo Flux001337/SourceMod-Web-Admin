@@ -1,0 +1,12 @@
+# Hochgeladene Dateien (Game-Icons). Die Oberfläche speichert hier nur neu erzeugte PNG-Bilder; alles andere wird
+# gesperrt und nichts wird als Skript ausgeführt.
+<IfModule mod_authz_core.c>
+    Require all denied
+    <FilesMatch "^[a-f0-9]{32}\.png$">
+        Require all granted
+    </FilesMatch>
+</IfModule>
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+Options -ExecCGI -Indexes

@@ -1,0 +1,570 @@
+/* Regeln der Oberfläche. Farben, Formen und Maße kommen aus dem Theme (assets/css/themes/*.css). Aufbau wie die
+   Bootstrap-"Sidebars": feste Seitenleiste links, rechts der Inhalt in voller Breite. */
+
+/* --- Grundlagen ------------------------------------------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+/* Das hidden-Attribut gilt immer, auch bei Elementen mit eigener display-Regel (z. B. .btn). */
+[hidden] { display: none !important; }
+/* Bereich, der gerade im Hintergrund neu geladen wird (Live-Suche). */
+.is-loading { opacity: .55; transition: opacity .15s ease; pointer-events: none; }
+html { font-family: var(--font); font-size: var(--font-size); color: var(--text); background: var(--bg); }
+body { margin: 0; min-height: 100vh; line-height: 1.45; }
+h1, h2, h3 { line-height: 1.2; }
+h2 { margin: 0 0 14px; font-size: 1.3rem; }
+h3 { margin: 24px 0 12px; font-size: 1.05rem; color: var(--text-nav); }
+a { color: var(--link); }
+small { color: var(--text-muted); }
+.muted { color: var(--text-muted); }
+.hint { margin: 6px 0 0; font-size: .82rem; color: var(--text-hint); line-height: 1.5; }
+.nowrap { white-space: nowrap; }
+ul.plain { margin: 0; padding-left: 18px; }
+
+/* --- Icons (SVG als Maske, Farbe = Textfarbe) ------------------------------------------------------------------- */
+.icon { display: inline-block; flex: none; width: 20px; height: 20px; background-color: currentColor;
+    -webkit-mask: center / contain no-repeat; mask: center / contain no-repeat; vertical-align: -4px; }
+.icon-home { -webkit-mask-image: url(../images/icons/home.svg); mask-image: url(../images/icons/home.svg); }
+.icon-users { -webkit-mask-image: url(../images/icons/users.svg); mask-image: url(../images/icons/users.svg); }
+.icon-profile { -webkit-mask-image: url(../images/icons/profile.svg); mask-image: url(../images/icons/profile.svg); }
+.icon-settings { -webkit-mask-image: url(../images/icons/settings.svg); mask-image: url(../images/icons/settings.svg); }
+.icon-logout { -webkit-mask-image: url(../images/icons/logout.svg); mask-image: url(../images/icons/logout.svg); }
+.icon-login { -webkit-mask-image: url(../images/icons/login.svg); mask-image: url(../images/icons/login.svg); }
+.icon-menu { -webkit-mask-image: url(../images/icons/menu.svg); mask-image: url(../images/icons/menu.svg); }
+.icon-search { -webkit-mask-image: url(../images/icons/search.svg); mask-image: url(../images/icons/search.svg); }
+.icon-plus { -webkit-mask-image: url(../images/icons/plus.svg); mask-image: url(../images/icons/plus.svg); }
+.icon-edit { -webkit-mask-image: url(../images/icons/edit.svg); mask-image: url(../images/icons/edit.svg); }
+.icon-delete { -webkit-mask-image: url(../images/icons/delete.svg); mask-image: url(../images/icons/delete.svg); }
+.icon-save { -webkit-mask-image: url(../images/icons/save.svg); mask-image: url(../images/icons/save.svg); }
+.icon-key { -webkit-mask-image: url(../images/icons/key.svg); mask-image: url(../images/icons/key.svg); }
+.icon-shield { -webkit-mask-image: url(../images/icons/shield.svg); mask-image: url(../images/icons/shield.svg); }
+.icon-layers { -webkit-mask-image: url(../images/icons/layers.svg); mask-image: url(../images/icons/layers.svg); }
+.icon-lock { -webkit-mask-image: url(../images/icons/lock.svg); mask-image: url(../images/icons/lock.svg); }
+.icon-server { -webkit-mask-image: url(../images/icons/server.svg); mask-image: url(../images/icons/server.svg); }
+.icon-gamepad { -webkit-mask-image: url(../images/icons/gamepad.svg); mask-image: url(../images/icons/gamepad.svg); }
+.icon-plug { -webkit-mask-image: url(../images/icons/plug.svg); mask-image: url(../images/icons/plug.svg); }
+.icon-send { -webkit-mask-image: url(../images/icons/send.svg); mask-image: url(../images/icons/send.svg); }
+.icon-download { -webkit-mask-image: url(../images/icons/download.svg); mask-image: url(../images/icons/download.svg); }
+.icon-terminal { -webkit-mask-image: url(../images/icons/terminal.svg); mask-image: url(../images/icons/terminal.svg); }
+.icon-puzzle { -webkit-mask-image: url(../images/icons/puzzle.svg); mask-image: url(../images/icons/puzzle.svg); }
+.icon-info { -webkit-mask-image: url(../images/icons/info.svg); mask-image: url(../images/icons/info.svg); }
+.icon-refresh { -webkit-mask-image: url(../images/icons/refresh.svg); mask-image: url(../images/icons/refresh.svg); }
+.icon-power { -webkit-mask-image: url(../images/icons/power.svg); mask-image: url(../images/icons/power.svg); }
+.icon-chevron { -webkit-mask-image: url(../images/icons/chevron.svg); mask-image: url(../images/icons/chevron.svg); }
+/* Unbekanntes Game (wie auf der Keks-Brigarde-Homepage), als Maske in der Textfarbe des Themes. */
+.icon-unknown { -webkit-mask-image: url(../images/games/unknown.png); mask-image: url(../images/games/unknown.png); }
+.icon-play { -webkit-mask-image: url(../images/icons/play.svg); mask-image: url(../images/icons/play.svg); }
+.icon-export { -webkit-mask-image: url(../images/icons/export.svg); mask-image: url(../images/icons/export.svg); }
+.icon-inline { width: 16px; height: 16px; vertical-align: -2px; color: var(--text-muted); }
+
+/* --- Gerüst: Seitenleiste + Inhalt ------------------------------------------------------------------------------ */
+.app { display: flex; min-height: 100vh; }
+.nav-toggle { position: absolute; opacity: 0; pointer-events: none; }
+
+.sidebar { position: sticky; top: 0; flex: none; display: flex; flex-direction: column; width: var(--sidebar-width);
+    height: 100vh; padding: 22px 16px 16px; background: var(--surface-sidebar); border-right: 1px solid var(--border); }
+.sidebar-nav { flex: 1; min-height: 0; margin-top: 22px; overflow-y: auto; }
+.nav-group + .nav-group { margin-top: 18px; }
+.nav-heading { padding: 0 12px 6px; font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--text-hint); }
+.nav-link { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: var(--radius-input);
+    color: var(--text-nav); text-decoration: none; }
+.nav-link + .nav-link { margin-top: 2px; }
+.nav-link:hover { background: var(--surface-hover); }
+.nav-link.active { background: var(--surface-active); color: var(--text); font-weight: 650;
+    box-shadow: inset 3px 0 0 var(--primary-border); }
+
+.sidebar-user { display: flex; align-items: center; gap: 10px; margin-top: 16px; padding-top: 16px;
+    border-top: 1px solid var(--border); }
+.sidebar-user form { margin: 0; }
+.sidebar-user-link { display: flex; flex: 1; min-width: 0; align-items: center; gap: 12px; color: var(--text);
+    text-decoration: none; padding: 6px; border-radius: var(--radius-input); }
+.sidebar-user-link:hover { background: var(--surface-hover); }
+.sidebar-user-name { display: flex; flex-direction: column; min-width: 0; }
+.sidebar-user-name strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sidebar-user-name small { font-size: .75rem; color: var(--accent); }
+.sidebar-backdrop { display: none; }
+
+.main { display: flex; flex: 1; flex-direction: column; min-width: 0; }
+.topbar { display: flex; align-items: center; gap: 16px; padding: 18px 29px; border-bottom: 1px solid var(--border); }
+.topbar-title { flex: 1; min-width: 0; }
+.topbar-subtitle { margin: 4px 0 0; font-size: .8rem; color: var(--text-muted); overflow-wrap: anywhere; }
+.topbar h1 { min-width: 0; margin: 0; font-size: 1.55rem; overflow-wrap: anywhere; }
+.topbar-link { color: inherit; text-decoration: none; }
+.topbar-link:hover, .topbar-link:focus-visible { color: var(--accent); }
+.topbar-sep { color: var(--text-hint); font-weight: 400; }
+.topbar-actions { display: flex; align-items: center; gap: 12px; }
+.topbar .nav-toggle-button { display: none; }
+.content { flex: 1; padding: 6px 29px 29px; }
+.foot { padding: 18px 29px; text-align: center; font-size: .82rem; color: var(--text-hint); }
+
+/* --- Marke ------------------------------------------------------------------------------------------------------ */
+.brand { display: flex; align-items: center; gap: 14px; color: var(--text); text-decoration: none; }
+.brand-logo { position: relative; flex: none; width: 46px; height: 46px;
+    background: url(../images/logo-smwa-plus-icon.png) center / contain no-repeat; }
+.brand-logo-large { width: 120px; height: 120px; }
+.brand-wordmark { display: block; flex: none; width: auto; height: 46px; max-width: calc(100% - 60px);
+    object-fit: contain; object-position: left center; }
+.brand-text { display: flex; flex-direction: column; min-width: 0; }
+.brand-text strong { font-size: 1.1rem; line-height: 1.2; }
+.brand-text small { margin-top: 2px; font-size: .8rem; }
+.brand-center { flex-direction: column; text-align: center; }
+.brand-center .brand-text strong { font-size: 1.6rem; }
+
+/* --- Panels, Kacheln, Raster ------------------------------------------------------------------------------------ */
+.panel { margin: 18px 0; padding: 22px; background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-panel); }
+.panel > :last-child { margin-bottom: 0; }
+.panel-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--gap); }
+.tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0 var(--gap); }
+.tile { display: flex; align-items: center; gap: 16px; color: var(--text); text-decoration: none; transition: background .15s; }
+.tile:hover { background: var(--surface-raised); border-color: var(--border-button); }
+.tile-icon { display: grid; place-items: center; flex: none; width: 52px; height: 52px; border-radius: 14px;
+    background: var(--accent-bg); color: var(--accent); }
+.tile-icon .icon { width: 26px; height: 26px; }
+.tile-text { display: flex; flex-direction: column; gap: 4px; }
+.tile-text small { line-height: 1.35; }
+.intro h2 { font-size: 1.5rem; }
+.facts { display: grid; gap: 10px; margin: 0; }
+.facts div { display: flex; justify-content: space-between; gap: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border-soft); }
+.facts div:last-child { border-bottom: 0; padding-bottom: 0; }
+.facts dt { color: var(--text-muted); }
+.facts dd { margin: 0; font-weight: 650; text-align: right; overflow-wrap: anywhere; }
+
+/* --- Pillen, Avatare, Flaggen ----------------------------------------------------------------------------------- */
+.pills { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+.pill { display: inline-block; padding: 5px 13px; border-radius: var(--radius-pill); background: var(--accent-bg);
+    color: var(--accent); font-size: .82rem; font-weight: 700; white-space: nowrap; }
+.pill-small { padding: 2px 9px; font-size: .74rem; }
+.pill-accent { background: var(--yellow); color: var(--text-on-accent); }
+.avatar { display: grid; place-items: center; flex: none; width: 40px; height: 40px; border-radius: 50%;
+    background: var(--surface-active); color: var(--text); font-size: .85rem; font-weight: 700; }
+.avatar-small { width: 30px; height: 30px; font-size: .7rem; }
+.avatar-large { width: 72px; height: 72px; font-size: 1.4rem; }
+/* Die Flaggen-SVGs aus vhplus enthalten mehrere Größen untereinander; gezeigt wird die erste (54 x 36 bei 20/20). */
+.flag { --fh: 22px; position: relative; flex: none; display: inline-block; width: calc(var(--fh) * 54 / 36); height: var(--fh);
+    overflow: hidden; border-radius: 5px; }
+.flag img { position: absolute; left: calc(var(--fh) * -20 / 36); top: calc(var(--fh) * -20 / 36);
+    height: calc(var(--fh) * 524 / 36); width: auto; max-width: none; }
+.flag-small { --fh: 15px; border-radius: 3px; }
+.lang-cell, .user-cell { display: inline-flex; align-items: center; gap: 9px; }
+
+/* --- Buttons ---------------------------------------------------------------------------------------------------- */
+button, .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 17px;
+    border: 1px solid var(--border-button); border-radius: var(--radius); background: var(--button); color: var(--text);
+    font: inherit; font-size: .95rem; text-decoration: none; white-space: nowrap; cursor: pointer; }
+button:hover, .btn:hover { filter: brightness(1.18); }
+button:focus-visible, .btn:focus-visible, .icon-button:focus-visible, .nav-link:focus-visible, a:focus-visible {
+    outline: 2px solid var(--primary-border); outline-offset: 2px; }
+.primary { background: var(--button); border-color: var(--border-button); font-weight: 700; }
+.danger { background: var(--danger); border-color: var(--danger-border); }
+.ghost { background: transparent; }
+.block { width: 100%; }
+.icon-button { display: inline-grid; place-items: center; width: 40px; height: 40px; padding: 0; flex: none;
+    border: 1px solid var(--border); border-radius: var(--radius-input); background: var(--surface-raised); color: var(--text-nav); cursor: pointer; }
+.icon-button:hover { background: var(--surface-hover); color: var(--text); filter: none; }
+.icon-button.danger { color: #ffb3bd; }
+.icon-button.danger:hover { background: var(--danger); color: var(--text); }
+
+/* --- Meldungen -------------------------------------------------------------------------------------------------- */
+.alert { margin: 18px 0; padding: 14px 16px; border-radius: var(--radius); border: 1px solid transparent; }
+.alert.success { background: var(--success-bg); border-color: var(--success-border); }
+.alert.error { background: var(--error-bg); border-color: var(--error-border); }
+.alert.warning { background: var(--warning-bg); border-color: var(--yellow); }
+/* Fehlende SourceMod-Tabellen (templates/pages/sm_tables_missing.html). */
+.sm-missing-steps { margin: 8px 0 14px; padding-left: 22px; }
+.sm-missing-steps li { padding: 4px 0; }
+.sm-missing-command { margin: 8px 0 4px; padding: 10px 14px; border: 1px solid var(--border-input); border-radius: var(--radius-input);
+    background: var(--surface-input); overflow-x: auto; }
+.panel .alert:first-child { margin-top: 0; }
+
+/* --- Formulare -------------------------------------------------------------------------------------------------- */
+.form > h3 { color: var(--teal); }
+.form > h3:first-of-type { margin-top: 0; }
+.form label:not(.check, .check-cell) { display: block; margin: 14px 0 6px; font-weight: 600; font-size: .92rem; }
+.form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0 var(--gap); }
+.form-grid label:not(.check, .check-cell) { margin-top: 0; }
+.form-grid > div { margin-bottom: 16px; }
+/* Mehrere Felder untereinander in einer Spalte des Rasters. */
+.form-stack > * + * { margin-top: 16px; }
+/* Buttons im Raster: in der ersten Spalte unter den Feldern, unten bündig mit einer Spalte, die über zwei Zeilen geht. */
+.form-grid > .form-span-rows { grid-row: span 2; }
+.form-grid > .form-actions { grid-column: 1; align-self: end; margin-top: 0; }
+/* Felder in einer Reihe, die bei Platzmangel umbricht: field-grow nimmt den freien Platz, field-fit ist so breit wie
+   sein Eingabefeld (der Hinweis darunter bricht in dieser Breite um). */
+.form-row { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 0 var(--gap); }
+.form-row label:not(.check, .check-cell) { margin-top: 0; }
+.form-row > div { margin-bottom: 16px; }
+.form-row + h3 { margin-top: -6px; }
+.form-row .check { margin: 8px 0 0; }
+.form-row > .field-grow { flex: 1 1 10em; min-width: 0; }
+.form-row > .field-grow input { max-width: none; }
+.form-row > .field-fit { flex: none; width: min-content; max-width: 100%; }
+/* Zwei Felder, die sich eine Spalte teilen (z. B. FTP-Host und -Port). */
+.form-row > .field-pair { flex: 1 1 18em; min-width: 0; display: flex; gap: 0 var(--gap); margin-bottom: 0; }
+.field-pair > div { margin-bottom: 16px; }
+.field-pair > .field-grow { flex: 1 1 auto; min-width: 0; }
+.field-pair > .field-grow input { max-width: none; }
+.field-pair > .field-fit { flex: none; width: min-content; }
+/* Gemeinsame Spalten für mehrere Reihen eines Formulars (form-columns), sobald alle nebeneinander passen:
+   Name | Adresse | Port | Passwort | Game. Darunter brechen die Reihen wie oben um. */
+.form-columns { container-type: inline-size; }
+@container (min-width: 78em) {
+    .form-cols { display: grid; grid-template-columns: minmax(10em, 1fr) 12em 6em 24em 20em; }
+    .form-row.form-cols > div { width: auto; }
+    .form-cols > .field-grow input { width: 100%; max-width: none; }
+}
+input[type=text], input[type=email], input[type=password], input[type=number], input[type=search], select {
+    width: 100%; max-width: 540px; padding: 10px 11px; border: 1px solid var(--border-input); border-radius: var(--radius-input);
+    background: var(--surface-input); color: var(--text); font: inherit; font-size: .95rem; }
+input:focus, select:focus { outline: 1px solid var(--teal); outline-offset: 0; border-color: var(--teal); }
+/* Geöffnete Auswahlfelder verwenden die Theme- und Buttonfarben. */
+select option { background: var(--surface-input); color: var(--text); }
+select option:hover, select option:focus, select option:checked { background: var(--button); color: var(--text); }
+@supports (appearance: base-select) {
+    select, select::picker(select) { appearance: base-select; }
+    select::picker(select) { background: var(--surface-input); color: var(--text);
+        border: 1px solid var(--border-input); border-radius: var(--radius-input);
+        box-shadow: var(--shadow); max-height: 300px; overflow-y: auto; }
+    select option { padding: 8px 12px; cursor: pointer; }
+}
+input:disabled { opacity: .6; }
+/* Auswahlfeld so breit wie die längste Option: die Texte liegen unsichtbar in derselben Rasterzelle. */
+.select-fit { display: inline-grid; max-width: 100%; }
+.select-fit > * { grid-area: 1 / 1; }
+.select-fit > select { width: 100%; }
+.select-fit > span { height: 0; visibility: hidden; white-space: nowrap; font-size: .95rem;
+    padding: 0 44px 0 12px; }
+/* Portfelder: Platz für fünf Ziffern. Server-Adresse: Platz für eine IPv4-Adresse (längere Hostnamen scrollen). */
+input.input-port { width: 6em; }
+input.input-host { width: 12em; }
+input.input-password { width: 24em; }
+input.input-username { width: 12em; }
+.check { display: flex; align-items: center; gap: 10px; margin: 14px 0; cursor: pointer; }
+.check input { flex: none; width: 20px; height: 20px; accent-color: var(--teal); }
+/* Einzelnes Häkchen als Feld mit Beschriftung darüber, auf Höhe der Eingabefelder daneben. */
+.check-cell { display: flex; align-items: center; gap: 8px; height: 2.6rem; white-space: nowrap; cursor: pointer;
+    font-size: .9rem; }
+.check-cell input { width: 20px; height: 20px; margin: 0; accent-color: var(--teal); cursor: pointer; }
+.check.locked { cursor: default; color: var(--text-hint); }
+.check-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0 var(--gap); }
+.check-grid .check { margin: 8px 0; padding: 10px 12px; border: 1px solid var(--border-soft); border-radius: var(--radius-input); }
+.check-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.check-text small { font-size: .78rem; line-height: 1.35; }
+.form-grid-tight { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+.form-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+.search { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; flex: 1; }
+.search input { max-width: 420px; flex: 1; min-width: 200px; }
+
+/* --- Tabellen und Seitenaufteilung ------------------------------------------------------------------------------ */
+.table-scroll { overflow-x: auto; }
+.table { width: 100%; border-collapse: collapse; }
+.table th { padding: 10px 12px; text-align: left; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em;
+    color: var(--text-muted); background: var(--surface-raised); }
+.table th:first-child { border-radius: var(--radius-input) 0 0 var(--radius-input); }
+.table th:last-child { border-radius: 0 var(--radius-input) var(--radius-input) 0; }
+/* Sortierbare Spaltenköpfe: Pfeil hoch = aufsteigend, runter = absteigend; bei den übrigen Spalten blass, damit man
+   sieht, dass sie sich ebenfalls sortieren lassen. */
+.sort-link { display: inline-flex; align-items: center; gap: 4px; color: inherit; text-decoration: none; white-space: nowrap; }
+.sort-link:hover, .sort-link.is-asc, .sort-link.is-desc { color: var(--text); }
+.sort-link .icon { width: 14px; height: 14px; opacity: .3; transition: transform .15s ease, opacity .15s ease; }
+.sort-link:hover .icon, .sort-link:focus-visible .icon { opacity: .7; }
+.sort-link.is-asc .icon, .sort-link.is-desc .icon { opacity: 1; }
+.sort-link.is-asc .icon { transform: rotate(180deg); }
+.table td { padding: 12px; border-bottom: 1px solid var(--border-soft); vertical-align: middle; }
+.table tbody tr:hover td { background: rgba(255, 255, 255, .02); }
+.actions-col { width: 1%; }
+.actions { display: flex; gap: 8px; justify-content: flex-end; }
+/* Formulare mit nur einem Button (z. B. Plugin neu laden) stehen wie der Button selbst in der Reihe. */
+.actions > form, .form-actions > form { display: contents; }
+.text-danger { color: var(--danger-border); }
+.text-teal { color: var(--teal); }
+/* Externer Link: kleines Pfeil-Symbol dahinter (Tabler "external-link", MIT, wie auf der Keks-Brigarde-Homepage),
+   folgt der Linkfarbe. */
+.external-link::after { content: ""; display: inline-block; width: .85em; height: .85em; margin-left: .3em;
+    vertical-align: -.05em; background: currentColor;
+    -webkit-mask: url(../images/icons/external.svg) center / contain no-repeat;
+    mask: url(../images/icons/external.svg) center / contain no-repeat; }
+
+/* SourceMod-Plugins */
+.plugin-filter select { width: auto; }
+.plugin-filter .check { margin: 0; }
+.plugin-filter .check input { flex: none; min-width: 0; }
+.unloaded-plugins { margin: 0 0 16px; padding: 12px 16px; border: 1px solid var(--border-soft); border-radius: var(--radius-input);
+    background: var(--surface-input); }
+.unloaded-plugins h3 { margin: 0; }
+.unloaded-plugins .hint { margin: 4px 0 8px; }
+.unloaded-plugins li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px;
+    padding: 6px 0; border-top: 1px solid var(--border-soft); }
+.plugin-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0 0 14px; }
+/* Extensions: Bestätigung von SourceMod, was beim Entladen mit entladen wird. */
+.pending-unload { border-color: var(--danger-border); }
+.pending-text { margin: 8px 0 12px; white-space: pre-wrap; overflow-wrap: anywhere; font-size: .85rem; }
+/* Autor bzw. Beschreibung; bei nicht geladenen Extensions ein langer Fehler mit Pfad. */
+.item-extra { overflow-wrap: anywhere; }
+/* Button, der wie ein Link aussieht (z. B. "24 anzeigen" in den Details eines Plugins). */
+.link-button { display: inline; padding: 0; border: 0; border-radius: 0; background: none; color: var(--link); font: inherit;
+    text-align: inherit; white-space: normal; }
+.link-button:hover { filter: none; color: var(--accent); text-decoration: underline; }
+/* ConVars eines Plugins im Dialog: eine Spalte, bei vielen Einträgen scrollbar. */
+.dialog.dialog-wide { width: min(640px, calc(100vw - 32px)); max-width: none; }
+/* Die Scrollleiste bekommt eigenen Platz rechts neben den Werten statt über ihnen zu liegen. */
+.cvar-list { max-height: 60vh; overflow-y: auto; padding-right: 10px; scrollbar-gutter: stable;
+    scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+.cvar-list .expand-facts { columns: 1; }
+.cvar-list .expand-facts dt { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+/* RCON-Konsole */
+/* Server-Buttons und Werkzeuge oben, die Erklärung dezent darunter. */
+.panel-head.console-top { margin-bottom: 12px; }
+.console-intro { margin: 0; }
+.console-tools { display: flex; flex-wrap: wrap; gap: 10px; }
+.console-tools form { display: contents; }
+.server-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+.server-tab { padding: 8px 16px; border: 1px solid var(--border-button); border-radius: var(--radius); background: var(--surface-raised);
+    color: var(--text); font-weight: 700; text-decoration: none; }
+.server-tab:hover { background: var(--surface-hover); }
+.server-tab.active { border-color: var(--yellow); background: var(--yellow); color: var(--text-on-accent); }
+.console-choose { margin: 14px 0 0; }
+.console-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.console-head h2 { margin: 0; }
+.console-head .status-pill { padding: 5px 14px; font-size: .88rem; }
+/* So hoch, dass die Eingabezeile ohne Scrollen sichtbar bleibt. */
+.console-output { height: clamp(240px, calc(100vh - 455px), 800px); overflow-y: auto; padding: 12px 16px; border: 1px solid var(--border-soft);
+    border-radius: var(--radius-input); background: var(--bg); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .84rem; line-height: 1.5; }
+.console-entry { padding: 4px 0; }
+.console-entry + .console-entry { border-top: 1px solid var(--border-soft); }
+.console-time { color: var(--text-hint); }
+.console-command { color: var(--teal); font-weight: 700; }
+.console-response { margin: 2px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; color: var(--text); }
+.console-entry.is-error .console-response { color: var(--danger-border); }
+.console-empty { margin: 0; font-family: var(--font, inherit); }
+/* Ausgabe links, Befehls-Buttons rechts (schmal: untereinander, Buttons oben). */
+.console-layout.has-buttons { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: var(--gap); align-items: start; }
+/* Eigene Fläche wie das Ausgabefenster, so hoch wie Ausgabe und Eingabezeile zusammen. */
+.console-buttons { max-height: calc(clamp(240px, calc(100vh - 455px), 800px) + 64px); overflow-y: auto; padding: 8px 14px;
+    position: relative; border: 1px solid var(--border-soft); border-radius: var(--radius-input); background: var(--surface-input); }
+/* Gut sichtbare Scrollleiste (Button-Spalte und Ausgabe): breiter und türkis (Chrome/Edge/Safari über ::-webkit-scrollbar, Firefox über
+   scrollbar-color; Chrome ignoriert ::-webkit-scrollbar, sobald scrollbar-color gesetzt ist). */
+.console-buttons::-webkit-scrollbar, .console-output::-webkit-scrollbar { width: 12px; }
+.console-buttons::-webkit-scrollbar-track, .console-output::-webkit-scrollbar-track { border-radius: var(--radius-pill);
+    background: var(--surface-raised); }
+.console-buttons::-webkit-scrollbar-thumb, .console-output::-webkit-scrollbar-thumb { border: 2px solid var(--surface-raised);
+    border-radius: var(--radius-pill); background: var(--teal); }
+.console-buttons::-webkit-scrollbar-thumb:hover, .console-output::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+@supports not selector(::-webkit-scrollbar) {
+    .console-buttons, .console-output { scrollbar-width: auto; scrollbar-color: var(--teal) var(--surface-raised); }
+}
+.console-group + .console-group { margin-top: 6px; }
+/* Aus der Plugin-Liste geöffnete Gruppe kurz hervorheben (app.js, data-console-focus). */
+.console-group.is-focused { animation: console-focus 2s ease-out; border-radius: var(--radius-input); }
+@keyframes console-focus { from { background: var(--surface-hover); } to { background: transparent; } }
+/* Titel mit Pfeil zum Auf- und Zuklappen (details/summary). */
+.console-group summary { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 4px;
+    border-bottom: 1px solid var(--border-soft); cursor: pointer; list-style: none; user-select: none; }
+.console-group summary::-webkit-details-marker { display: none; }
+.console-group summary:hover h3, .console-group summary:hover .icon { color: var(--accent); }
+.console-group summary:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; border-radius: var(--radius-input); }
+.console-group h3 { margin: 0; color: var(--teal); font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; }
+.console-group summary .icon { width: 16px; height: 16px; color: var(--text-muted); transition: transform .15s ease; }
+.console-group[open] summary .icon { transform: rotate(180deg); }
+.console-group[open] .console-group-buttons { padding: 10px 0 8px; }
+.console-group-buttons { display: flex; flex-wrap: wrap; gap: 6px; }
+/* Gleiche Farben wie die Serverauswahl (.server-tab). */
+.console-button { padding: 6px 11px; border-color: var(--border-button); background: var(--surface-raised); color: var(--text);
+    font-size: .84rem; font-weight: 600; white-space: normal; text-align: left; }
+.console-button:hover { filter: none; background: var(--surface-hover); }
+.console-dialog-form > div > label:first-child { margin-top: 0; }
+.console-dialog-form input { max-width: none; }
+.console-dialog-form code { overflow-wrap: anywhere; }
+@media (max-width: 1200px) {
+    .console-layout.has-buttons { grid-template-columns: minmax(0, 1fr); }
+    .console-buttons { order: -1; max-height: none; overflow: visible; }
+}
+.console-form { display: flex; gap: 10px; margin-top: 14px; }
+.console-form input[type=text] { flex: 1; max-width: none; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.console-form button { flex: none; }
+/* Senden hebt sich in der Akzentfarbe der Konsole von den übrigen Buttons ab. */
+.console-send { border-color: var(--teal); background: var(--teal); color: var(--text-on-accent); }
+.console-send:hover { filter: none; border-color: var(--accent); background: var(--accent); }
+.console-send:disabled { opacity: .6; cursor: progress; }
+/* Server offline (app.js, data-offline): gesperrt statt "wird gesendet". */
+form[data-offline="1"] .console-send:disabled, .console-button:disabled { opacity: .5; cursor: not-allowed; }
+.console-offline { margin: 0 0 14px; }
+
+/* Nur für Screenreader. */
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden;
+    clip-path: inset(50%); white-space: nowrap; border: 0; }
+
+/* Aufklappbare Tabellenzeilen wie die Ban-Liste der Keks-Brigarde-Homepage (assets/js/app.js, data-expand): Klick auf
+   die Zeile oder den Pfeil zeigt die Detailzeile darunter; die Details stehen zweispaltig, Bezeichnung links, Wert rechts. */
+.row-expandable { cursor: pointer; }
+.row-expandable.is-expanded > td { background: var(--surface-raised); border-bottom-color: transparent; }
+.table .toggle-col { width: 1%; padding-left: 0; text-align: right; }
+.expand-toggle .icon { transition: transform .15s ease; }
+.expand-toggle[aria-expanded="true"] .icon { transform: rotate(180deg); }
+.details-row > td { padding: 0; }
+.expand-panel { padding: 8px 26px 14px; background: var(--surface-input); }
+.expand-facts { columns: 2; column-gap: 28px; margin: 0; font-size: .86rem; }
+.expand-facts > div { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; break-inside: avoid;
+    border-bottom: 1px solid var(--border-soft); }
+.expand-facts dt { flex: none; max-width: 50%; color: var(--teal); }
+.expand-facts dd { min-width: 0; margin: 0; text-align: right; overflow-wrap: anywhere; }
+.expand-panel .alert { margin: 6px 0 0; }
+@media (max-width: 760px) {
+    .expand-facts { columns: 1; }
+    .expand-facts > div { flex-direction: column; gap: 2px; }
+    .expand-facts dt { max-width: none; }
+    .expand-facts dd { text-align: left; }
+}
+.table .actions-cell { padding-top: 8px; padding-bottom: 8px; }
+.list-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; }
+/* Blättern wie bei der Ban-Liste der Keks-Brigarde-Homepage: Zurück, Seiten mit Lücken (…), Weiter. */
+.pager { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.pager a, .pager .current { display: grid; place-items: center; min-width: 36px; height: 36px; padding: 0 10px;
+    border: 1px solid var(--border); border-radius: var(--radius-input); color: var(--text-nav); text-decoration: none; }
+.pager a:hover { background: var(--surface-hover); }
+.pager .current { background: var(--primary); border-color: var(--primary-border); color: var(--text); font-weight: 700; cursor: default; }
+.pager-gap { padding: 0 4px; color: var(--text-muted); }
+
+/* --- Dialog ----------------------------------------------------------------------------------------------------- */
+.dialog { max-width: 460px; padding: 24px; border: 1px solid var(--border); border-radius: var(--radius-panel);
+    background: var(--surface-dialog); color: var(--text); box-shadow: var(--shadow); }
+.dialog::backdrop { background: var(--backdrop); }
+.dialog-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px; }
+
+/* --- Sprachauswahl (wie vhplus) --------------------------------------------------------------------------------- */
+.lang-switch { display: inline-flex; align-items: center; gap: 10px; margin: 0; }
+.lang-switch select { width: auto; height: 44px; padding: 0 12px; border-color: var(--border); border-radius: var(--radius);
+    background: var(--surface); font-weight: 650; cursor: pointer; }
+.lang-switch select:hover { border-color: var(--border-button); }
+
+/* --- Profil ----------------------------------------------------------------------------------------------------- */
+.profile-head { display: flex; align-items: center; gap: 20px; }
+.profile-head h2 { margin-bottom: 4px; }
+.profile-head p { margin: 0; }
+
+/* --- Login ------------------------------------------------------------------------------------------------------ */
+.auth-body { display: grid; place-items: center; padding: 24px; }
+.auth-wrap { width: 100%; max-width: 460px; }
+.auth-lang { display: flex; justify-content: center; margin-top: 24px; }
+.auth-card { margin-top: 18px; }
+.auth-title { margin-bottom: 6px; }
+.auth-card .form button { margin-top: 8px; }
+.auth-card input[type=text], .auth-card input[type=password] { max-width: none; }
+/* Installer (install/index.php): breiter als die Anmeldung, Sprachen als Links, Systemprüfung als Liste. */
+.install-wrap { max-width: 780px; }
+.install-langs { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 14px; margin-top: 20px; font-size: .9rem; }
+.install-langs a { color: var(--text-muted); text-decoration: none; }
+.install-langs a:hover, .install-langs a[aria-current] { color: var(--teal); }
+ul.install-checks { margin: 0 0 22px; padding: 0; }
+.auth-card .hint + h2 { margin-top: 22px; }
+.install-checks li { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 6px 0;
+    border-top: 1px solid var(--border-soft); }
+.install-required { margin-left: auto; font-size: .8rem; }
+.install-wrap .tabs a.current { background: var(--teal); border-color: var(--teal); color: var(--surface-input); }
+.install-checks-head { margin: 22px 0 10px; }
+/* Wichtiger Hinweis, z. B. das Präfix des alten SMWA ($table, das alte SMWA hängt noch "_" an). */
+.hint-warning { color: var(--yellow); }
+.password-reveal { display: flex; gap: 8px; }
+.password-reveal input { flex: 1; min-width: 0; }
+.password-reveal button { padding: 6px 12px; font-size: .85rem; }
+.install-checks-head h2 { margin: 0; }
+.install-checks-head .btn { padding: 6px 12px; font-size: .85rem; }
+.install-migrated { margin: 8px 0 14px; padding-left: 20px; }
+.install-migrated li { padding: 2px 0; }
+.install-config { width: 100%; margin: 0 0 14px; padding: 12px; border: 1px solid var(--border-input);
+    border-radius: var(--radius-input); background: var(--surface-input); color: var(--text); resize: vertical;
+    font: .8rem/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+/* --- SourceMod ------------------------------------------------------------------------------------------------- */
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .88rem; }
+code.identity { overflow-wrap: anywhere; }
+.sm-flags { display: inline-flex; flex-wrap: wrap; gap: 3px; }
+.sm-flag { display: inline-grid; place-items: center; flex: none; width: 22px; height: 22px; border-radius: 6px;
+    background: var(--accent-bg); color: var(--accent); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .8rem; font-weight: 700; }
+.sm-flag-small { width: 17px; height: 17px; border-radius: 4px; font-size: .68rem; }
+.sm-flag-check .sm-flag { width: 26px; height: 26px; }
+.pill-allow { background: var(--success-bg); color: var(--text); }
+.sm-intro { margin: 0 0 16px; }
+.link-list { margin: 0; padding: 0; list-style: none; }
+.link-list li { padding: 9px 0; border-bottom: 1px solid var(--border-soft); }
+.link-list li:last-child { border-bottom: 0; }
+
+/* --- Server und Games ------------------------------------------------------------------------------------------ */
+.game-cell { display: inline-flex; align-items: center; gap: 10px; }
+.game-icon { flex: none; width: 32px; height: 32px; object-fit: contain; image-rendering: auto; }
+.game-icon-large { width: 64px; height: 64px; }
+.game-icon-empty { display: inline-grid; place-items: center; color: var(--text-hint); }
+.game-icon-empty .icon { width: 24px; height: 24px; }
+.server-name { display: flex; flex-direction: column; min-width: 150px; }
+.server-name small:empty { display: none; }
+.status-pill { display: inline-block; padding: 2px 10px; border-radius: var(--radius-pill); background: var(--surface-raised);
+    color: var(--text-muted); font-size: .76rem; font-weight: 700; white-space: nowrap; }
+.status-pill.online { background: var(--success-bg); color: var(--text); }
+.status-pill.offline { background: var(--error-bg); color: var(--text); }
+.status-pill.warning { background: var(--warning-bg); color: var(--text); }
+.test-results li { display: flex; align-items: baseline; gap: 10px; }
+input[type=file] { max-width: 540px; color: var(--text-muted); font: inherit; font-size: .9rem; }
+input[type=file]::file-selector-button { margin-right: 12px; padding: 8px 14px; border: 1px solid var(--border-button);
+    border-radius: var(--radius); background: var(--button); color: var(--text); font: inherit; cursor: pointer; }
+
+/* --- Export ---------------------------------------------------------------------------------------------------- */
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.tabs a { padding: 8px 14px; border: 1px solid var(--border); border-radius: var(--radius-input); color: var(--text-nav);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .88rem; text-decoration: none; }
+.tabs a:hover { background: var(--surface-hover); }
+.tabs a.current { background: var(--primary); border-color: var(--primary-border); color: var(--text); font-weight: 700; }
+.code-preview { max-height: 520px; margin: 16px 0 0; padding: 16px; overflow: auto; border: 1px solid var(--border-soft);
+    border-radius: var(--radius-input); background: var(--surface-input); color: var(--text);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .82rem; line-height: 1.5; tab-size: 4; }
+
+/* --- Kleine Bildschirme: Seitenleiste wird zum ausklappbaren Menü ----------------------------------------------- */
+@media (max-width: 960px) {
+    .sidebar { position: fixed; z-index: 30; left: 0; top: 0; transform: translateX(-100%); transition: transform .2s ease;
+        box-shadow: var(--shadow); }
+    .nav-toggle:checked ~ .app .sidebar { transform: none; }
+    .nav-toggle:checked ~ .app .sidebar-backdrop { display: block; position: fixed; z-index: 20; inset: 0; background: var(--backdrop); }
+    .topbar .nav-toggle-button { display: inline-grid; }
+    .topbar { padding: 14px 16px; }
+    .topbar h1 { font-size: 1.25rem; }
+    .content { padding: 4px 16px 20px; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .panel { padding: 18px; }
+}
+@media (max-width: 560px) {
+    .lang-switch select { max-width: 130px; }
+    .topbar-site, .topbar-site-sep { display: none; }
+    .profile-head { flex-direction: column; text-align: center; }
+}
+
+/* Auswahlfelder mit vollständig steuerbaren Hover- und Fokusfarben. */
+.language-dropdown { position: relative; }
+.language-trigger { height: 44px; padding: 0 12px; background: var(--surface);
+    border-color: var(--border); font-weight: 600; }
+.language-trigger::after { content: ""; width: 6px; height: 6px; margin-left: 10px;
+    border-right: 1px solid currentColor; border-bottom: 1px solid currentColor; transform: rotate(45deg); }
+.language-trigger:hover { filter: none; border-color: var(--border-button); }
+/* Alle Einträge in derselben Zelle (Breite = längster Eintrag), sichtbar nur der gewählte (app.js). */
+.language-value { display: grid; min-width: 0; text-align: left; }
+.language-value > span { grid-area: 1 / 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; visibility: hidden; }
+.language-value > .is-current { visibility: visible; }
+.language-options { position: absolute; right: 0; top: calc(100% + 4px); z-index: 100;
+    min-width: 100%; width: max-content; max-width: calc(100vw - 48px); max-height: 300px; overflow-y: auto;
+    padding: 4px; background: var(--surface-input); border: 1px solid var(--border-input);
+    border-radius: var(--radius-input); box-shadow: var(--shadow); }
+.language-options[hidden] { display: none; }
+.language-option { padding: 8px 12px; color: var(--text); border-radius: 4px; cursor: pointer; }
+.language-option[aria-selected="true"] { font-weight: 700; }
+.language-option:hover, .language-option:focus { background: var(--button); outline: none; }
+
+.form .language-dropdown { width: 100%; max-width: 540px; }
+.form .language-trigger { width: 100%; justify-content: space-between; font: inherit; font-size: .95rem;
+    height: auto; min-height: 44px; padding: 10px 11px; background: var(--surface-input);
+    border-color: var(--border-input); border-radius: var(--radius-input); }
+.form .language-options { left: 0; right: auto; width: 100%; }
+.language-trigger:disabled { opacity: .6; cursor: default; }
+@media (max-width: 560px) {
+    .lang-switch .language-trigger { max-width: 130px; }
+}

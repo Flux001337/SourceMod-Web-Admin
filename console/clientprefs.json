@@ -1,0 +1,13 @@
+{
+    "name": {"en": "Client preferences", "de": "Client-Einstellungen"},
+    "description": {"en": "SourceMod plugin clientprefs", "de": "SourceMod-Plugin clientprefs"},
+    "order": 150,
+    "requires": "clientprefs.smx",
+    "buttons": [
+        {
+            "label": {"en": "Cookies", "de": "Cookies"},
+            "command": "sm_cookies",
+            "description": {"en": "Lists all cookies.", "de": "Listet alle Cookies."}
+        }
+    ]
+}

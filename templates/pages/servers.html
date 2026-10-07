@@ -1,0 +1,138 @@
+{{?show_list}}<section class="panel">
+    <div class="panel-head">
+        <p class="hint sm-intro">{{ t.servers.intro }}</p>
+        <a class="btn primary" href="index.php?section=servers&action=create"><span class="icon icon-plus" aria-hidden="true"></span>{{ t.servers.create_button }}</a>
+    </div>
+
+    {{?has_servers}}<div class="table-scroll">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{ t.servers.status }}</th>
+                    <th>{{ t.servers.name }}</th>
+                    <th>{{ t.servers.address }}</th>
+                    <th>{{ t.servers.map }}</th>
+                    <th>{{ t.servers.players }}</th>
+                    <th>{{ t.servers.info }}</th>
+                    <th class="actions-col">{{ t.common.actions }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#servers}}<tr data-server-status="index.php?section=servers&action=status&id={{ id }}">
+                    <td><span class="status-pill" data-field="status">{{ t.servers.loading }}</span></td>
+                    <td><span class="game-cell">{{?has_game_icon}}<img class="game-icon" src="{{ game_icon }}" alt="" title="{{ game_name }}" data-field="icon">{{/has_game_icon}}{{?has_no_game_icon}}<span class="game-icon game-icon-empty" data-field="icon" title="{{ t.servers.game_unknown }}"><span class="icon icon-unknown" aria-hidden="true"></span></span>{{/has_no_game_icon}}<span class="server-name"><strong>{{ name }}</strong><small data-field="hostname"></small></span></span></td>
+                    <td><code>{{ address }}</code></td>
+                    <td data-field="map"><span class="muted">–</span></td>
+                    <td class="nowrap" data-field="players"><span class="muted">–</span></td>
+                    <td><span class="pills" data-field="labels"></span></td>
+                    <td class="actions-cell"><div class="actions">
+                        <a class="icon-button" href="{{ connect_url }}" title="{{ t.servers.connect }}" aria-label="{{ t.servers.connect }}: {{ name }}"><span class="icon icon-play" aria-hidden="true"></span></a>
+                        <a class="icon-button" href="index.php?section=servers&action=edit&id={{ id }}" title="{{ t.common.edit }}" aria-label="{{ t.common.edit }}: {{ name }}"><span class="icon icon-edit" aria-hidden="true"></span></a>
+                        <button class="icon-button danger" type="button" data-dialog-open="delete-server-{{ id }}" title="{{ t.common.delete }}" aria-label="{{ t.common.delete }}: {{ name }}"><span class="icon icon-delete" aria-hidden="true"></span></button>
+                        <dialog id="delete-server-{{ id }}" class="dialog">
+                            <h2>{{ t.servers.delete_title }}</h2>
+                            <p>{{ delete_question }}</p>
+                            <form method="post" action="index.php?section=servers" class="dialog-actions">
+                                <input type="hidden" name="server_id" value="{{ id }}">
+                                <button type="button" class="ghost" data-dialog-close="delete-server-{{ id }}">{{ t.common.cancel }}</button>
+                                <button type="submit" class="danger" name="delete_server" value="1"><span class="icon icon-delete" aria-hidden="true"></span>{{ t.common.delete }}</button>
+                            </form>
+                        </dialog>
+                    </div></td>
+                </tr>{{/servers}}
+            </tbody>
+        </table>
+    </div>
+    <div class="list-foot"><span class="muted">{{ count_text }}</span></div>{{/has_servers}}
+    {{?has_no_servers}}<p class="muted">{{ t.servers.none_found }}</p>{{/has_no_servers}}
+</section>{{/show_list}}
+
+{{?show_form}}{{?has_test_results}}<section class="panel">
+    <h2>{{ t.servers.test_title }}</h2>
+    <ul class="link-list test-results">
+        {{#test_results}}<li><span class="status-pill{{?ok}} online{{/ok}}{{?failed}} offline{{/failed}}">{{ label }}</span> {{ text }}</li>{{/test_results}}
+    </ul>
+</section>{{/has_test_results}}
+
+<section class="panel">
+    <h2>{{ form_title }}</h2>
+    {{?has_errors}}<div class="alert error" role="alert"><ul class="plain">{{#errors}}<li>{{ text }}</li>{{/errors}}</ul></div>{{/has_errors}}
+    {{?no_master_key}}<div class="alert error" role="alert">{{ t.servers.no_master_key }}</div>{{/no_master_key}}
+
+    <form method="post" action="{{ form_action }}" class="form form-columns">
+        <input type="hidden" name="server_id" value="{{ server_id }}">
+
+        <h3>{{ t.servers.general }}</h3>
+        <div class="form-row form-cols">
+            <div class="field-grow">
+                <label for="server-name">{{ t.servers.name }}</label>
+                <input type="text" id="server-name" name="name" value="{{ form.name }}" maxlength="64" required>
+                <p class="hint">{{ t.servers.name_hint }}</p>
+            </div>
+            <div class="field-fit">
+                <label for="server-host">{{ t.servers.host }}</label>
+                <input type="text" id="server-host" class="input-host" name="host" value="{{ form.host }}" maxlength="255" required spellcheck="false" autocomplete="off" placeholder="203.0.113.10">
+                <p class="hint">{{ t.servers.host_hint }}</p>
+            </div>
+            <div class="field-fit">
+                <label for="server-port">{{ t.servers.port }}</label>
+                <input type="number" id="server-port" class="input-port" name="port" value="{{ form.port }}" min="1" max="65535" required>
+            </div>
+            <div class="field-fit">
+                <label for="server-rcon">{{ t.servers.rcon_password }}</label>
+                <input type="password" id="server-rcon" class="input-password" name="rcon_password" maxlength="255" autocomplete="new-password">
+                <p class="hint">{{?has_rcon_password}}<span class="pill pill-small">{{ t.servers.password_set }}</span> {{ t.servers.password_keep_hint }}{{/has_rcon_password}}{{?has_no_rcon_password}}{{ t.servers.rcon_hint }}{{/has_no_rcon_password}}</p>
+                {{?has_rcon_password}}<label class="check"><input type="checkbox" name="remove_rcon_password" value="1"{{?form.remove_rcon_password}} checked{{/form.remove_rcon_password}}> {{ t.servers.remove_password }}</label>{{/has_rcon_password}}
+            </div>
+            <div class="field-fit">
+                <label for="server-game">{{ t.servers.game }}</label>
+                <div class="select-fit">
+                    <select id="server-game" name="game_id">{{#game_options}}<option value="{{ value }}"{{?selected}} selected{{/selected}}>{{ label }}</option>{{/game_options}}</select>
+                    {{#game_options}}<span aria-hidden="true">{{ label }}</span>{{/game_options}}
+                </div>
+                <p class="hint">{{ t.servers.game_hint }}</p>
+            </div>
+        </div>
+
+        <h3>{{ t.servers.ftp }}</h3>
+        <p class="hint">{{ t.servers.ftp_hint }}</p>
+        <div class="form-row form-cols">
+            <div class="field-pair">
+                <div class="field-grow">
+                    <label for="server-ftp-host">{{ t.servers.ftp_host }}</label>
+                    <input type="text" id="server-ftp-host" name="ftp_host" value="{{ form.ftp_host }}" maxlength="255" spellcheck="false" autocomplete="off">
+                </div>
+                <div class="field-fit">
+                    <label for="server-ftp-port">{{ t.servers.port }}</label>
+                    <input type="number" id="server-ftp-port" class="input-port" name="ftp_port" value="{{ form.ftp_port }}" min="1" max="65535">
+                </div>
+            </div>
+            <div class="field-fit">
+                <label for="server-ftp-username">{{ t.servers.ftp_username }}</label>
+                <input type="text" id="server-ftp-username" class="input-username" name="ftp_username" value="{{ form.ftp_username }}" maxlength="255" spellcheck="false" autocomplete="off">
+            </div>
+            <div class="field-fit">
+                <label for="server-ftp-tls">{{ t.servers.ftp_tls_short }}</label>
+                <label class="check-cell" title="{{ t.servers.ftp_tls }}"><input type="checkbox" id="server-ftp-tls" name="ftp_tls" value="1"{{?form.ftp_tls}} checked{{/form.ftp_tls}}> <span id="server-ftp-tls-text">{{ t.servers.ftp_tls_on }}</span></label>
+            </div>
+            <div class="field-fit">
+                <label for="server-ftp-password">{{ t.servers.ftp_password }}</label>
+                <input type="password" id="server-ftp-password" class="input-password" name="ftp_password" maxlength="255" autocomplete="new-password">
+                {{?has_ftp_password}}<p class="hint"><span class="pill pill-small">{{ t.servers.password_set }}</span> {{ t.servers.password_keep_hint }}</p>
+                <label class="check"><input type="checkbox" name="remove_ftp_password" value="1"{{?form.remove_ftp_password}} checked{{/form.remove_ftp_password}}> {{ t.servers.remove_password }}</label>{{/has_ftp_password}}
+            </div>
+            <div class="field-grow">
+                <label for="server-ftp-path">{{ t.servers.ftp_path }}</label>
+                <input type="text" id="server-ftp-path" name="ftp_path" value="{{ form.ftp_path }}" maxlength="255" spellcheck="false" autocomplete="off" placeholder="cstrike/addons/sourcemod/configs">
+                <p class="hint">{{ t.servers.ftp_path_hint }}</p>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="primary" name="{{ submit_name }}" value="1"><span class="icon icon-save" aria-hidden="true"></span>{{ t.common.save }}</button>
+            {{?is_edit}}<button type="submit" name="test_server" value="1" formnovalidate><span class="icon icon-server" aria-hidden="true"></span>{{ t.servers.test_button }}</button>{{/is_edit}}
+            <a class="btn ghost" href="index.php?section=servers">{{ t.common.back }}</a>
+        </div>
+        {{?is_edit}}<p class="hint">{{ t.servers.test_hint }}</p>{{/is_edit}}
+    </form>
+</section>{{/show_form}}

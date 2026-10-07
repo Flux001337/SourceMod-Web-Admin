@@ -1,0 +1,80 @@
+{
+    "name": {"en": "Communication", "de": "Kommunikation"},
+    "description": {"en": "SourceMod plugin basecomm", "de": "SourceMod-Plugin basecomm"},
+    "order": 50,
+    "requires": ["basecomm.smx", "sbpp_comms.smx"],
+    "buttons": [
+        {
+            "label": {"en": "Mute (voice)", "de": "Stumm (Voice)"},
+            "command": "sm_mute {target}",
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                }
+            }
+        },
+        {
+            "label": {"en": "Unmute", "de": "Voice wieder an"},
+            "command": "sm_unmute {target}",
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                }
+            }
+        },
+        {
+            "label": {"en": "Gag", "de": "Chat sperren"},
+            "command": "sm_gag {target}",
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                }
+            }
+        },
+        {
+            "label": {"en": "Ungag", "de": "Chat frei"},
+            "command": "sm_ungag {target}",
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                }
+            }
+        },
+        {
+            "label": {"en": "Silence", "de": "Ganz stumm"},
+            "command": "sm_silence {target}",
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                }
+            }
+        },
+        {
+            "label": {"en": "Unsilence", "de": "Stumm aufheben"},
+            "command": "sm_unsilence {target}",
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                }
+            }
+        }
+    ]
+}

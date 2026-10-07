@@ -1,0 +1,64 @@
+<section class="panel">
+    <div class="panel-head console-top">
+        {{?has_no_servers}}<p class="muted">{{ t.console.no_servers }}{{?can_manage_servers}} <a href="index.php?section=servers">{{ t.console.to_servers }}</a>{{/can_manage_servers}}</p>{{/has_no_servers}}
+        {{?has_servers}}<nav class="server-tabs" aria-label="{{ t.console.server }}">{{#server_tabs}}<a class="server-tab{{?active}} active{{/active}}" href="{{ url }}"{{?active}} aria-current="page"{{/active}}>{{ name }}</a>{{/server_tabs}}</nav>{{/has_servers}}
+        {{?has_server}}<div class="console-tools">
+            <a class="btn ghost" href="{{ download_url }}" download><span class="icon icon-download" aria-hidden="true"></span>{{ t.console.download }}</a>
+            <form method="post" action="{{ page_url }}">
+                <input type="hidden" name="server" value="{{ server_id }}">
+                <button type="submit" class="ghost" name="clear_console" value="1"><span class="icon icon-delete" aria-hidden="true"></span>{{ t.console.clear }}</button>
+            </form>
+        </div>{{/has_server}}
+    </div>
+    <p class="hint console-intro">{{ t.console.intro }}</p>
+    {{?has_no_selection}}<p class="muted console-choose">{{ t.console.choose_hint }}</p>{{/has_no_selection}}
+</section>
+
+{{?has_server}}<section class="panel">
+    <div class="console-head">
+        <h2>{{ console_title }}</h2>
+        <!-- Online/Offline wird nachgeladen (app.js, data-console-status). -->
+        <span class="status-pill" data-console-status="{{ status_url }}">{{ t.console.checking }}</span>
+    </div>
+    <!-- Server offline: app.js sperrt Eingabe, Senden und Befehls-Buttons und zeigt diesen Hinweis. -->
+    <p class="alert error console-offline" data-console-offline hidden>{{ t.console.offline_hint }}</p>
+    {{?has_button_errors}}<div class="alert error" role="alert"><ul class="plain">{{#button_errors}}<li><code>console/{{ text }}</code></li>{{/button_errors}}</ul></div>{{/has_button_errors}}
+    <div class="console-layout{{?has_buttons}} has-buttons{{/has_buttons}}">
+        <div class="console-main">
+            <div class="console-output" id="console-output" role="log" aria-live="polite" tabindex="0">
+                {{#entries}}<div class="console-entry{{?error}} is-error{{/error}}"><span class="console-time">[{{ time }}]</span> <span class="console-command">&gt; <span data-console-command>{{ command }}</span></span>{{?has_response}}<pre class="console-response">{{ response }}</pre>{{/has_response}}</div>{{/entries}}
+                <p class="console-empty muted"{{?has_entries}} hidden{{/has_entries}}>{{ t.console.empty }}</p>
+            </div>
+            <!-- Senden ohne Neuladen (app.js, data-console-form); ohne JavaScript ein normales Formular. -->
+            <form method="post" action="{{ page_url }}" class="console-form" id="console-form" data-console-form="console-output" data-console-error="{{ t.console.error_send }}">
+                <input type="hidden" name="server" value="{{ server_id }}">
+                <input type="text" name="command" maxlength="{{ max_command }}" placeholder="{{ t.console.placeholder }}" aria-label="{{ t.console.command }}" autocomplete="off" spellcheck="false" required autofocus>
+                <button type="submit" class="primary console-send" name="send_command" value="1"><span class="icon icon-send" aria-hidden="true"></span>{{ t.console.send }}</button>
+            </form>
+            <p class="hint">{{ t.console.history_hint }}</p>
+        </div>
+
+        {{?has_buttons}}<!-- Befehls-Buttons aus console/*.json; Platzhalter und Rückfragen über den Dialog (app.js, data-console-button). -->
+        <aside class="console-buttons" aria-label="{{ t.console.buttons }}" data-console-requires="{{ requires_url }}">
+            {{#button_groups}}<!-- Aufklappbar; app.js merkt sich offen/zu je Gruppe (data-console-fold). -->
+            <details class="console-group" data-console-fold="{{ file }}"{{?open}} open{{/open}}{{?focus}} data-console-focus{{/focus}}{{?has_requires}} data-console-group="{{ file }}" hidden{{/has_requires}}>
+                <summary{{?description}} title="{{ description }}"{{/description}}><h3>{{ name }}</h3><span class="icon icon-chevron" aria-hidden="true"></span></summary>
+                <div class="console-group-buttons">{{#buttons}}<button type="button" class="console-button" data-console-button="{{ spec }}" title="{{ title }}">{{ label }}</button>{{/buttons}}</div>
+            </details>{{/button_groups}}
+        </aside>{{/has_buttons}}
+    </div>
+</section>
+
+<dialog id="console-button-dialog" class="dialog dialog-wide" data-players="{{ players_url }}" data-error-required="{{ t.console.error_required }}" data-error-value="{{ t.console.error_value }}">
+    <h2 data-console-dialog-title></h2>
+    <p data-console-dialog-confirm hidden></p>
+    <form method="dialog" class="form console-dialog-form" data-console-dialog-form>
+        <div data-console-dialog-fields></div>
+        <p class="hint">{{ t.console.command }}: <code data-console-dialog-preview></code></p>
+        <p class="alert error" data-console-dialog-error hidden></p>
+        <div class="dialog-actions">
+            <button type="button" class="ghost" data-dialog-close="console-button-dialog">{{ t.common.cancel }}</button>
+            <button type="submit" class="primary console-send"><span class="icon icon-send" aria-hidden="true"></span>{{ t.console.send }}</button>
+        </div>
+    </form>
+</dialog>{{/has_server}}

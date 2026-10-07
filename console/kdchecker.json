@@ -1,0 +1,131 @@
+{
+    "name": "KDR Checker",
+    "description": {"en": "Plugin by HSFighter: github.com/Flux001337/Sourcemod-Kill-Death-Ratio-Checker", "de": "Plugin von HSFighter: github.com/Flux001337/Sourcemod-Kill-Death-Ratio-Checker"},
+    "order": 210,
+    "requires": "kdchecker.smx",
+    "buttons": [
+        {
+            "label": {"en": "Settings", "de": "Einstellungen"},
+            "command": "sm_kdrc_enable;sm_kdrc_show_roundend;sm_kdrc_show_kill;sm_kdrc_watch_enable;sm_kdrc_watch_rate;sm_kdrc_watch_kills;sm_kdrc_watch_checkrate;sm_kdrc_watch_action;sm_kdrc_watch_bantime;sm_kdrc_debug;sm_kdrc_version",
+            "description": {"en": "Shows all ConVars of the plugin.", "de": "Zeigt alle ConVars des Plugins."}
+        },
+        {
+            "label": {"en": "Enable / disable", "de": "An / aus"},
+            "command": "sm_kdrc_enable {value}",
+            "description": {"en": "Changes via RCON apply until the next map change or restart; permanent values belong in the plugin's cfg file.", "de": "Änderungen per RCON gelten bis zum nächsten Mapwechsel oder Neustart; dauerhaft gehören sie in die cfg-Datei des Plugins."},
+            "args": {
+                "value": {
+                    "label": {"en": "On (1) or off (0)", "de": "An (1) oder aus (0)"},
+                    "options": ["1", "0"],
+                    "type": "number"
+                }
+            }
+        },
+        {
+            "label": {"en": "Show on round end", "de": "Bei Rundenende zeigen"},
+            "command": "sm_kdrc_show_roundend {value}",
+            "description": {"en": "Changes via RCON apply until the next map change or restart; permanent values belong in the plugin's cfg file.", "de": "Änderungen per RCON gelten bis zum nächsten Mapwechsel oder Neustart; dauerhaft gehören sie in die cfg-Datei des Plugins."},
+            "args": {
+                "value": {
+                    "label": {"en": "On (1) or off (0)", "de": "An (1) oder aus (0)"},
+                    "options": ["1", "0"],
+                    "type": "number"
+                }
+            }
+        },
+        {
+            "label": {"en": "Show on kill", "de": "Bei Kill zeigen"},
+            "command": "sm_kdrc_show_kill {value}",
+            "description": {"en": "Changes via RCON apply until the next map change or restart; permanent values belong in the plugin's cfg file.", "de": "Änderungen per RCON gelten bis zum nächsten Mapwechsel oder Neustart; dauerhaft gehören sie in die cfg-Datei des Plugins."},
+            "args": {
+                "value": {
+                    "label": {"en": "On (1) or off (0)", "de": "An (1) oder aus (0)"},
+                    "options": ["1", "0"],
+                    "type": "number"
+                }
+            }
+        },
+        {
+            "label": {"en": "Watch on / off", "de": "Überwachung an / aus"},
+            "command": "sm_kdrc_watch_enable {value}",
+            "description": {"en": "Changes via RCON apply until the next map change or restart; permanent values belong in the plugin's cfg file.", "de": "Änderungen per RCON gelten bis zum nächsten Mapwechsel oder Neustart; dauerhaft gehören sie in die cfg-Datei des Plugins."},
+            "args": {
+                "value": {
+                    "label": {"en": "On (1) or off (0)", "de": "An (1) oder aus (0)"},
+                    "options": ["1", "0"],
+                    "type": "number"
+                }
+            }
+        },
+        {
+            "label": {"en": "Watch: KDR limit", "de": "Überwachung: KDR-Grenze"},
+            "command": "sm_kdrc_watch_rate {value}",
+            "description": {"en": "Changes via RCON apply until the next map change or restart; permanent values belong in the plugin's cfg file.", "de": "Änderungen per RCON gelten bis zum nächsten Mapwechsel oder Neustart; dauerhaft gehören sie in die cfg-Datei des Plugins."},
+            "args": {
+                "value": {
+                    "label": {"en": "KD ratio before action", "de": "KD-Rate bis zur Aktion"},
+                    "placeholder": {"en": "Default: 4.0", "de": "Standard: 4.0"}
+                }
+            }
+        },
+        {
+            "label": {"en": "Watch: kills", "de": "Überwachung: Kills"},
+            "command": "sm_kdrc_watch_kills {value}",
+            "description": {"en": "Changes via RCON apply until the next map change or restart; permanent values belong in the plugin's cfg file.", "de": "Änderungen per RCON gelten bis zum nächsten Mapwechsel oder Neustart; dauerhaft gehören sie in die cfg-Datei des Plugins."},
+            "args": {
+                "value": {
+                    "label": {"en": "Kills before a player is checked", "de": "Kills, bevor ein Spieler geprüft wird"},
+                    "placeholder": {"en": "Default: 15", "de": "Standard: 15"},
+                    "type": "number"
+                }
+            }
+        },
+        {
+            "label": {"en": "Watch: interval", "de": "Überwachung: Intervall"},
+            "command": "sm_kdrc_watch_checkrate {value}",
+            "description": {"en": "Changes via RCON apply until the next map change or restart; permanent values belong in the plugin's cfg file.", "de": "Änderungen per RCON gelten bis zum nächsten Mapwechsel oder Neustart; dauerhaft gehören sie in die cfg-Datei des Plugins."},
+            "args": {
+                "value": {
+                    "label": {"en": "Seconds between checks", "de": "Sekunden zwischen den Prüfungen"},
+                    "placeholder": {"en": "Default: 30.0", "de": "Standard: 30.0"}
+                }
+            }
+        },
+        {
+            "label": {"en": "Watch: action", "de": "Überwachung: Aktion"},
+            "command": "sm_kdrc_watch_action {value}",
+            "description": {"en": "Changes via RCON apply until the next map change or restart; permanent values belong in the plugin's cfg file.", "de": "Änderungen per RCON gelten bis zum nächsten Mapwechsel oder Neustart; dauerhaft gehören sie in die cfg-Datei des Plugins."},
+            "args": {
+                "value": {
+                    "label": {"en": "0 = kick, 1 = ban", "de": "0 = kicken, 1 = bannen"},
+                    "options": ["0", "1"],
+                    "type": "number"
+                }
+            }
+        },
+        {
+            "label": {"en": "Watch: ban time", "de": "Überwachung: Banndauer"},
+            "command": "sm_kdrc_watch_bantime {value}",
+            "description": {"en": "Changes via RCON apply until the next map change or restart; permanent values belong in the plugin's cfg file.", "de": "Änderungen per RCON gelten bis zum nächsten Mapwechsel oder Neustart; dauerhaft gehören sie in die cfg-Datei des Plugins."},
+            "args": {
+                "value": {
+                    "label": {"en": "Minutes (0 = permanent)", "de": "Minuten (0 = permanent)"},
+                    "placeholder": {"en": "Default: 60", "de": "Standard: 60"},
+                    "type": "number"
+                }
+            }
+        },
+        {
+            "label": {"en": "Debug log", "de": "Debug-Log"},
+            "command": "sm_kdrc_debug {value}",
+            "description": {"en": "Changes via RCON apply until the next map change or restart; permanent values belong in the plugin's cfg file.", "de": "Änderungen per RCON gelten bis zum nächsten Mapwechsel oder Neustart; dauerhaft gehören sie in die cfg-Datei des Plugins."},
+            "args": {
+                "value": {
+                    "label": {"en": "On (1) or off (0)", "de": "An (1) oder aus (0)"},
+                    "options": ["1", "0"],
+                    "type": "number"
+                }
+            }
+        }
+    ]
+}

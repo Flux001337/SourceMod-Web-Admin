@@ -1,0 +1,17 @@
+<section class="panel">
+    <h2>{{ t.sm.tables_missing_title }}</h2>
+    <div class="alert warning" role="alert">{{ t.sm.tables_missing_warning }} <code>{{ tables }}</code></div>
+
+    <h3>{{ t.sm.tables_missing_how }}</h3>
+    <ol class="sm-missing-steps">
+        <li>{{ t.sm.tables_missing_step_command }}<pre class="sm-missing-command"><code>sm_create_adm_tables</code></pre></li>
+        <li>{{ t.sm.tables_missing_step_database }} <code>{{ database }}</code></li>
+        <li>{{ t.sm.tables_missing_step_recheck }}</li>
+    </ol>
+    <p class="hint">{{ t.sm.tables_missing_alternative }}</p>
+
+    <div class="form-actions">
+        {{?can_console}}<a class="btn primary" href="{{ console_url }}"><span class="icon icon-terminal" aria-hidden="true"></span>{{ t.sm.tables_missing_console }}</a>{{/can_console}}
+        <a class="btn" href="{{ recheck_url }}">↻ {{ t.sm.tables_missing_recheck }}</a>
+    </div>
+</section>

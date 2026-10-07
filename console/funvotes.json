@@ -1,0 +1,66 @@
+{
+    "name": {"en": "Fun votes", "de": "Spaß-Abstimmungen"},
+    "description": {"en": "SourceMod plugin funvotes", "de": "SourceMod-Plugin funvotes"},
+    "order": 90,
+    "requires": "funvotes.smx",
+    "buttons": [
+        {
+            "label": {"en": "Gravity", "de": "Schwerkraft"},
+            "command": "sm_votegravity {amount1} {amount2} {amount3} {amount4} {amount5}",
+            "args": {
+                "amount1": {
+                    "label": {"en": "Amount 1", "de": "Wert 1"},
+                    "placeholder": "800"
+                },
+                "amount2": {
+                    "label": {"en": "Amount 2", "de": "Wert 2"},
+                    "required": false
+                },
+                "amount3": {
+                    "label": {"en": "Amount 3", "de": "Wert 3"},
+                    "required": false
+                },
+                "amount4": {
+                    "label": {"en": "Amount 4", "de": "Wert 4"},
+                    "required": false
+                },
+                "amount5": {
+                    "label": {"en": "Amount 5", "de": "Wert 5"},
+                    "required": false
+                }
+            }
+        },
+        {
+            "label": {"en": "Burn", "de": "Anzünden"},
+            "command": "sm_voteburn {target}",
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                }
+            }
+        },
+        {
+            "label": {"en": "Slay", "de": "Töten"},
+            "command": "sm_voteslay {target}",
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                }
+            }
+        },
+        {
+            "label": {"en": "All talk", "de": "All-Talk"},
+            "command": "sm_votealltalk"
+        },
+        {
+            "label": {"en": "Friendly fire", "de": "Friendly Fire"},
+            "command": "sm_voteff"
+        }
+    ]
+}

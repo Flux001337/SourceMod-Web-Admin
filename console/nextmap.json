@@ -1,0 +1,16 @@
+{
+    "name": {"en": "Next map", "de": "Nächste Map"},
+    "description": {"en": "SourceMod plugin nextmap", "de": "SourceMod-Plugin nextmap"},
+    "order": 120,
+    "requires": "nextmap.smx",
+    "buttons": [
+        {
+            "label": {"en": "Map history", "de": "Map-Verlauf"},
+            "command": "sm_maphistory"
+        },
+        {
+            "label": {"en": "Map cycle", "de": "Map-Zyklus"},
+            "command": "listmaps"
+        }
+    ]
+}

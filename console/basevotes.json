@@ -1,0 +1,102 @@
+{
+    "name": {"en": "Votes", "de": "Abstimmungen"},
+    "description": {"en": "SourceMod plugin basevotes", "de": "SourceMod-Plugin basevotes"},
+    "order": 80,
+    "requires": "basevotes.smx",
+    "buttons": [
+        {
+            "label": {"en": "Vote", "de": "Abstimmung"},
+            "command": "sm_vote {question} {answer1} {answer2} {answer3} {answer4} {answer5}",
+            "description": {"en": "Without answers it is a yes/no vote.", "de": "Ohne Antworten ist es eine Ja/Nein-Abstimmung."},
+            "args": {
+                "question": {
+                    "label": {"en": "Question", "de": "Frage"},
+                    "quote": true
+                },
+                "answer1": {
+                    "label": {"en": "Answer 1", "de": "Antwort 1"},
+                    "quote": true,
+                    "required": false
+                },
+                "answer2": {
+                    "label": {"en": "Answer 2", "de": "Antwort 2"},
+                    "quote": true,
+                    "required": false
+                },
+                "answer3": {
+                    "label": {"en": "Answer 3", "de": "Antwort 3"},
+                    "quote": true,
+                    "required": false
+                },
+                "answer4": {
+                    "label": {"en": "Answer 4", "de": "Antwort 4"},
+                    "quote": true,
+                    "required": false
+                },
+                "answer5": {
+                    "label": {"en": "Answer 5", "de": "Antwort 5"},
+                    "quote": true,
+                    "required": false
+                }
+            }
+        },
+        {
+            "label": {"en": "Map vote", "de": "Map-Abstimmung"},
+            "command": "sm_votemap {map1} {map2} {map3} {map4} {map5}",
+            "args": {
+                "map1": {
+                    "label": "Map 1",
+                    "placeholder": "de_dust2"
+                },
+                "map2": {
+                    "label": "Map 2",
+                    "required": false
+                },
+                "map3": {
+                    "label": "Map 3",
+                    "required": false
+                },
+                "map4": {
+                    "label": "Map 4",
+                    "required": false
+                },
+                "map5": {
+                    "label": "Map 5",
+                    "required": false
+                }
+            }
+        },
+        {
+            "label": {"en": "Vote kick", "de": "Kick-Abstimmung"},
+            "command": "sm_votekick {target} {reason}",
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                },
+                "reason": {
+                    "label": {"en": "Reason", "de": "Grund"},
+                    "required": false
+                }
+            }
+        },
+        {
+            "label": {"en": "Vote ban", "de": "Bann-Abstimmung"},
+            "command": "sm_voteban {target} {reason}",
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                },
+                "reason": {
+                    "label": {"en": "Reason", "de": "Grund"},
+                    "required": false
+                }
+            }
+        }
+    ]
+}

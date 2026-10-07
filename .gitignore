@@ -1,0 +1,14 @@
+config/config.php
+config/config.local.php
+# Sicherungskopien der Konfiguration (enthalten Passwörter), die Vorlage bleibt
+config/config.php.*
+config/config.local.php.*
+!config/config.php.example
+*.bak
+*.log
+.claude/
+# Altes SMWA 2.x nur zum lokalen Vergleich (enthält echte Zugangsdaten)
+old/
+# Hochgeladene Game-Icons
+assets/uploads/games/*
+!assets/uploads/games/.keep

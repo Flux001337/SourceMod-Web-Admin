@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="{{ html_lang }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ t.install.title }} | SourceMod Web Admin</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+    <link rel="stylesheet" href="../assets/css/themes/Midnight.css?v={{ styles_version }}">
+    <link rel="stylesheet" href="../assets/css/styles.css?v={{ styles_version }}">
+</head>
+<body class="auth-body">
+    <div class="auth-wrap install-wrap">
+        <div class="brand brand-center">
+            <span class="brand-logo brand-logo-large" aria-hidden="true"></span>
+            <span class="brand-text"><strong>SourceMod Web Admin</strong><small>{{ t.install.title }}</small></span>
+        </div>
+        <!-- Sprache per Link (ohne JavaScript und ohne Cookie). -->
+        <nav class="install-langs" aria-label="{{ t.common.language }}">{{#languages}}<a href="{{ url }}"{{?selected}} aria-current="true"{{/selected}}>{{ name }}</a>{{/languages}}</nav>
+
+        {{?show_message}}<main class="panel auth-card">
+            <h1 class="auth-title">{{ message_title }}</h1>
+            {{?message_text}}<p>{{ message_text }}</p>{{/message_text}}
+            {{?message_error}}<div class="alert error" role="alert">{{ message_error }}</div>{{/message_error}}
+            {{?show_delete}}<div class="alert error" role="alert"><strong>{{ t.install.done_delete }}</strong></div>{{/show_delete}}
+            <p><a class="btn primary" href="../index.php">{{ t.install.to_login }}</a></p>
+        </main>{{/show_message}}
+
+        {{?show_update}}<main class="panel auth-card">
+            <h1 class="auth-title">{{ t.install.update_title }}</h1>
+            <p class="hint">{{ t.install.update_intro }}</p>
+            <p>{{ update_versions }}</p>
+            {{?has_errors}}<div class="alert error" role="alert"><ul class="plain">{{#errors}}<li>{{ text }}</li>{{/errors}}</ul></div>{{/has_errors}}
+            <form method="post" action="index.php" class="form">
+                <input type="hidden" name="lang" value="{{ lang_code }}">
+                <p class="hint">{{ t.install.update_login_hint }}</p>
+                <div class="form-grid">
+                    <div><label for="owner-username">{{ t.users.username }}</label><input type="text" id="owner-username" name="owner_username" value="{{ owner_username }}" maxlength="30" autocomplete="username" required></div>
+                    <div><label for="owner-password">{{ t.users.password }}</label><input type="password" id="owner-password" name="owner_password" autocomplete="current-password" required></div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="primary">{{ t.install.update_submit }}</button>
+                </div>
+            </form>
+        </main>{{/show_update}}
+
+        {{?show_update_done}}<main class="panel auth-card">
+            <h1 class="auth-title">{{ t.install.update_done_title }}</h1>
+            <p>{{ update_done_text }}</p>
+            {{?has_steps}}<p class="hint">{{ update_steps }}</p>{{/has_steps}}
+            <div class="alert error" role="alert"><strong>{{ t.install.done_delete }}</strong></div>
+            <p><a class="btn primary" href="../index.php">{{ t.install.to_login }}</a></p>
+        </main>{{/show_update_done}}
+
+        {{?show_done}}<main class="panel auth-card">
+            <h1 class="auth-title">{{ t.install.done_title }}</h1>
+            <p>{{ done_text }}</p>
+            {{?is_migrate}}<h2>{{ migrated_title }}</h2>
+            <ul class="install-migrated">{{#migrated}}<li>{{ text }}</li>{{/migrated}}</ul>
+            <p class="hint">{{ t.install.done_migrated_hint }}</p>{{/is_migrate}}
+            {{?config_written}}<div class="alert success" role="status">{{ t.install.done_config_written }}</div>{{/config_written}}
+            {{?config_manual}}<div class="alert error" role="alert">{{ t.install.done_config_manual }}</div>
+            <textarea class="install-config" rows="18" readonly spellcheck="false">{{ config_content }}</textarea>{{/config_manual}}
+            {{?has_sm_missing}}<div class="alert error" role="alert">{{ sm_missing }}</div>{{/has_sm_missing}}
+            <div class="alert error" role="alert"><strong>{{ t.install.done_delete }}</strong></div>
+            <p><a class="btn primary" href="../index.php">{{ t.install.to_login }}</a></p>
+        </main>{{/show_done}}
+
+        {{?show_form}}<main class="panel auth-card">
+            <h1 class="auth-title">{{ t.install.title }}</h1>
+            <!-- Art der Installation per Link (ohne JavaScript). -->
+            <nav class="tabs" aria-label="{{ t.install.title }}">
+                <a href="{{ mode_install_url }}"{{?is_install}} class="current" aria-current="page"{{/is_install}}>{{ t.install.mode_install }}</a>
+                <a href="{{ mode_migrate_url }}"{{?is_migrate}} class="current" aria-current="page"{{/is_migrate}}>{{ t.install.mode_migrate }}</a>
+            </nav>
+            {{?is_install}}<p class="hint">{{ t.install.intro }}</p>{{/is_install}}
+            {{?is_migrate}}<p class="hint">{{ t.install.migrate_intro }}</p>{{/is_migrate}}
+
+            <!-- Prüfung wiederholen: lädt die Seite mit Modus und Sprache neu (Formulareingaben gehen dabei verloren). -->
+            <div class="panel-head install-checks-head">
+                <h2>{{ t.install.requirements }}</h2>
+                <a class="btn ghost" href="{{ recheck_url }}">↻ {{ t.install.recheck }}</a>
+            </div>
+            <ul class="plain install-checks">
+                {{#requirements}}<li>
+                    {{?ok}}<span class="status-pill online">{{ t.install.ok }}</span>{{/ok}}{{?is_missing_required}}<span class="status-pill offline">{{ t.install.missing }}</span>{{/is_missing_required}}{{?is_missing_optional}}<span class="status-pill warning">{{ t.install.missing }}</span>{{/is_missing_optional}}
+                    <span>{{ label }}{{?has_detail}} <code>{{ detail }}</code>{{/has_detail}}</span>
+                    {{?required}}<span class="muted install-required">{{ t.install.required }}</span>{{/required}}
+                </li>{{/requirements}}
+            </ul>
+            {{?cannot_install}}<div class="alert error" role="alert">{{ t.install.requirements_failed }}</div>{{/cannot_install}}
+
+            {{?can_install}}{{?has_errors}}<div class="alert error" role="alert"><ul class="plain">{{#errors}}<li>{{ text }}</li>{{/errors}}</ul></div>{{/has_errors}}
+            <form method="post" action="index.php" class="form" autocomplete="off">
+                <input type="hidden" name="lang" value="{{ lang_code }}">
+                <input type="hidden" name="mode" value="{{ mode }}">
+
+                <h3>{{ t.install.database }}</h3>
+                <div class="form-grid">
+                    <div><label for="db-host">{{ t.install.db_host }}</label><input type="text" id="db-host" name="db_host" value="{{ form.db_host }}" required></div>
+                    <div><label for="db-port">{{ t.install.db_port }}</label><input type="number" id="db-port" name="db_port" value="{{ form.db_port }}" min="1" max="65535" required></div>
+                    <div><label for="db-name">{{ t.install.db_name }}</label><input type="text" id="db-name" name="db_name" value="{{ form.db_name }}" required></div>
+                    <div><label for="db-user">{{ t.install.db_user }}</label><input type="text" id="db-user" name="db_user" value="{{ form.db_user }}" required></div>
+                    <div><label for="db-password">{{ t.install.db_password }}</label><div class="password-reveal"><input type="password" id="db-password" name="db_password" autocomplete="new-password" spellcheck="false"><button type="button" class="ghost" data-reveal="db-password" data-show="{{ t.install.show_password }}" data-hide="{{ t.install.hide_password }}" aria-pressed="false" hidden>{{ t.install.show_password }}</button></div></div>
+                    <div><label for="db-prefix">{{ t.install.db_prefix }}</label><input type="text" id="db-prefix" name="db_prefix" value="{{ form.db_prefix }}"><p class="hint">{{ t.install.db_prefix_hint }}</p></div>
+                </div>
+
+                {{?is_migrate}}<h3>{{ t.install.old_smwa }}</h3>
+                <div class="form-grid">
+                    <div><label for="old-database">{{ t.install.old_database }}</label><input type="text" id="old-database" name="old_database" value="{{ form.old_database }}"><p class="hint">{{ t.install.old_database_hint }}</p></div>
+                    <div><label for="old-prefix">{{ t.install.old_prefix }}</label><input type="text" id="old-prefix" name="old_prefix" value="{{ form.old_prefix }}" required><p class="hint"><span class="hint-warning">{{ t.install.old_prefix_hint_source }}</span> {{ t.install.old_prefix_hint }}</p></div>
+                </div>{{/is_migrate}}
+
+                <h3>{{ t.install.sourcemod }}</h3>
+                <div class="form-grid">
+                    <div><label for="sm-database">{{ t.install.sm_database }}</label><input type="text" id="sm-database" name="sm_database" value="{{ form.sm_database }}"><p class="hint">{{ t.install.sm_database_hint }}</p></div>
+                    <div><label for="sm-prefix">{{ t.install.sm_prefix }}</label><input type="text" id="sm-prefix" name="sm_prefix" value="{{ form.sm_prefix }}"></div>
+                </div>
+
+                <h3>{{ t.install.site }}</h3>
+                <div class="form-grid">
+                    <div><label for="site-title">{{ t.settings.site_title }}</label><input type="text" id="site-title" name="site_title" value="{{ form.site_title }}" maxlength="80" required></div>
+                    <div><label for="default-language">{{ t.settings.default_language }}</label><select id="default-language" name="default_language">{{#language_options}}<option value="{{ code }}"{{?selected}} selected{{/selected}}>{{ name }}</option>{{/language_options}}</select></div>
+                </div>
+
+                {{?is_install}}<h3>{{ t.install.owner }}</h3>
+                <p class="hint">{{ t.install.owner_hint }}</p>
+                <div class="form-grid">
+                    <div><label for="owner-username">{{ t.users.username }}</label><input type="text" id="owner-username" name="owner_username" value="{{ form.owner_username }}" maxlength="30" required></div>
+                    <div><label for="owner-email">{{ t.users.email }}</label><input type="email" id="owner-email" name="owner_email" value="{{ form.owner_email }}" maxlength="150" required></div>
+                    <div><label for="owner-password">{{ t.users.password }}</label><input type="password" id="owner-password" name="owner_password" minlength="8" autocomplete="new-password" required><p class="hint">{{ t.users.password_hint }}</p></div>
+                    <div><label for="owner-password-repeat">{{ t.users.password_repeat }}</label><input type="password" id="owner-password-repeat" name="owner_password_repeat" minlength="8" autocomplete="new-password" required></div>
+                </div>{{/is_install}}
+
+                <div class="form-actions">
+                    <button type="submit" class="primary">{{?is_install}}{{ t.install.submit }}{{/is_install}}{{?is_migrate}}{{ t.install.submit_migrate }}{{/is_migrate}}</button>
+                </div>
+            </form>{{/can_install}}
+        </main>{{/show_form}}
+
+        <footer class="foot">SourceMod Web Admin Plus {{ version }}</footer>
+    </div>
+    <script src="../assets/js/install.js?v={{ install_js_version }}" defer></script>
+</body>
+</html>

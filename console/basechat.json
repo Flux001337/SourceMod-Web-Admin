@@ -1,0 +1,82 @@
+{
+    "name": "Chat",
+    "description": {"en": "SourceMod plugin basechat", "de": "SourceMod-Plugin basechat"},
+    "order": 40,
+    "requires": "basechat.smx",
+    "buttons": [
+        {
+            "label": {"en": "Message", "de": "Nachricht"},
+            "command": "sm_say {text}",
+            "args": {
+                "text": {
+                    "label": {"en": "Text", "de": "Text"}
+                }
+            }
+        },
+        {
+            "label": {"en": "Center text", "de": "Bildschirmmitte"},
+            "command": "sm_csay {text}",
+            "args": {
+                "text": {
+                    "label": {"en": "Text", "de": "Text"}
+                }
+            }
+        },
+        {
+            "label": {"en": "Hint", "de": "Hinweis"},
+            "command": "sm_hsay {text}",
+            "args": {
+                "text": {
+                    "label": {"en": "Text", "de": "Text"}
+                }
+            }
+        },
+        {
+            "label": {"en": "Top left", "de": "Oben links"},
+            "command": "sm_tsay {color} {text}",
+            "args": {
+                "color": {
+                    "label": {"en": "Color", "de": "Farbe"},
+                    "required": false,
+                    "options": ["white", "red", "green", "blue", "yellow", "purple", "cyan", "orange", "pink", "olive", "lime", "violet", "lightblue"]
+                },
+                "text": {
+                    "label": {"en": "Text", "de": "Text"}
+                }
+            }
+        },
+        {
+            "label": {"en": "Menu panel", "de": "Menü-Fenster"},
+            "command": "sm_msay {text}",
+            "args": {
+                "text": {
+                    "label": {"en": "Text", "de": "Text"}
+                }
+            }
+        },
+        {
+            "label": {"en": "To admins", "de": "An Admins"},
+            "command": "sm_chat {text}",
+            "args": {
+                "text": {
+                    "label": {"en": "Text", "de": "Text"}
+                }
+            }
+        },
+        {
+            "label": {"en": "Private", "de": "Privat"},
+            "command": "sm_psay {target} {text}",
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                },
+                "text": {
+                    "label": {"en": "Text", "de": "Text"}
+                }
+            }
+        }
+    ]
+}

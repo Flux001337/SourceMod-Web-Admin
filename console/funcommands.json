@@ -1,0 +1,176 @@
+{
+    "name": {"en": "Fun", "de": "Spaß"},
+    "description": {"en": "SourceMod plugin funcommands", "de": "SourceMod-Plugin funcommands"},
+    "order": 70,
+    "requires": "funcommands.smx",
+    "buttons": [
+        {
+            "label": {"en": "Beacon", "de": "Leuchtfeuer"},
+            "command": "sm_beacon {target} {state}",
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                },
+                "state": {
+                    "label": {"en": "On/off (empty = toggle)", "de": "An/aus (leer = umschalten)"},
+                    "options": ["1", "0"],
+                    "required": false
+                }
+            }
+        },
+        {
+            "label": {"en": "Time bomb", "de": "Zeitbombe"},
+            "command": "sm_timebomb {target} {state}",
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                },
+                "state": {
+                    "label": {"en": "On/off (empty = toggle)", "de": "An/aus (leer = umschalten)"},
+                    "options": ["1", "0"],
+                    "required": false
+                }
+            }
+        },
+        {
+            "label": {"en": "Fire bomb", "de": "Feuerbombe"},
+            "command": "sm_firebomb {target} {state}",
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                },
+                "state": {
+                    "label": {"en": "On/off (empty = toggle)", "de": "An/aus (leer = umschalten)"},
+                    "options": ["1", "0"],
+                    "required": false
+                }
+            }
+        },
+        {
+            "label": {"en": "Freeze bomb", "de": "Frostbombe"},
+            "command": "sm_freezebomb {target} {state}",
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                },
+                "state": {
+                    "label": {"en": "On/off (empty = toggle)", "de": "An/aus (leer = umschalten)"},
+                    "options": ["1", "0"],
+                    "required": false
+                }
+            }
+        },
+        {
+            "label": {"en": "Burn", "de": "Anzünden"},
+            "command": "sm_burn {target} {time}",
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                },
+                "time": {
+                    "label": {"en": "Seconds", "de": "Sekunden"},
+                    "default": "20",
+                    "type": "number",
+                    "required": false
+                }
+            }
+        },
+        {
+            "label": {"en": "Freeze", "de": "Einfrieren"},
+            "command": "sm_freeze {target} {time}",
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                },
+                "time": {
+                    "label": {"en": "Seconds", "de": "Sekunden"},
+                    "default": "10",
+                    "type": "number",
+                    "required": false
+                }
+            }
+        },
+        {
+            "label": {"en": "Gravity", "de": "Schwerkraft"},
+            "command": "sm_gravity {target} {amount}",
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                },
+                "amount": {
+                    "label": {"en": "Amount 0.0–5.0 (empty = reset)", "de": "Wert 0.0–5.0 (leer = zurücksetzen)"},
+                    "options": ["0.5", "1.0", "2.0"],
+                    "required": false
+                }
+            }
+        },
+        {
+            "label": {"en": "Blind", "de": "Blenden"},
+            "command": "sm_blind {target} {amount}",
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                },
+                "amount": {
+                    "label": {"en": "Amount 0–255 (empty = reset)", "de": "Stärke 0–255 (leer = zurücksetzen)"},
+                    "type": "number",
+                    "options": ["0", "128", "255"],
+                    "required": false
+                }
+            }
+        },
+        {
+            "label": {"en": "Drug", "de": "Drogen"},
+            "command": "sm_drug {target} {state}",
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                },
+                "state": {
+                    "label": {"en": "On/off (empty = toggle)", "de": "An/aus (leer = umschalten)"},
+                    "options": ["1", "0"],
+                    "required": false
+                }
+            }
+        },
+        {
+            "label": "Noclip",
+            "command": "sm_noclip {target}",
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                }
+            }
+        }
+    ]
+}

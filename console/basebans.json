@@ -1,0 +1,87 @@
+{
+    "name": "Bans",
+    "description": {"en": "SourceMod plugin basebans", "de": "SourceMod-Plugin basebans"},
+    "order": 30,
+    "requires": ["basebans.smx", "sbpp_main.smx", "keksbans.smx"],
+    "buttons": [
+        {
+            "label": {"en": "Ban", "de": "Bannen"},
+            "command": "sm_ban {target} {minutes} {reason}",
+            "confirm": {"en": "Ban this player?", "de": "Spieler bannen?"},
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                },
+                "minutes": {
+                    "label": {"en": "Minutes (0 = permanent)", "de": "Minuten (0 = permanent)"},
+                    "default": "60",
+                    "type": "number",
+                    "options": ["0", "30", "60", "1440", "10080"]
+                },
+                "reason": {
+                    "label": {"en": "Reason", "de": "Grund"},
+                    "required": false
+                }
+            }
+        },
+        {
+            "label": {"en": "Ban Steam ID", "de": "Steam-ID bannen"},
+            "command": "sm_addban {minutes} {steamid} {reason}",
+            "confirm": {"en": "Ban this Steam ID?", "de": "Steam-ID bannen?"},
+            "args": {
+                "minutes": {
+                    "label": {"en": "Minutes (0 = permanent)", "de": "Minuten (0 = permanent)"},
+                    "default": "0",
+                    "type": "number",
+                    "options": ["0", "30", "60", "1440", "10080"]
+                },
+                "steamid": {
+                    "label": "Steam-ID",
+                    "placeholder": "STEAM_0:1:1234",
+                    "quote": true,
+                    "suggest": "steamid"
+                },
+                "reason": {
+                    "label": {"en": "Reason", "de": "Grund"},
+                    "required": false
+                }
+            }
+        },
+        {
+            "label": {"en": "Ban IP", "de": "IP bannen"},
+            "command": "sm_banip {ip} {minutes} {reason}",
+            "confirm": {"en": "Ban this IP?", "de": "IP bannen?"},
+            "args": {
+                "ip": {
+                    "label": {"en": "IP or player", "de": "IP oder Spieler"},
+                    "placeholder": "1.2.3.4",
+                    "suggest": "ip"
+                },
+                "minutes": {
+                    "label": {"en": "Minutes (0 = permanent)", "de": "Minuten (0 = permanent)"},
+                    "default": "0",
+                    "type": "number",
+                    "options": ["0", "30", "60", "1440", "10080"]
+                },
+                "reason": {
+                    "label": {"en": "Reason", "de": "Grund"},
+                    "required": false
+                }
+            }
+        },
+        {
+            "label": {"en": "Unban", "de": "Entbannen"},
+            "command": "sm_unban {id}",
+            "args": {
+                "id": {
+                    "label": {"en": "Steam ID or IP", "de": "Steam-ID oder IP"},
+                    "placeholder": "STEAM_0:1:1234",
+                    "quote": true
+                }
+            }
+        }
+    ]
+}

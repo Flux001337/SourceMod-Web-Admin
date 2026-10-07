@@ -1,0 +1,52 @@
+<section class="panel">
+    {{?has_errors}}<div class="alert error" role="alert"><ul class="plain">{{#errors}}<li>{{ text }}</li>{{/errors}}</ul></div>{{/has_errors}}
+    <form method="post" action="index.php?section=settings" class="form">
+        <h3>{{ t.settings.interface }}</h3>
+        <div class="form-grid">
+            <div>
+                <label for="settings-title">{{ t.settings.site_title }}</label>
+                <input type="text" id="settings-title" name="site_title" value="{{ values.site_title }}" maxlength="80" required>
+            </div>
+            <div>
+                <label for="settings-subtitle">{{ t.settings.site_subtitle }}</label>
+                <input type="text" id="settings-subtitle" name="site_subtitle" value="{{ values.site_subtitle }}" maxlength="160">
+                <p class="hint">{{ t.settings.site_subtitle_hint }}</p>
+            </div>
+            <div>
+                <label for="settings-language">{{ t.settings.default_language }}</label>
+                <select id="settings-language" name="default_language">{{#languages}}<option value="{{ code }}"{{?selected}} selected{{/selected}}>{{ name }}</option>{{/languages}}</select>
+                <p class="hint">{{ t.settings.default_language_hint }}</p>
+            </div>
+            {{?has_theme_choice}}<div>
+                <label for="settings-theme">{{ t.common.theme }}</label>
+                <select id="settings-theme" name="site_theme">{{#themes}}<option value="{{ name }}"{{?selected}} selected{{/selected}}>{{ label }}</option>{{/themes}}</select>
+            </div>{{/has_theme_choice}}
+        </div>
+
+        <h3>{{ t.settings.lists }}</h3>
+        <div class="form-grid">
+            <div>
+                <label for="settings-users-per-page">{{ t.settings.users_per_page }}</label>
+                <input type="number" id="settings-users-per-page" name="users_per_page" value="{{ values.users_per_page }}" min="5" max="200" required>
+            </div>
+            <div>
+                <label for="settings-sm-per-page">{{ t.settings.sm_per_page }}</label>
+                <input type="number" id="settings-sm-per-page" name="sm_per_page" value="{{ values.sm_per_page }}" min="5" max="200" required>
+                <p class="hint">{{ t.settings.sm_per_page_hint }}</p>
+            </div>
+        </div>
+
+        <h3>{{ t.settings.servers }}</h3>
+        <div class="form-grid">
+            <div>
+                <label for="settings-query-timeout">{{ t.settings.server_query_timeout }}</label>
+                <input type="number" id="settings-query-timeout" name="server_query_timeout" value="{{ values.server_query_timeout }}" min="1" max="10" required>
+                <p class="hint">{{ t.settings.server_query_timeout_hint }}</p>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="primary" name="save_settings" value="1"><span class="icon icon-save" aria-hidden="true"></span>{{ t.common.save }}</button>
+        </div>
+    </form>
+</section>

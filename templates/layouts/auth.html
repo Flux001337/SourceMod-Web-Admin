@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="{{ html_lang }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title }}</title>
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    {{?has_theme}}<link rel="stylesheet" href="{{ theme_path }}?v={{ theme_version }}">{{/has_theme}}
+    <link rel="stylesheet" href="assets/css/styles.css?v={{ styles_version }}">
+</head>
+<body class="auth-body">
+    <div class="auth-wrap">
+        <div class="brand brand-center">
+            <span class="brand-logo brand-logo-large" aria-hidden="true"></span>
+            <span class="brand-text"><strong>{{ site_title }}</strong>{{?has_site_subtitle}}<small>{{ site_subtitle }}</small>{{/has_site_subtitle}}</span>
+        </div>
+        <div class="auth-lang">{{{ language_switch }}}</div>
+        <main class="panel auth-card">
+            {{?has_flash}}<div class="alert {{ flash_type }}" role="status">{{ flash_message }}</div>{{/has_flash}}
+            {{{ view }}}
+        </main>
+        <footer class="foot">SourceMod Web Admin Plus {{ version }}</footer>
+    </div>
+    <script src="assets/js/app.js?v={{ app_js_version }}" defer></script>
+</body>
+</html>

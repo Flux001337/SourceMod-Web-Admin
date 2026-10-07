@@ -1,0 +1,37 @@
+{
+    "name": "Spectator Switch",
+    "description": {"en": "Plugin by HSFighter: github.com/Flux001337/Sourcemod-Spectator-Switch", "de": "Plugin von HSFighter: github.com/Flux001337/Sourcemod-Spectator-Switch"},
+    "order": 200,
+    "requires": "spectatorswitch.smx",
+    "buttons": [
+        {
+            "label": {"en": "Move to spectator", "de": "In Zuschauer verschieben"},
+            "command": "sm_spec {target}",
+            "description": {"en": "Bots cannot be moved.", "de": "Bots lassen sich nicht verschieben."},
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                }
+            }
+        },
+        {
+            "label": {"en": "Settings", "de": "Einstellungen"},
+            "command": "sm_spec_enable;sm_spec_version"
+        },
+        {
+            "label": {"en": "Enable / disable", "de": "An / aus"},
+            "command": "sm_spec_enable {state}",
+            "description": {"en": "Changes via RCON apply until the next map change or restart; permanent values belong in the plugin's cfg file.", "de": "Änderungen per RCON gelten bis zum nächsten Mapwechsel oder Neustart; dauerhaft gehören sie in die cfg-Datei des Plugins."},
+            "args": {
+                "state": {
+                    "label": {"en": "On (1) or off (0)", "de": "An (1) oder aus (0)"},
+                    "options": ["1", "0"],
+                    "type": "number"
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,49 @@
+<?php
+declare(strict_types=1);
+
+// Vorlage: nach config/config.php kopieren und anpassen. config.php und config.local.php stehen in .gitignore.
+
+$config = [
+    'db' => [
+        'host' => '127.0.0.1',
+        'port' => 3306,
+        'database' => 'deine_datenbank',
+        'username' => 'dein_datenbankbenutzer',
+        'password' => 'DEIN_SICHERES_DATENBANKPASSWORT',
+        'charset' => 'utf8mb4',
+        // Präfix der Tabellen dieser Oberfläche (database/schema.sql verwendet "wa_").
+        'prefix' => 'wa_',
+    ],
+    'sourcemod' => [
+        // Tabellen der SourceMod-SQL-Admins (SourceMod: configs/sql-init-scripts/mysql/create_admins.sql).
+        // Leer = dieselbe Datenbank wie oben; sonst eine andere Datenbank auf demselben Server (gleicher Benutzer).
+        'database' => '',
+        'prefix' => 'sm_',
+    ],
+    'debug' => [
+        // Nur temporär aktivieren: zeigt PHP-Fehler im Browser.
+        'enabled' => false,
+    ],
+    'security' => [
+        // Verschlüsselt RCON- und FTP-Passwörter (und dient als Geheimnis für die Rate-Limits): 32 Bytes, base64.
+        // Erzeugen: php -r 'echo base64_encode(random_bytes(32)), PHP_EOL;'
+        // Wird er geändert oder geht er verloren, müssen die RCON- und FTP-Passwörter neu eingegeben werden.
+        // Alternativ über die Umgebungsvariable APP_MASTER_KEY setzen.
+        'master_key' => getenv('APP_MASTER_KEY') ?: '',
+        // Nur eintragen, wenn die Seite hinter einem Reverse-Proxy läuft (IP-Adressen des Proxys).
+        'trusted_proxies' => [],
+        // Sekunden ohne Aktivität, nach denen eine Sitzung abläuft (Mindestwert 300).
+        'session_idle_timeout' => 7200,
+    ],
+];
+
+// Lokale Abweichungen (z. B. eine Entwicklungsdatenbank) überschreiben die Werte oben.
+$localConfigPath = __DIR__ . '/config.local.php';
+if (is_file($localConfigPath))
+{
+    $localConfig = require $localConfigPath;
+    if (is_array($localConfig))
+    {
+        $config = array_replace_recursive($config, $localConfig);
+    }
+}

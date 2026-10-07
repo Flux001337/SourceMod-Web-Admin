@@ -1,0 +1,22 @@
+# Von außen soll nur index.php und assets/ erreichbar sein.
+# Alles andere (Quelltext, Konfiguration, Schema, Sprachdateien, .git ...) wird gesperrt.
+
+<IfModule mod_authz_core.c>
+    # Verborgene Dateien (.gitignore, .env, ...)
+    <FilesMatch "^\.">
+        Require all denied
+    </FilesMatch>
+    # Router für den PHP-Entwicklungsserver
+    <FilesMatch "^router\.php$">
+        Require all denied
+    </FilesMatch>
+    # Daten- und Dokumentationsdateien
+    <FilesMatch "\.(sql|md|json|jsonc|example|log|lock|bak|dist|ini|sh)$">
+        Require all denied
+    </FilesMatch>
+</IfModule>
+
+# Ordner, die nie direkt aufgerufen werden sollen (auch .git/ und seine Unterordner).
+<IfModule mod_alias.c>
+    RedirectMatch 404 "(?i)(^|/)(\.git|app|config|console|database|templates|pages|tools|lang|lib)(/|$)"
+</IfModule>

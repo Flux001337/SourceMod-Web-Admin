@@ -1,0 +1,62 @@
+/* Theme "Midnight" (Grundeinstellung): das dunkle Blau des ValheimPlus Config Studio. Alle Farben, Formen und Maße an
+   einer Stelle; styles.css verwendet nur diese Variablen.
+   Neues Theme: diese Datei kopieren und umbenennen (Dateiname = Theme-Name; Buchstaben, Ziffern, - und _), dann erscheint
+   es in den Einstellungen und im Profil zur Auswahl. Ein Theme muss alle Variablen dieser Datei setzen. */
+:root {
+    /* Flächen */
+    --bg: #101827;                       /* Seitenhintergrund */
+    --surface-sidebar: #131f31;          /* Seitenleiste */
+    --surface: #1a2739;                  /* Panels */
+    --surface-raised: #213149;           /* Kacheln beim Überfahren, Tabellenkopf */
+    --surface-input: #101b2c;            /* Eingabefelder */
+    --surface-hover: #314966;            /* Menüeinträge beim Überfahren */
+    --surface-active: #28476a;           /* aktiver Menüeintrag */
+    --surface-dialog: #16233a;
+    --backdrop: rgba(5, 10, 20, .65);
+
+    /* Rahmen */
+    --border: #30445d;
+    --border-soft: #26374d;              /* Trennlinien in Tabellen */
+    --border-input: #48617e;
+    --border-button: #5074a0;
+
+    /* Texte */
+    --text: #e9eff9;
+    --text-nav: #c7dbf1;
+    --text-muted: #aab9d0;
+    --text-hint: #7f93ab;
+    --text-on-accent: #12202e;
+
+    /* Akzente */
+    --button: #28476a;
+    --primary: #3986c9;
+    --primary-border: #65a7df;
+    --danger: #8f3443;
+    --danger-border: #c25a6b;
+    --accent: #80dfc2;                   /* Text der Pillen, Links beim Überfahren */
+    --accent-bg: #19334a;                /* Pillen */
+    --teal: #57bcaa;
+    --yellow: #e0b341;
+    --link: #7cc4f2;
+    --success-bg: #17483b;
+    --success-border: #2b7a62;
+    --error-bg: #67323c;
+    --error-border: #a04c5a;
+    --warning-bg: #5e4a17;               /* z. B. nicht geladene optionale Extensions */
+    --logo-from: #1685e6;
+    --logo-symbol: #ffffff;              /* Schild und SM */
+    --logo-plus-border: #147e96;         /* Rand des Pluszeichens */
+    --logo-plus: #42edbb;                /* Pluszeichen */
+    --logo-to: #28c9b6;
+
+    /* Formen und Maße */
+    --font: system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-size: 17px;
+    --radius-panel: 17px;
+    --radius: 11px;
+    --radius-input: 8px;
+    --radius-pill: 24px;
+    --sidebar-width: 290px;
+    --gap: 22px;
+    --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+}

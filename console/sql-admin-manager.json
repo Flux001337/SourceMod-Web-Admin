@@ -1,0 +1,124 @@
+{
+    "name": "SQL Admins",
+    "description": {"en": "SourceMod plugin sql-admin-manager", "de": "SourceMod-Plugin sql-admin-manager"},
+    "order": 170,
+    "requires": "sql-admin-manager.smx",
+    "buttons": [
+        {
+            "label": {"en": "Add admin", "de": "Admin anlegen"},
+            "command": "sm_sql_addadmin {alias} {authtype} {identity} {flags} {immunity} {password}",
+            "args": {
+                "alias": {
+                    "label": "Name",
+                    "quote": true
+                },
+                "authtype": {
+                    "label": {"en": "Auth type", "de": "Anmeldung"},
+                    "options": ["steam", "ip", "name"],
+                    "default": "steam"
+                },
+                "identity": {
+                    "label": {"en": "Identity", "de": "Identität"},
+                    "placeholder": "STEAM_0:1:1234",
+                    "quote": true,
+                    "suggest": "steamid"
+                },
+                "flags": {
+                    "label": "Flags",
+                    "placeholder": "bcdefgh",
+                    "options": ["z", "b", "bcdefghijk"]
+                },
+                "immunity": {
+                    "label": {"en": "Immunity", "de": "Immunität"},
+                    "type": "number",
+                    "required": false
+                },
+                "password": {
+                    "label": {"en": "Password", "de": "Passwort"},
+                    "quote": true,
+                    "required": false
+                }
+            }
+        },
+        {
+            "label": {"en": "Delete admin", "de": "Admin löschen"},
+            "command": "sm_sql_deladmin {authtype} {identity}",
+            "confirm": {"en": "Delete this admin?", "de": "Diesen Admin löschen?"},
+            "args": {
+                "authtype": {
+                    "label": {"en": "Auth type", "de": "Anmeldung"},
+                    "options": ["steam", "ip", "name"],
+                    "default": "steam"
+                },
+                "identity": {
+                    "label": {"en": "Identity", "de": "Identität"},
+                    "placeholder": "STEAM_0:1:1234",
+                    "quote": true,
+                    "suggest": "steamid"
+                }
+            }
+        },
+        {
+            "label": {"en": "Add group", "de": "Gruppe anlegen"},
+            "command": "sm_sql_addgroup {name} {flags} {immunity}",
+            "args": {
+                "name": {
+                    "label": "Name",
+                    "quote": true
+                },
+                "flags": {
+                    "label": "Flags",
+                    "placeholder": "bcdefgh"
+                },
+                "immunity": {
+                    "label": {"en": "Immunity", "de": "Immunität"},
+                    "type": "number",
+                    "required": false
+                }
+            }
+        },
+        {
+            "label": {"en": "Delete group", "de": "Gruppe löschen"},
+            "command": "sm_sql_delgroup {name}",
+            "confirm": {"en": "Delete this group?", "de": "Diese Gruppe löschen?"},
+            "args": {
+                "name": {
+                    "label": "Name",
+                    "quote": true
+                }
+            }
+        },
+        {
+            "label": {"en": "Set admin groups", "de": "Admin-Gruppen setzen"},
+            "command": "sm_sql_setadmingroups {authtype} {identity} {groups}",
+            "description": {"en": "Replaces all groups of the admin.", "de": "Ersetzt alle Gruppen des Admins."},
+            "args": {
+                "authtype": {
+                    "label": {"en": "Auth type", "de": "Anmeldung"},
+                    "options": ["steam", "ip", "name"],
+                    "default": "steam"
+                },
+                "identity": {
+                    "label": {"en": "Identity", "de": "Identität"},
+                    "placeholder": "STEAM_0:1:1234",
+                    "quote": true,
+                    "suggest": "steamid"
+                },
+                "groups": {
+                    "label": {"en": "Groups (separated by spaces, empty = none)", "de": "Gruppen (mit Leerzeichen getrennt, leer = keine)"},
+                    "required": false
+                }
+            }
+        },
+        {
+            "label": {"en": "Create tables", "de": "Tabellen anlegen"},
+            "command": "sm_create_adm_tables",
+            "confirm": {"en": "Create the SQL admin tables?", "de": "Die SQL-Admin-Tabellen anlegen?"}
+        },
+        {
+            "label": {"en": "Update tables", "de": "Tabellen aktualisieren"},
+            "command": "sm_update_adm_tables",
+            "confirm": {"en": "Update the SQL admin tables?", "de": "Die SQL-Admin-Tabellen aktualisieren?"}
+        }
+    ]
+}

@@ -1,0 +1,30 @@
+{
+    "name": {"en": "Help", "de": "Hilfe"},
+    "description": {"en": "SourceMod plugin adminhelp", "de": "SourceMod-Plugin adminhelp"},
+    "order": 160,
+    "requires": "adminhelp.smx",
+    "buttons": [
+        {
+            "label": {"en": "Commands", "de": "Befehle"},
+            "command": "sm_help {page}",
+            "args": {
+                "page": {
+                    "label": {"en": "Page", "de": "Seite"},
+                    "type": "number",
+                    "default": "1",
+                    "required": false
+                }
+            }
+        },
+        {
+            "label": {"en": "Search command", "de": "Befehl suchen"},
+            "command": "sm_searchcmd {text}",
+            "args": {
+                "text": {
+                    "label": {"en": "Search", "de": "Suche"},
+                    "placeholder": "kick"
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,106 @@
+{{?show_list}}<section class="panel">
+    <div class="panel-head">
+        <form class="search" method="get" action="index.php" role="search">
+            <input type="hidden" name="section" value="users">
+            <input type="search" name="q" value="{{ search }}" placeholder="{{ t.users.search_placeholder }}" aria-label="{{ t.common.search }}">
+            <button type="submit"><span class="icon icon-search" aria-hidden="true"></span>{{ t.common.search }}</button>
+            {{?has_search}}<a class="btn ghost" href="index.php?section=users">{{ t.common.reset }}</a>{{/has_search}}
+        </form>
+        {{?can_create}}<a class="btn primary" href="index.php?section=users&action=create"><span class="icon icon-plus" aria-hidden="true"></span>{{ t.users.create_button }}</a>{{/can_create}}
+    </div>
+
+    {{?has_users}}<div class="table-scroll">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{ t.users.username }}</th>
+                    <th>{{ t.users.email }}</th>
+                    <th>{{ t.common.language }}</th>
+                    <th>{{ t.users.permissions }}</th>
+                    <th>{{ t.users.last_login }}</th>
+                    <th class="actions-col">{{ t.common.actions }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#users}}<tr>
+                    <td><span class="user-cell"><span class="avatar avatar-small" aria-hidden="true">{{ initials }}</span><strong>{{ username }}</strong>{{?is_self}} <span class="pill pill-small">{{ t.users.you }}</span>{{/is_self}}</span></td>
+                    <td>{{ email }}</td>
+                    <td><span class="lang-cell">{{?has_flag}}<span class="flag flag-small" aria-hidden="true"><img src="assets/flags/{{ flag }}.svg" alt=""></span>{{/has_flag}}{{ language }}</span></td>
+                    <td>{{?is_owner}}<span class="pill pill-accent">{{ t.users.all_permissions }}</span>{{/is_owner}}<span class="pills">{{#permissions}}<span class="pill pill-small">{{ label }}</span>{{/permissions}}</span>{{?has_no_permissions}}<span class="muted">–</span>{{/has_no_permissions}}</td>
+                    <td class="nowrap">{{ last_login }}</td>
+                    <td class="actions-cell"><div class="actions">
+                        {{?can_edit}}<a class="icon-button" href="index.php?section=users&action=edit&id={{ id }}" title="{{ t.common.edit }}" aria-label="{{ t.common.edit }}: {{ username }}"><span class="icon icon-edit" aria-hidden="true"></span></a>{{/can_edit}}
+                        {{?can_delete}}<button class="icon-button danger" type="button" data-dialog-open="delete-user-{{ id }}" title="{{ t.common.delete }}" aria-label="{{ t.common.delete }}: {{ username }}"><span class="icon icon-delete" aria-hidden="true"></span></button>
+                        <dialog id="delete-user-{{ id }}" class="dialog">
+                            <h2>{{ t.users.delete_title }}</h2>
+                            <p>{{ delete_question }}</p>
+                            <form method="post" action="index.php?section=users" class="dialog-actions">
+                                <input type="hidden" name="user_id" value="{{ id }}">
+                                <button type="button" class="ghost" data-dialog-close="delete-user-{{ id }}">{{ t.common.cancel }}</button>
+                                <button type="submit" class="danger" name="delete_user" value="1"><span class="icon icon-delete" aria-hidden="true"></span>{{ t.common.delete }}</button>
+                            </form>
+                        </dialog>{{/can_delete}}
+                    </div></td>
+                </tr>{{/users}}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="list-foot">
+        <span class="muted">{{ count_text }}</span>
+        {{?pager.has_pages}}<nav class="pager" aria-label="{{ t.common.pages }}">{{?pager.has_previous}}<a href="{{ pager.previous_url }}" rel="prev">‹ {{ t.common.previous }}</a>{{/pager.has_previous}}{{#pager.links}}{{?is_gap}}<span class="pager-gap">…</span>{{/is_gap}}{{?is_page}}{{?current}}<span class="current" aria-current="page">{{ number }}</span>{{/current}}{{?is_other}}<a href="{{ url }}">{{ number }}</a>{{/is_other}}{{/is_page}}{{/pager.links}}{{?pager.has_next}}<a href="{{ pager.next_url }}" rel="next">{{ t.common.next }} ›</a>{{/pager.has_next}}</nav>{{/pager.has_pages}}
+    </div>{{/has_users}}
+    {{?has_no_users}}<p class="muted">{{ t.users.none_found }}</p>{{/has_no_users}}
+</section>{{/show_list}}
+
+{{?show_form}}<section class="panel">
+    <h2>{{ form_title }}</h2>
+    {{?has_errors}}<div class="alert error" role="alert"><ul class="plain">{{#errors}}<li>{{ text }}</li>{{/errors}}</ul></div>{{/has_errors}}
+
+    <form method="post" action="{{ form_action }}" class="form">
+        <input type="hidden" name="user_id" value="{{ user_id }}">
+
+        <h3>{{ t.users.account }}</h3>
+        {{?may_edit_account}}<div class="form-grid">
+            <div>
+                <label for="user-name">{{ t.users.username }}</label>
+                <input type="text" id="user-name" name="username" value="{{ form.username }}" maxlength="30" required>
+            </div>
+            <div>
+                <label for="user-email">{{ t.users.email }}</label>
+                <input type="email" id="user-email" name="email" value="{{ form.email }}" maxlength="150" required>
+            </div>
+            <div>
+                <label for="user-password">{{ t.users.password }}</label>
+                <input type="password" id="user-password" name="password" autocomplete="new-password"{{?is_create}} required{{/is_create}}>
+                {{?is_create}}<p class="hint">{{ t.users.password_hint }}</p>{{/is_create}}
+                {{?user_id}}<p class="hint">{{ t.users.password_keep_hint }}</p>{{/user_id}}
+            </div>
+            <div>
+                <label for="user-password-repeat">{{ t.users.password_repeat }}</label>
+                <input type="password" id="user-password-repeat" name="password_repeat" autocomplete="new-password"{{?is_create}} required{{/is_create}}>
+            </div>
+            <div>
+                <label for="user-language">{{ t.common.language }}</label>
+                <select id="user-language" name="language">{{#languages}}<option value="{{ code }}"{{?selected}} selected{{/selected}}>{{ name }}</option>{{/languages}}</select>
+            </div>
+        </div>{{/may_edit_account}}
+        {{?account_readonly}}<dl class="facts">
+            <div><dt>{{ t.users.username }}</dt><dd>{{ form.username }}</dd></div>
+            <div><dt>{{ t.users.email }}</dt><dd>{{ form.email }}</dd></div>
+        </dl>
+        <p class="hint">{{ t.users.account_readonly_hint }}</p>{{/account_readonly}}
+
+        <h3>{{ t.users.permissions }}</h3>
+        {{?is_owner_target}}<p class="hint">{{ t.users.owner_permissions_hint }}</p>{{/is_owner_target}}
+        <div class="check-grid">
+            {{#permission_rows}}<label class="check{{?locked}} locked{{/locked}}"><input type="checkbox" name="permissions[]" value="{{ key }}"{{?checked}} checked{{/checked}}{{?locked}} disabled{{/locked}}> {{ label }}</label>{{/permission_rows}}
+        </div>
+        {{?show_permissions_readonly_hint}}<p class="hint">{{ t.users.permissions_readonly_hint }}</p>{{/show_permissions_readonly_hint}}
+
+        <div class="form-actions">
+            <button type="submit" class="primary" name="{{ submit_name }}" value="1"><span class="icon icon-save" aria-hidden="true"></span>{{ t.common.save }}</button>
+            <a class="btn ghost" href="index.php?section=users">{{ t.common.back }}</a>
+        </div>
+    </form>
+</section>{{/show_form}}

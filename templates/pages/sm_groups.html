@@ -1,0 +1,164 @@
+{{?show_list}}<section class="panel">
+    <div class="panel-head">
+        <form class="search" method="get" action="index.php" role="search">
+            <input type="hidden" name="section" value="sm_groups">
+            <input type="search" name="q" value="{{ search }}" placeholder="{{ t.sm_groups.search_placeholder }}" aria-label="{{ t.common.search }}">
+            <button type="submit"><span class="icon icon-search" aria-hidden="true"></span>{{ t.common.search }}</button>
+            {{?has_search}}<a class="btn ghost" href="index.php?section=sm_groups">{{ t.common.reset }}</a>{{/has_search}}
+        </form>
+        <a class="btn primary" href="index.php?section=sm_groups&action=create"><span class="icon icon-plus" aria-hidden="true"></span>{{ t.sm_groups.create_button }}</a>
+    </div>
+
+    {{?has_groups}}<div class="table-scroll">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{ t.sm_groups.name }}</th>
+                    <th>{{ t.sm.flags_title }}</th>
+                    <th>{{ t.sm.immunity }}</th>
+                    <th>{{ t.sm_groups.immune_from }}</th>
+                    <th>{{ t.sm_groups.members }}</th>
+                    <th>{{ t.sm_groups.overrides }}</th>
+                    <th class="actions-col">{{ t.common.actions }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#groups}}<tr>
+                    <td><strong>{{ name }}</strong></td>
+                    <td>{{?has_no_flags}}<span class="muted">–</span>{{/has_no_flags}}<span class="sm-flags">{{#flags}}<span class="sm-flag" title="{{ name }}">{{ letter }}</span>{{/flags}}</span></td>
+                    <td>{{ immunity_level }}</td>
+                    <td>{{?has_no_immune_from}}<span class="muted">–</span>{{/has_no_immune_from}}<span class="pills">{{#immune_from}}<span class="pill pill-small">{{ name }}</span>{{/immune_from}}</span></td>
+                    <td>{{ members }}</td>
+                    <td>{{ overrides }}</td>
+                    <td class="actions-cell"><div class="actions">
+                        <a class="icon-button" href="index.php?section=sm_groups&action=edit&id={{ id }}" title="{{ t.common.edit }}" aria-label="{{ t.common.edit }}: {{ name }}"><span class="icon icon-edit" aria-hidden="true"></span></a>
+                        <button class="icon-button danger" type="button" data-dialog-open="delete-group-{{ id }}" title="{{ t.common.delete }}" aria-label="{{ t.common.delete }}: {{ name }}"><span class="icon icon-delete" aria-hidden="true"></span></button>
+                        <dialog id="delete-group-{{ id }}" class="dialog">
+                            <h2>{{ t.sm_groups.delete_title }}</h2>
+                            <p>{{ delete_question }}</p>
+                            <form method="post" action="index.php?section=sm_groups" class="dialog-actions">
+                                <input type="hidden" name="group_id" value="{{ id }}">
+                                <button type="button" class="ghost" data-dialog-close="delete-group-{{ id }}">{{ t.common.cancel }}</button>
+                                <button type="submit" class="danger" name="delete_group" value="1"><span class="icon icon-delete" aria-hidden="true"></span>{{ t.common.delete }}</button>
+                            </form>
+                        </dialog>
+                    </div></td>
+                </tr>{{/groups}}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="list-foot">
+        <span class="muted">{{ count_text }}</span>
+        {{?pager.has_pages}}<nav class="pager" aria-label="{{ t.common.pages }}">{{?pager.has_previous}}<a href="{{ pager.previous_url }}" rel="prev">‹ {{ t.common.previous }}</a>{{/pager.has_previous}}{{#pager.links}}{{?is_gap}}<span class="pager-gap">…</span>{{/is_gap}}{{?is_page}}{{?current}}<span class="current" aria-current="page">{{ number }}</span>{{/current}}{{?is_other}}<a href="{{ url }}">{{ number }}</a>{{/is_other}}{{/is_page}}{{/pager.links}}{{?pager.has_next}}<a href="{{ pager.next_url }}" rel="next">{{ t.common.next }} ›</a>{{/pager.has_next}}</nav>{{/pager.has_pages}}
+    </div>{{/has_groups}}
+    {{?has_no_groups}}<p class="muted">{{ t.sm_groups.none_found }}</p>{{/has_no_groups}}
+</section>{{/show_list}}
+
+{{?show_form}}<section class="panel">
+    <h2>{{ form_title }}</h2>
+    {{?has_errors}}<div class="alert error" role="alert"><ul class="plain">{{#errors}}<li>{{ text }}</li>{{/errors}}</ul></div>{{/has_errors}}
+
+    <form method="post" action="{{ form_action }}" class="form">
+        <input type="hidden" name="group_id" value="{{ group_id }}">
+
+        <h3>{{ t.sm_groups.general }}</h3>
+        <div class="form-grid">
+            <div>
+                <label for="group-name">{{ t.sm_groups.name }}</label>
+                <input type="text" id="group-name" name="name" value="{{ form.name }}" maxlength="120" required>
+            </div>
+            <div>
+                <label for="group-immunity">{{ t.sm.immunity }}</label>
+                <input type="number" id="group-immunity" name="immunity_level" value="{{ form.immunity_level }}" min="0" max="4294967295" required>
+                <p class="hint">{{ t.sm_groups.immunity_hint }}</p>
+            </div>
+        </div>
+
+        <h3>{{ t.sm.flags_title }}</h3>
+        <div class="check-grid">
+            {{#flag_rows}}<label class="check sm-flag-check"><input type="checkbox" name="flags[]" value="{{ letter }}"{{?checked}} checked{{/checked}}><span class="sm-flag" aria-hidden="true">{{ letter }}</span><span class="check-text"><strong>{{ name }}</strong><small>{{ description }}</small></span></label>{{/flag_rows}}
+        </div>
+
+        <h3>{{ t.sm_groups.immune_from }}</h3>
+        {{?has_immunity_rows}}<p class="hint">{{ t.sm_groups.immune_from_hint }}</p>
+        <div class="check-grid">
+            {{#immunity_rows}}<label class="check"><input type="checkbox" name="immune_from[]" value="{{ id }}"{{?checked}} checked{{/checked}}><span class="check-text"><strong>{{ name }}</strong><small>{{ t.sm.immunity }} {{ immunity_level }}</small></span></label>{{/immunity_rows}}
+        </div>{{/has_immunity_rows}}
+        {{?has_no_immunity_rows}}<p class="muted">{{ t.sm_groups.no_other_groups }}</p>{{/has_no_immunity_rows}}
+
+        <div class="form-actions">
+            <button type="submit" class="primary" name="{{ submit_name }}" value="1"><span class="icon icon-save" aria-hidden="true"></span>{{ t.common.save }}</button>
+            <a class="btn ghost" href="index.php?section=sm_groups">{{ t.common.back }}</a>
+        </div>
+    </form>
+</section>
+
+{{?is_edit}}<div class="grid-2">
+    <section class="panel">
+        <h2>{{ t.sm_groups.overrides_title }}</h2>
+        <p class="hint">{{ t.sm_groups.overrides_hint }}</p>
+        {{?has_override_errors}}<div class="alert error" role="alert"><ul class="plain">{{#override_errors}}<li>{{ text }}</li>{{/override_errors}}</ul></div>{{/has_override_errors}}
+
+        {{?has_overrides}}<div class="table-scroll">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>{{ t.sm.override_type }}</th>
+                        <th>{{ t.sm.override_name }}</th>
+                        <th>{{ t.sm_groups.access }}</th>
+                        <th class="actions-col">{{ t.common.actions }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#overrides}}<tr>
+                        <td>{{ type_label }}</td>
+                        <td><code>{{ name }}</code></td>
+                        <td><span class="pill pill-small{{?is_allow}} pill-allow{{/is_allow}}">{{ access_label }}</span></td>
+                        <td class="actions-cell"><div class="actions">
+                            <form method="post" action="index.php?section=sm_groups&action=edit&id={{ group_id }}">
+                                <input type="hidden" name="group_id" value="{{ group_id }}">
+                                <input type="hidden" name="override_type" value="{{ type }}">
+                                <input type="hidden" name="override_name" value="{{ name }}">
+                                <button class="icon-button danger" type="submit" name="delete_override" value="1" title="{{ t.common.delete }}" aria-label="{{ t.common.delete }}: {{ name }}"><span class="icon icon-delete" aria-hidden="true"></span></button>
+                            </form>
+                        </div></td>
+                    </tr>{{/overrides}}
+                </tbody>
+            </table>
+        </div>{{/has_overrides}}
+        {{?has_no_overrides}}<p class="muted">{{ t.sm_groups.no_overrides }}</p>{{/has_no_overrides}}
+
+        <form method="post" action="index.php?section=sm_groups&action=edit&id={{ group_id }}" class="form">
+            <input type="hidden" name="group_id" value="{{ group_id }}">
+            <h3>{{ t.sm_groups.override_add }}</h3>
+            <div class="form-grid form-grid-tight">
+                <div>
+                    <label for="override-type">{{ t.sm.override_type }}</label>
+                    <select id="override-type" name="override_type">{{#override_types}}<option value="{{ value }}"{{?selected}} selected{{/selected}}>{{ label }}</option>{{/override_types}}</select>
+                </div>
+                <div>
+                    <label for="override-name">{{ t.sm.override_name }}</label>
+                    <input type="text" id="override-name" name="override_name" value="{{ override_form.name }}" maxlength="32" required spellcheck="false" autocomplete="off" placeholder="sm_kick">
+                </div>
+                <div>
+                    <label for="override-access">{{ t.sm_groups.access }}</label>
+                    <select id="override-access" name="override_access">{{#access_options}}<option value="{{ value }}"{{?selected}} selected{{/selected}}>{{ label }}</option>{{/access_options}}</select>
+                </div>
+            </div>
+            <p class="hint">{{ t.sm_groups.override_add_hint }}</p>
+            <div class="form-actions">
+                <button type="submit" name="add_override" value="1"><span class="icon icon-plus" aria-hidden="true"></span>{{ t.sm_groups.override_add }}</button>
+            </div>
+        </form>
+    </section>
+
+    <section class="panel">
+        <h2>{{ members_title }}</h2>
+        <p class="hint">{{ t.sm_groups.members_hint }}</p>
+        {{?has_members}}<ul class="link-list">
+            {{#members}}<li><a href="index.php?section=sm_admins&action=edit&id={{ id }}"><strong>{{ name }}</strong></a> <span class="muted">{{ authtype }}</span> <code class="identity">{{ identity }}</code></li>{{/members}}
+        </ul>{{/has_members}}
+        {{?has_no_members}}<p class="muted">{{ t.sm_groups.no_members }}</p>{{/has_no_members}}
+    </section>
+</div>{{/is_edit}}{{/show_form}}

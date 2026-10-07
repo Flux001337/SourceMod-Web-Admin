@@ -1,0 +1,91 @@
+// Example of a button group for the RCON console. Every file in console/ (.json or .jsonc) is one group; adding a
+// file is enough. Comments with // or /* ... */ are allowed; the .jsonc extension tells the editor that the file
+// contains comments.
+//
+// Texts are plain text ("Status") or per language ({"en": "...", "de": "..."}). The interface language is shown,
+// otherwise English, otherwise the first one given.
+{
+    // Title of the group.
+    "name": {"en": "Server", "de": "Server"},
+
+    // Optional: tooltip of the title.
+    // "description": {"en": "Basic server commands", "de": "Grundlegende Serverbefehle"},
+
+    // Optional: order of the groups (lower = further up, default 100, then the file name).
+    "order": 10,
+
+    // Optional: always start expanded (default: collapsed; then the browser remembers what you expand or collapse).
+    "open": true,
+
+    // Optional: only show the group if one of these plugins is running on the server (".smx" may be omitted).
+    // "requires": ["basebans.smx", "sbpp_main.smx"],
+
+    // Optional: only show the group for servers with this game folder (assigned or detected game).
+    // "games": ["cstrike", "csgo", "tf"],
+
+    "buttons": [
+        // Simplest button: label and command. Without placeholders and confirmation it is sent immediately.
+        {
+            "label": "Status",
+            "command": "status"
+        },
+        {
+            "label": {"en": "SM version", "de": "SM-Version"},
+            "command": "sm version"
+        },
+        {
+            "label": {"en": "Plugins", "de": "Plugins"},
+            "command": "sm plugins list"
+        },
+        {
+            "label": {"en": "Extensions", "de": "Extensions"},
+            "command": "sm exts list"
+        },
+        {
+            "label": {"en": "Maps", "de": "Maps"},
+            "command": "maps *",
+            // Optional: tooltip of the button (otherwise the command is shown).
+            "description": {"en": "Lists all maps on the server", "de": "Listet alle Maps auf dem Server"}
+        },
+
+        // Button with a placeholder: {map} is asked for in a dialog before sending, with a preview of the command.
+        // "confirm" additionally asks for confirmation.
+        {
+            "label": {"en": "Change map", "de": "Map wechseln"},
+            "command": "changelevel {map}",
+            "confirm": {"en": "Change the map now?", "de": "Die Map jetzt wechseln?"},
+
+            // Optional: replace spaces in the values with _ (as in Simple-RCON-Tool).
+            // "argmode": "underscore",
+
+            // Settings for the placeholders. Without settings, the placeholder's name is used as its label.
+            "args": {
+                "map": {
+                    "label": "Map",
+                    "placeholder": "de_dust2"
+
+                    // More options per placeholder:
+                    // "default": "de_dust2",                  default value in the field
+                    // "type": "number",                       number field instead of a text field
+                    // "options": ["de_dust2", "cs_office"],   suggestions to pick from
+                    // "required": false,                      may stay empty (then left out of the command)
+                    // "quote": true,                          value in quotation marks (e.g. names with spaces)
+                    // "suggest": "player",                    suggest players from "status": "player" (#userid),
+                    //                                         "steamid" or "ip"
+                }
+            }
+        },
+        {
+            "label": {"en": "Restart round", "de": "Runde neu starten"},
+            "command": "mp_restartgame {seconds}",
+            "confirm": {"en": "Restart the game?", "de": "Das Spiel neu starten?"},
+            "args": {
+                "seconds": {
+                    "label": {"en": "Seconds", "de": "Sekunden"},
+                    "default": "1",
+                    "type": "number"
+                }
+            }
+        }
+    ]
+}

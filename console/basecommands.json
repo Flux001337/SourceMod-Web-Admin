@@ -1,0 +1,92 @@
+{
+    "name": {"en": "Admin", "de": "Admin"},
+    "description": {"en": "SourceMod plugin basecommands", "de": "SourceMod-Plugin basecommands"},
+    "order": 20,
+    "requires": "basecommands.smx",
+    "buttons": [
+        {
+            "label": {"en": "Players", "de": "Spieler"},
+            "command": "sm_who {target}",
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player",
+                    "required": false
+                }
+            }
+        },
+        {
+            "label": "Kick",
+            "command": "sm_kick {target} {reason}",
+            "confirm": {"en": "Kick this player?", "de": "Spieler kicken?"},
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                },
+                "reason": {
+                    "label": {"en": "Reason", "de": "Grund"},
+                    "required": false
+                }
+            }
+        },
+        {
+            "label": {"en": "Map (SM)", "de": "Map (SM)"},
+            "command": "sm_map {map}",
+            "confirm": {"en": "Change the map now?", "de": "Die Map jetzt wechseln?"},
+            "args": {
+                "map": {
+                    "label": "Map",
+                    "placeholder": "de_dust2"
+                }
+            }
+        },
+        {
+            "label": "Cvar",
+            "command": "sm_cvar {cvar} {value}",
+            "description": {"en": "Without a value the current value is shown.", "de": "Ohne Wert wird der aktuelle Wert angezeigt."},
+            "args": {
+                "cvar": {
+                    "label": "Cvar",
+                    "placeholder": "mp_timelimit"
+                },
+                "value": {
+                    "label": {"en": "Value", "de": "Wert"},
+                    "required": false
+                }
+            }
+        },
+        {
+            "label": {"en": "Reset cvar", "de": "Cvar zurücksetzen"},
+            "command": "sm_resetcvar {cvar}",
+            "args": {
+                "cvar": {
+                    "label": "Cvar",
+                    "placeholder": "mp_timelimit"
+                }
+            }
+        },
+        {
+            "label": {"en": "Execute config", "de": "Config ausführen"},
+            "command": "sm_execcfg {file}",
+            "args": {
+                "file": {
+                    "label": {"en": "File", "de": "Datei"},
+                    "placeholder": "server.cfg"
+                }
+            }
+        },
+        {
+            "label": {"en": "Cancel vote", "de": "Abstimmung abbrechen"},
+            "command": "sm_cancelvote"
+        },
+        {
+            "label": {"en": "Reload admins", "de": "Admins neu laden"},
+            "command": "sm_reloadadmins"
+        }
+    ]
+}

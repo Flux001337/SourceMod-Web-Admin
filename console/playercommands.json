@@ -1,0 +1,56 @@
+{
+    "name": {"en": "Players", "de": "Spieler"},
+    "description": {"en": "SourceMod plugin playercommands", "de": "SourceMod-Plugin playercommands"},
+    "order": 60,
+    "requires": "playercommands.smx",
+    "buttons": [
+        {
+            "label": {"en": "Slap", "de": "Ohrfeige"},
+            "command": "sm_slap {target} {damage}",
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                },
+                "damage": {
+                    "label": {"en": "Damage", "de": "Schaden"},
+                    "default": "0",
+                    "type": "number",
+                    "required": false
+                }
+            }
+        },
+        {
+            "label": {"en": "Slay", "de": "Töten"},
+            "command": "sm_slay {target}",
+            "confirm": {"en": "Slay this player?", "de": "Spieler töten?"},
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                }
+            }
+        },
+        {
+            "label": {"en": "Rename", "de": "Umbenennen"},
+            "command": "sm_rename {target} {name}",
+            "args": {
+                "target": {
+                    "label": {"en": "Player", "de": "Spieler"},
+                    "placeholder": {"en": "#userid or name", "de": "#userid oder Name"},
+                    "quote": true,
+                    "suggest": "player"
+                },
+                "name": {
+                    "label": {"en": "New name (empty = random)", "de": "Neuer Name (leer = zufällig)"},
+                    "quote": true,
+                    "required": false
+                }
+            }
+        }
+    ]
+}

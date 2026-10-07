@@ -1,0 +1,53 @@
+{
+	"name": "xpaw/php-source-query-class",
+	"description": "PHP library to query and send RCON commands to servers based on \"Source Engine Query\" protocol",
+	"homepage": "https://github.com/xPaw/PHP-Source-Query",
+	"type": "library",
+	"license": "LGPL-2.1",
+	"funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/xPaw"
+        }
+	],
+	"keywords":
+	[
+		"rcon",
+		"minecraft",
+		"csgo",
+		"counter-strike",
+		"team fortress",
+		"starbound",
+		"rust",
+		"ark",
+		"gmod"
+	],
+	"scripts":
+	{
+		"test":
+		[
+			"@phpunit",
+			"@phpstan"
+		],
+		"phpunit": "phpunit --configuration Tests/phpunit.xml --fail-on-warning",
+		"phpunit:coverage": "phpunit --configuration Tests/phpunit.xml --fail-on-warning --coverage-clover build/logs/clover.xml",
+		"phpstan": "phpstan"
+	},
+	"require":
+	{
+		"php": ">=8.2"
+	},
+	"require-dev":
+	{
+		"phpunit/phpunit": "^12.0",
+		"phpstan/phpstan": "^2.0",
+		"phpstan/phpstan-strict-rules": "^2.0"
+	},
+	"autoload":
+	{
+		"psr-4":
+		{
+			"xPaw\\SourceQuery\\": "SourceQuery/"
+		}
+	}
+}

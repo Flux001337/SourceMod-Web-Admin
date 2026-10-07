@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="{{ html_lang }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title }}</title>
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <!-- Erst das Theme (Farben, Formen, Maße), dann die Regeln, die es verwenden. -->
+    {{?has_theme}}<link rel="stylesheet" href="{{ theme_path }}?v={{ theme_version }}">{{/has_theme}}
+    <link rel="stylesheet" href="assets/css/styles.css?v={{ styles_version }}">
+</head>
+<body>
+    <!-- Schalter für die Seitenleiste auf kleinen Bildschirmen (funktioniert ohne JavaScript). -->
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" tabindex="-1">
+    <div class="app">
+        <aside class="sidebar" aria-label="{{ t.nav.main }}">
+            <a class="brand" href="index.php">
+                <span class="brand-logo" aria-hidden="true"></span>
+                <img class="brand-wordmark" src="assets/images/logo-smwa-plus-wordmark.png" alt="Sourcemod webadmin plus" width="940" height="300">
+            </a>
+
+            <nav class="sidebar-nav">
+                {{#navigation_groups}}<div class="nav-group">
+                    {{?has_heading}}<div class="nav-heading">{{ heading }}</div>{{/has_heading}}
+                    {{#items}}<a class="nav-link{{?active}} active{{/active}}" href="index.php?section={{ section }}"{{?active}} aria-current="page"{{/active}}><span class="icon icon-{{ icon }}" aria-hidden="true"></span>{{ label }}</a>{{/items}}
+                </div>{{/navigation_groups}}
+            </nav>
+
+            <div class="sidebar-user">
+                <a class="sidebar-user-link" href="index.php?section=profile">
+                    <span class="avatar" aria-hidden="true">{{ initials }}</span>
+                    <span class="sidebar-user-name"><strong>{{ username }}</strong>{{?is_owner}}<small>{{ t.common.owner }}</small>{{/is_owner}}</span>
+                </a>
+                <form method="post" action="index.php?section=logout">
+                    <button class="icon-button" type="submit" title="{{ t.nav.logout }}" aria-label="{{ t.nav.logout }}"><span class="icon icon-logout" aria-hidden="true"></span></button>
+                </form>
+            </div>
+        </aside>
+        <label for="nav-toggle" class="sidebar-backdrop" aria-hidden="true"></label>
+
+        <div class="main">
+            <header class="topbar">
+                <label for="nav-toggle" class="icon-button nav-toggle-button" title="{{ t.nav.menu }}"><span class="icon icon-menu" aria-hidden="true"></span></label>
+                <div class="topbar-title">
+                    <h1><a class="topbar-site topbar-link" href="index.php?section=home">{{ site_title }}</a><span class="topbar-sep topbar-site-sep" aria-hidden="true"> - </span>{{#page_title_parts}}{{?has_separator}}<span class="topbar-sep" aria-hidden="true"> - </span>{{/has_separator}}{{?is_link}}<a class="topbar-page topbar-link" href="{{ url }}">{{ label }}</a>{{/is_link}}{{?is_current}}<span class="topbar-page" aria-current="page">{{ label }}</span>{{/is_current}}{{/page_title_parts}}</h1>
+                    {{?has_site_subtitle}}<p class="topbar-subtitle">{{ site_subtitle }}</p>{{/has_site_subtitle}}
+                </div>
+                <div class="topbar-actions">{{{ language_switch }}}</div>
+            </header>
+
+            <main class="content">
+                {{?has_flash}}<div class="alert {{ flash_type }}" role="status">{{ flash_message }}</div>{{/has_flash}}
+                {{{ view }}}
+            </main>
+
+            <footer class="foot">SourceMod Web Admin Plus {{ version }}</footer>
+        </div>
+    </div>
+    <script src="assets/js/app.js?v={{ app_js_version }}" defer></script>
+</body>
+</html>

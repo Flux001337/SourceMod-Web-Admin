@@ -1,0 +1,20 @@
+{
+    "name": "Info",
+    "description": {"en": "SourceMod plugin basetriggers", "de": "SourceMod-Plugin basetriggers"},
+    "order": 130,
+    "requires": "basetriggers.smx",
+    "buttons": [
+        {
+            "label": {"en": "Time left", "de": "Restzeit"},
+            "command": "timeleft"
+        },
+        {
+            "label": {"en": "Next map", "de": "Nächste Map"},
+            "command": "nextmap"
+        },
+        {
+            "label": {"en": "Friendly fire", "de": "Friendly Fire"},
+            "command": "ff"
+        }
+    ]
+}

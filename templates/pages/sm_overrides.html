@@ -1,0 +1,86 @@
+{{?show_list}}<section class="panel">
+    <p class="hint sm-intro">{{ t.sm_overrides.intro }}</p>
+    <div class="panel-head">
+        <form class="search" method="get" action="index.php" role="search">
+            <input type="hidden" name="section" value="sm_overrides">
+            <input type="search" name="q" value="{{ search }}" placeholder="{{ t.sm_overrides.search_placeholder }}" aria-label="{{ t.common.search }}">
+            <button type="submit"><span class="icon icon-search" aria-hidden="true"></span>{{ t.common.search }}</button>
+            {{?has_search}}<a class="btn ghost" href="index.php?section=sm_overrides">{{ t.common.reset }}</a>{{/has_search}}
+        </form>
+        <a class="btn primary" href="index.php?section=sm_overrides&action=create"><span class="icon icon-plus" aria-hidden="true"></span>{{ t.sm_overrides.create_button }}</a>
+    </div>
+
+    {{?has_overrides}}<div class="table-scroll">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{ t.sm.override_type }}</th>
+                    <th>{{ t.sm.override_name }}</th>
+                    <th>{{ t.sm.flags_title }}</th>
+                    <th class="actions-col">{{ t.common.actions }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#overrides}}<tr>
+                    <td>{{ type_label }}</td>
+                    <td><code>{{ name }}</code></td>
+                    <td>{{?has_no_flags}}<span class="muted">–</span>{{/has_no_flags}}<span class="sm-flags">{{#flags}}<span class="sm-flag" title="{{ name }}">{{ letter }}</span>{{/flags}}</span></td>
+                    <td class="actions-cell"><div class="actions">
+                        <a class="icon-button" href="{{ edit_url }}" title="{{ t.common.edit }}" aria-label="{{ t.common.edit }}: {{ name }}"><span class="icon icon-edit" aria-hidden="true"></span></a>
+                        <button class="icon-button danger" type="button" data-dialog-open="delete-override-{{ index }}" title="{{ t.common.delete }}" aria-label="{{ t.common.delete }}: {{ name }}"><span class="icon icon-delete" aria-hidden="true"></span></button>
+                        <dialog id="delete-override-{{ index }}" class="dialog">
+                            <h2>{{ t.sm_overrides.delete_title }}</h2>
+                            <p>{{ delete_question }}</p>
+                            <form method="post" action="index.php?section=sm_overrides" class="dialog-actions">
+                                <input type="hidden" name="original_type" value="{{ type }}">
+                                <input type="hidden" name="original_name" value="{{ name }}">
+                                <button type="button" class="ghost" data-dialog-close="delete-override-{{ index }}">{{ t.common.cancel }}</button>
+                                <button type="submit" class="danger" name="delete_override" value="1"><span class="icon icon-delete" aria-hidden="true"></span>{{ t.common.delete }}</button>
+                            </form>
+                        </dialog>
+                    </div></td>
+                </tr>{{/overrides}}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="list-foot">
+        <span class="muted">{{ count_text }}</span>
+        {{?pager.has_pages}}<nav class="pager" aria-label="{{ t.common.pages }}">{{?pager.has_previous}}<a href="{{ pager.previous_url }}" rel="prev">‹ {{ t.common.previous }}</a>{{/pager.has_previous}}{{#pager.links}}{{?is_gap}}<span class="pager-gap">…</span>{{/is_gap}}{{?is_page}}{{?current}}<span class="current" aria-current="page">{{ number }}</span>{{/current}}{{?is_other}}<a href="{{ url }}">{{ number }}</a>{{/is_other}}{{/is_page}}{{/pager.links}}{{?pager.has_next}}<a href="{{ pager.next_url }}" rel="next">{{ t.common.next }} ›</a>{{/pager.has_next}}</nav>{{/pager.has_pages}}
+    </div>{{/has_overrides}}
+    {{?has_no_overrides}}<p class="muted">{{ t.sm_overrides.none_found }}</p>{{/has_no_overrides}}
+</section>{{/show_list}}
+
+{{?show_form}}<section class="panel">
+    <h2>{{ form_title }}</h2>
+    {{?has_errors}}<div class="alert error" role="alert"><ul class="plain">{{#errors}}<li>{{ text }}</li>{{/errors}}</ul></div>{{/has_errors}}
+
+    <form method="post" action="{{ form_action }}" class="form">
+        <input type="hidden" name="original_type" value="{{ original_type }}">
+        <input type="hidden" name="original_name" value="{{ original_name }}">
+
+        <h3>{{ t.sm_overrides.general }}</h3>
+        <div class="form-grid">
+            <div>
+                <label for="override-type">{{ t.sm.override_type }}</label>
+                <select id="override-type" name="type">{{#types}}<option value="{{ value }}"{{?selected}} selected{{/selected}}>{{ label }}</option>{{/types}}</select>
+            </div>
+            <div>
+                <label for="override-name">{{ t.sm.override_name }}</label>
+                <input type="text" id="override-name" name="name" value="{{ form.name }}" maxlength="32" required spellcheck="false" autocomplete="off" placeholder="sm_kick">
+                <p class="hint">{{ t.sm_overrides.name_hint }}</p>
+            </div>
+        </div>
+
+        <h3>{{ t.sm_overrides.required_flags }}</h3>
+        <p class="hint">{{ t.sm_overrides.flags_hint }}</p>
+        <div class="check-grid">
+            {{#flag_rows}}<label class="check sm-flag-check"><input type="checkbox" name="flags[]" value="{{ letter }}"{{?checked}} checked{{/checked}}><span class="sm-flag" aria-hidden="true">{{ letter }}</span><span class="check-text"><strong>{{ name }}</strong><small>{{ description }}</small></span></label>{{/flag_rows}}
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="primary" name="{{ submit_name }}" value="1"><span class="icon icon-save" aria-hidden="true"></span>{{ t.common.save }}</button>
+            <a class="btn ghost" href="index.php?section=sm_overrides">{{ t.common.back }}</a>
+        </div>
+    </form>
+</section>{{/show_form}}

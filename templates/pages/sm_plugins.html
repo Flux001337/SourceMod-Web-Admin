@@ -1,0 +1,141 @@
+{{?show_list}}<section class="panel">
+    <p class="hint sm-intro">{{ k.intro }}</p>
+    {{?has_no_servers}}<p class="muted">{{ k.no_servers }}{{?can_manage_servers}} <a href="index.php?section=servers">{{ k.to_servers }}</a>{{/can_manage_servers}}</p>{{/has_no_servers}}
+
+    {{?has_servers}}<div class="panel-head">
+        <!-- Filtern ohne Seitenwechsel (app.js, data-live-search): lädt #item-results neu; ohne JavaScript ein normales GET-Formular. -->
+        <form class="search plugin-filter" method="get" action="index.php" role="search" data-live-search="item-results">
+            <input type="hidden" name="section" value="{{ section }}">
+            <input type="hidden" name="sort" value="{{ sort_by }}" data-live-sort>
+            <input type="hidden" name="dir" value="{{ sort_dir }}" data-live-sort>
+            <select name="server" aria-label="{{ k.server }}">{{#server_options}}<option value="{{ value }}"{{?selected}} selected{{/selected}}>{{ label }}</option>{{/server_options}}</select>
+            <input type="search" name="q" value="{{ filters.q }}" placeholder="{{ k.search_placeholder }}" aria-label="{{ t.common.search }}">
+            {{?can_hide_am}}<input type="hidden" name="hide_am" value="0">
+            <label class="check"><input type="checkbox" name="hide_am" value="1" data-default-checked{{?filters.hide_am}} checked{{/filters.hide_am}}> {{ k.hide_alliedmodders }}</label>{{/can_hide_am}}
+            <label class="check"><input type="checkbox" name="only_failed" value="1"{{?filters.only_failed}} checked{{/filters.only_failed}}> {{ k.only_failed }}</label>
+            <button type="submit"><span class="icon icon-search" aria-hidden="true"></span>{{ t.common.search }}</button>
+            {{?can_refresh}}<button type="submit" form="items-refresh" name="refresh_items" value="1" title="{{ k.refresh_hint }}"><span class="icon icon-refresh" aria-hidden="true"></span>{{ k.refresh }}</button>{{/can_refresh}}
+            <a class="btn ghost" href="{{ reset_url }}" data-live-search-reset{{?has_no_filters}} hidden{{/has_no_filters}}>{{ t.common.reset }}</a>
+        </form>
+    </div>
+
+    <div id="item-results">
+    {{?can_refresh}}<!-- Ziel des Buttons "Plugins aktualisieren" im Suchformular; hier, damit Server und Rücksprung zur aktuellen Ansicht passen. -->
+    <form id="items-refresh" method="post" action="index.php?section={{ section }}" hidden>
+        <input type="hidden" name="server" value="{{ server_id }}">
+        <input type="hidden" name="return" value="{{ page_url }}">
+    </form>{{/can_refresh}}
+    {{?has_no_selection}}<p class="muted">{{ k.choose_hint }}</p>{{/has_no_selection}}
+    {{?has_error}}<div class="alert error" role="alert">{{ error }}</div>{{/has_error}}
+    {{?has_sm_version}}<p class="plugin-meta">{{?has_mm_version}}<span class="pill pill-small">{{ mm_version_text }}</span>{{/has_mm_version}}<span class="pill pill-small">{{ version_text }}</span> <span class="{{ summary_class }}">{{ summary }}</span></p>{{/has_sm_version}}
+
+    {{?has_pending}}<div class="unloaded-plugins pending-unload" role="alert">
+        <h3>{{ k.confirm_title }}</h3>
+        <pre class="pending-text">{{ pending.text }}</pre>
+        <form method="post" action="index.php?section={{ section }}" class="form-actions">
+            <input type="hidden" name="server" value="{{ server_id }}">
+            <input type="hidden" name="return" value="{{ pending.return_url }}">
+            <button type="submit" class="danger" name="confirm_unload" value="1"><span class="icon icon-power" aria-hidden="true"></span>{{ k.confirm_button }}</button>
+            <button type="submit" class="ghost" name="cancel_unload" value="1">{{ t.common.cancel }}</button>
+        </form>
+    </div>{{/has_pending}}
+
+    {{?has_unloaded}}<div class="unloaded-plugins">
+        <h3>{{ k.unloaded_title }}</h3>
+        <p class="hint">{{ k.unloaded_hint }}</p>
+        <ul class="plain">
+            {{#unloaded}}<li>
+                <span><strong>{{ name }}</strong> <code>{{ file }}</code></span>
+                <form method="post" action="index.php?section={{ section }}">
+                    <input type="hidden" name="server" value="{{ server_id }}">
+                    <input type="hidden" name="item_file" value="{{ file }}">
+                    <input type="hidden" name="return" value="{{ return_url }}">
+                    <button type="submit" class="primary" name="load_item" value="1"><span class="icon icon-play" aria-hidden="true"></span>{{ k.load }}</button>
+                </form>
+            </li>{{/unloaded}}
+        </ul>
+    </div>{{/has_unloaded}}
+
+    {{?has_items}}<div class="table-scroll">
+        <table class="table">
+            <thead>
+                <tr>
+                    <!-- Sortieren per Klick (app.js, data-live-sort: ohne Seitenwechsel); ohne JavaScript normale Links. -->
+                    <th{{?sort.id.active}} aria-sort="{{ sort.id.aria }}"{{/sort.id.active}}><a class="sort-link{{ sort.id.class }}" href="{{ sort.id.url }}" data-live-sort>{{ k.col_id }}<span class="icon icon-chevron" aria-hidden="true"></span></a></th>
+                    <th{{?sort.status.active}} aria-sort="{{ sort.status.aria }}"{{/sort.status.active}}><a class="sort-link{{ sort.status.class }}" href="{{ sort.status.url }}" data-live-sort>{{ k.col_status }}<span class="icon icon-chevron" aria-hidden="true"></span></a></th>
+                    <th{{?sort.name.active}} aria-sort="{{ sort.name.aria }}"{{/sort.name.active}}><a class="sort-link{{ sort.name.class }}" href="{{ sort.name.url }}" data-live-sort>{{ k.col_name }}<span class="icon icon-chevron" aria-hidden="true"></span></a></th>
+                    <th{{?sort.version.active}} aria-sort="{{ sort.version.aria }}"{{/sort.version.active}}><a class="sort-link{{ sort.version.class }}" href="{{ sort.version.url }}" data-live-sort>{{ k.col_version }}<span class="icon icon-chevron" aria-hidden="true"></span></a></th>
+                    <th{{?sort.extra.active}} aria-sort="{{ sort.extra.aria }}"{{/sort.extra.active}}><a class="sort-link{{ sort.extra.class }}" href="{{ sort.extra.url }}" data-live-sort>{{ k.col_extra }}<span class="icon icon-chevron" aria-hidden="true"></span></a></th>
+                    <th class="actions-col">{{ t.common.actions }}</th>
+                    <th class="toggle-col"><span class="visually-hidden">{{ k.details }}</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#items}}<tr class="row-expandable">
+                    <td><code>{{ id }}</code></td>
+                    <td class="nowrap">{{?is_running}}<span class="status-pill online">{{ status_label }}</span>{{/is_running}}{{?is_failed}}<span class="status-pill offline">{{ status_label }}</span>{{/is_failed}}{{?is_warning}}<span class="status-pill warning">{{ status_label }}</span>{{/is_warning}}{{?is_other}}<span class="status-pill">{{ status_label }}</span>{{/is_other}}</td>
+                    <td><strong>{{ name }}</strong></td>
+                    <td>{{?has_version}}{{ version }}{{/has_version}}</td>
+                    <td class="item-extra">{{ extra }}</td>
+                    <td class="actions-cell"><div class="actions">
+                        {{?has_console}}<!-- Zur Konsole mit aufgeklappter Button-Gruppe dieses Plugins (console/*.json). -->
+                        <a class="icon-button" href="{{ console_url }}" title="{{ t.nav.console }}" aria-label="{{ t.nav.console }}: {{ name }}"><span class="icon icon-terminal" aria-hidden="true"></span></a>{{/has_console}}
+                        {{?reload_direct}}<form method="post" action="index.php?section={{ section }}">
+                            <input type="hidden" name="server" value="{{ server_id }}">
+                            <input type="hidden" name="item_id" value="{{ id }}">
+                            <input type="hidden" name="item_name" value="{{ name }}">
+                            <input type="hidden" name="return" value="{{ return_url }}">
+                            <button class="icon-button" type="submit" name="reload_item" value="1" title="{{ k.reload }}" aria-label="{{ k.reload }}: {{ name }}"><span class="icon icon-refresh" aria-hidden="true"></span></button>
+                        </form>{{/reload_direct}}
+                        {{?confirm_reload}}<button class="icon-button" type="button" data-dialog-open="reload-item-{{ id }}" title="{{ k.reload }}" aria-label="{{ k.reload }}: {{ name }}"><span class="icon icon-refresh" aria-hidden="true"></span></button>
+                        <dialog id="reload-item-{{ id }}" class="dialog">
+                            <h2>{{ k.reload_title }}</h2>
+                            <p>{{ reload_question }}</p>
+                            <form method="post" action="index.php?section={{ section }}" class="dialog-actions">
+                                <input type="hidden" name="server" value="{{ server_id }}">
+                                <input type="hidden" name="item_id" value="{{ id }}">
+                                <input type="hidden" name="item_name" value="{{ name }}">
+                                <input type="hidden" name="return" value="{{ return_url }}">
+                                <button type="button" class="ghost" data-dialog-close="reload-item-{{ id }}">{{ t.common.cancel }}</button>
+                                <button type="submit" class="primary" name="reload_item" value="1"><span class="icon icon-refresh" aria-hidden="true"></span>{{ k.reload }}</button>
+                            </form>
+                        </dialog>{{/confirm_reload}}
+                        {{?has_cvars}}<button class="icon-button" type="button" data-dialog-open="cvars-item-{{ id }}" title="{{ k.cvars }}" aria-label="{{ k.cvars }}: {{ name }}"><span class="icon icon-settings" aria-hidden="true"></span></button>
+                        <!-- ConVars (sm cvars), beim ersten Öffnen nachgeladen (app.js, data-expand-load). -->
+                        <dialog id="cvars-item-{{ id }}" class="dialog dialog-wide">
+                            <h2>{{ cvars_title }}</h2>
+                            <div class="cvar-list" data-expand-load="{{ cvars_url }}" data-expand-error="{{ k.error_details }}" data-expand-empty="{{ k.cvars_none }}"><span class="muted">{{ k.loading }}</span></div>
+                            <div class="dialog-actions">
+                                <button type="button" class="ghost" data-dialog-close="cvars-item-{{ id }}">{{ t.common.close }}</button>
+                            </div>
+                        </dialog>{{/has_cvars}}
+                        <button class="icon-button danger" type="button" data-dialog-open="unload-item-{{ id }}" title="{{ k.unload }}" aria-label="{{ k.unload }}: {{ name }}"><span class="icon icon-power" aria-hidden="true"></span></button>
+                        <dialog id="unload-item-{{ id }}" class="dialog">
+                            <h2>{{ k.unload_title }}</h2>
+                            <p>{{ unload_question }}</p>
+                            <form method="post" action="index.php?section={{ section }}" class="dialog-actions">
+                                <input type="hidden" name="server" value="{{ server_id }}">
+                                <input type="hidden" name="item_id" value="{{ id }}">
+                                <input type="hidden" name="item_name" value="{{ name }}">
+                                <input type="hidden" name="return" value="{{ return_url }}">
+                                <button type="button" class="ghost" data-dialog-close="unload-item-{{ id }}">{{ t.common.cancel }}</button>
+                                <button type="submit" class="danger" name="unload_item" value="1"><span class="icon icon-power" aria-hidden="true"></span>{{ k.unload }}</button>
+                            </form>
+                        </dialog>
+                    </div></td>
+                    <td class="toggle-col"><button class="icon-button expand-toggle" type="button" data-expand aria-controls="item-details-{{ id }}" aria-expanded="false" data-label-open="{{ k.details_show }}" data-label-close="{{ k.details_hide }}" title="{{ k.details_show }}" aria-label="{{ k.details_show }}: {{ name }}"><span class="icon icon-chevron" aria-hidden="true"></span></button></td>
+                </tr>
+                <tr class="details-row" id="item-details-{{ id }}" hidden><td colspan="7">
+                    <div class="expand-panel" data-expand-load="{{ info_url }}" data-expand-error="{{ k.error_details }}"><span class="muted">{{ k.loading }}</span></div>
+                </td></tr>{{/items}}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="list-foot">
+        <span class="muted">{{ count_text }}</span>
+        {{?pager.has_pages}}<nav class="pager" aria-label="{{ t.common.pages }}">{{?pager.has_previous}}<a href="{{ pager.previous_url }}" rel="prev">‹ {{ t.common.previous }}</a>{{/pager.has_previous}}{{#pager.links}}{{?is_gap}}<span class="pager-gap">…</span>{{/is_gap}}{{?is_page}}{{?current}}<span class="current" aria-current="page">{{ number }}</span>{{/current}}{{?is_other}}<a href="{{ url }}">{{ number }}</a>{{/is_other}}{{/is_page}}{{/pager.links}}{{?pager.has_next}}<a href="{{ pager.next_url }}" rel="next">{{ t.common.next }} ›</a>{{/pager.has_next}}</nav>{{/pager.has_pages}}
+    </div>{{/has_items}}
+    {{?has_no_items}}<p class="muted">{{ k.none_found }}</p>{{/has_no_items}}
+    </div>{{/has_servers}}
+</section>{{/show_list}}

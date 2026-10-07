@@ -1,0 +1,19 @@
+{
+    "name": {"en": "Nominations", "de": "Nominierungen"},
+    "description": {"en": "SourceMod plugin nominations", "de": "SourceMod-Plugin nominations"},
+    "order": 110,
+    "requires": "nominations.smx",
+    "buttons": [
+        {
+            "label": {"en": "Add map to vote", "de": "Map zur Abstimmung"},
+            "command": "sm_nominate_addmap {map}",
+            "description": {"en": "Forces a map to be on the next map vote.", "de": "Setzt eine Map fest auf die nächste Map-Abstimmung."},
+            "args": {
+                "map": {
+                    "label": "Map",
+                    "placeholder": "de_dust2"
+                }
+            }
+        }
+    ]
+}

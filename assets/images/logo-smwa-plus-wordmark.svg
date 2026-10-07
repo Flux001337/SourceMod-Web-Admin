@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 300" role="img" aria-labelledby="wordmark-title">
+  <title id="wordmark-title">Sourcemod webadmin plus</title>
+  <!-- Transparenter Hintergrund; Schrift bleibt als Text editierbar.
+       Bei Inline-Einbindung lassen sich die Farben per CSS-Variablen steuern. -->
+  <g font-family="Montserrat, DejaVu Sans, Arial, sans-serif" font-weight="700" fill="var(--logo-symbol, #ffffff)">
+    <text x="0" y="138" font-size="150" textLength="950" lengthAdjust="spacingAndGlyphs">Sourcemod</text>
+    <text x="0" y="264" font-size="108" textLength="665" lengthAdjust="spacingAndGlyphs">webadmin</text>
+    <text x="693" y="264" font-size="108" textLength="257" lengthAdjust="spacingAndGlyphs" fill="var(--logo-plus, #42edbb)">plus</text>
+  </g>
+</svg>

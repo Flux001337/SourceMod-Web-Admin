@@ -1,0 +1,44 @@
+{{?has_results}}<section class="panel">
+    <h2>{{ t.sm_export.results_title }}</h2>
+    <ul class="link-list test-results">
+        {{#results}}<li><span class="status-pill{{?ok}} online{{/ok}}{{?failed}} offline{{/failed}}">{{ name }}</span> {{ text }}</li>{{/results}}
+    </ul>
+</section>{{/has_results}}
+
+<section class="panel">
+    <nav class="tabs" aria-label="{{ t.sm_export.files }}">
+        {{#file_tabs}}<a href="{{ url }}"{{?current}} class="current" aria-current="page"{{/current}}>{{ name }}</a>{{/file_tabs}}
+    </nav>
+    <p class="hint">{{ file_info }}</p>
+    {{?has_notes}}<div class="alert error" role="status"><ul class="plain">{{#notes}}<li>{{ text }}</li>{{/notes}}</ul></div>{{/has_notes}}
+
+    <pre class="code-preview" tabindex="0" aria-label="{{ file }}">{{ content_text }}</pre>
+
+    <div class="form-actions">
+        <a class="btn primary" href="{{ download_url }}"><span class="icon icon-save" aria-hidden="true"></span>{{ t.sm_export.download }}</a>
+    </div>
+</section>
+
+<section class="panel">
+    <h2>{{ t.sm_export.upload_title }}</h2>
+    <p class="hint">{{ t.sm_export.upload_hint }}</p>
+    {{?has_servers}}<form method="post" action="{{ upload_action }}" class="form">
+        <h3>{{ t.sm_export.files }}</h3>
+        <div class="check-grid">
+            {{#file_checks}}<label class="check"><input type="checkbox" name="files[]" value="{{ name }}"{{?checked}} checked{{/checked}}><code>{{ name }}</code></label>{{/file_checks}}
+        </div>
+
+        <h3>{{ t.nav.servers }}</h3>
+        <div class="check-grid">
+            {{#servers}}<label class="check"><input type="checkbox" name="servers[]" value="{{ id }}"{{?checked}} checked{{/checked}}><span class="check-text"><strong>{{ name }}</strong><small>{{ target }}</small></span></label>{{/servers}}
+        </div>
+        {{?has_servers_without_ftp}}<p class="hint">{{ servers_without_ftp }}</p>{{/has_servers_without_ftp}}
+
+        <label class="check"><input type="checkbox" name="reload" value="1"{{?reload_checked}} checked{{/reload_checked}}> {{ t.sm_export.reload }}</label>
+
+        <div class="form-actions">
+            <button type="submit" class="primary" name="upload_export" value="1"><span class="icon icon-server" aria-hidden="true"></span>{{ t.sm_export.upload_button }}</button>
+        </div>
+    </form>{{/has_servers}}
+    {{?has_no_servers}}<p class="muted">{{ t.sm_export.no_ftp_servers }}{{?can_manage_servers}} <a href="index.php?section=servers">{{ t.sm_export.to_servers }}</a>{{/can_manage_servers}}</p>{{/has_no_servers}}
+</section>

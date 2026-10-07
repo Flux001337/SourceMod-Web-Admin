@@ -1,0 +1,74 @@
+{{?show_list}}<section class="panel">
+    <div class="panel-head">
+        <p class="hint sm-intro">{{ t.games.intro }}</p>
+        <a class="btn primary" href="index.php?section=games&action=create"><span class="icon icon-plus" aria-hidden="true"></span>{{ t.games.create_button }}</a>
+    </div>
+
+    {{?has_games}}<div class="table-scroll">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{ t.games.name }}</th>
+                    <th>{{ t.games.folder }}</th>
+                    <th class="actions-col">{{ t.common.actions }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#games}}<tr>
+                    <td><span class="game-cell">{{?has_icon}}<img class="game-icon" src="{{ icon_url }}" alt="">{{/has_icon}}{{?has_no_icon}}<span class="game-icon game-icon-empty" aria-hidden="true"><span class="icon icon-gamepad"></span></span>{{/has_no_icon}}<strong>{{ name }}</strong></span></td>
+                    <td><code>{{ folder }}</code></td>
+                    <td class="actions-cell"><div class="actions">
+                        <a class="icon-button" href="index.php?section=games&action=edit&id={{ id }}" title="{{ t.common.edit }}" aria-label="{{ t.common.edit }}: {{ name }}"><span class="icon icon-edit" aria-hidden="true"></span></a>
+                        <button class="icon-button danger" type="button" data-dialog-open="delete-game-{{ id }}" title="{{ t.common.delete }}" aria-label="{{ t.common.delete }}: {{ name }}"><span class="icon icon-delete" aria-hidden="true"></span></button>
+                        <dialog id="delete-game-{{ id }}" class="dialog">
+                            <h2>{{ t.games.delete_title }}</h2>
+                            <p>{{ delete_question }}</p>
+                            <form method="post" action="index.php?section=games" class="dialog-actions">
+                                <input type="hidden" name="game_id" value="{{ id }}">
+                                <button type="button" class="ghost" data-dialog-close="delete-game-{{ id }}">{{ t.common.cancel }}</button>
+                                <button type="submit" class="danger" name="delete_game" value="1"><span class="icon icon-delete" aria-hidden="true"></span>{{ t.common.delete }}</button>
+                            </form>
+                        </dialog>
+                    </div></td>
+                </tr>{{/games}}
+            </tbody>
+        </table>
+    </div>
+    <div class="list-foot"><span class="muted">{{ count_text }}</span></div>{{/has_games}}
+    {{?has_no_games}}<p class="muted">{{ t.games.none_found }}</p>{{/has_no_games}}
+</section>{{/show_list}}
+
+{{?show_form}}<section class="panel">
+    <h2>{{ form_title }}</h2>
+    {{?has_errors}}<div class="alert error" role="alert"><ul class="plain">{{#errors}}<li>{{ text }}</li>{{/errors}}</ul></div>{{/has_errors}}
+
+    <form method="post" action="{{ form_action }}" class="form" enctype="multipart/form-data">
+        <input type="hidden" name="game_id" value="{{ game_id }}">
+        <div class="form-grid">
+            <!-- Name und Spielordner untereinander, das Icon daneben. -->
+            <div class="form-stack">
+                <div>
+                    <label for="game-name">{{ t.games.name }}</label>
+                    <input type="text" id="game-name" name="name" value="{{ form.name }}" maxlength="100" required>
+                </div>
+                <div>
+                    <label for="game-folder">{{ t.games.folder }}</label>
+                    <input type="text" id="game-folder" name="folder" value="{{ form.folder }}" maxlength="64" required spellcheck="false" autocomplete="off" placeholder="cstrike">
+                    <p class="hint">{{ t.games.folder_hint }}</p>
+                </div>
+            </div>
+            <div class="form-span-rows">
+                <label for="game-icon">{{ t.games.icon }}</label>
+                {{?has_icon}}<p class="game-cell"><img class="game-icon game-icon-large" src="{{ icon_url }}" alt="{{ t.games.icon_current }}"> <span class="muted">{{ t.games.icon_current }}</span></p>{{/has_icon}}
+                <input type="file" id="game-icon" name="icon" accept="image/png,image/gif,image/jpeg,image/webp">
+                <p class="hint">{{ icon_hint }}</p>
+                {{?has_icon}}<label class="check"><input type="checkbox" name="remove_icon" value="1"{{?form.remove_icon}} checked{{/form.remove_icon}}> {{ t.games.remove_icon }}</label>{{/has_icon}}
+            </div>
+            <!-- Unter Name und Spielordner, unten bündig mit der Icon-Spalte. -->
+            <div class="form-actions">
+                <button type="submit" class="primary" name="{{ submit_name }}" value="1"><span class="icon icon-save" aria-hidden="true"></span>{{ t.common.save }}</button>
+                <a class="btn ghost" href="index.php?section=games">{{ t.common.back }}</a>
+            </div>
+        </div>
+    </form>
+</section>{{/show_form}}

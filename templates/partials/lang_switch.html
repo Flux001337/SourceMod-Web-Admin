@@ -1,0 +1,5 @@
+<form class="lang-switch" method="post" data-auto-submit>
+    <span class="flag" aria-hidden="true"><img src="assets/flags/{{ flag }}.svg" alt=""></span>
+    <select name="switch_lang" aria-label="{{ t.common.language }}">{{#languages}}<option value="{{ code }}"{{?selected}} selected{{/selected}}>{{ name }}</option>{{/languages}}</select>
+    <noscript><button type="submit">{{ t.common.ok }}</button></noscript>
+</form>

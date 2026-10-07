@@ -1,0 +1,14 @@
+<h2 class="auth-title">{{ t.login.heading }}</h2>
+<p class="muted">{{ t.login.intro }}</p>
+{{?has_error}}<div class="alert error" role="alert">{{ error }}</div>{{/has_error}}
+<form method="post" action="index.php?section=login" class="form">
+    <label for="login-username">{{ t.login.username }}</label>
+    <input type="text" id="login-username" name="username" value="{{ username }}" autocomplete="username" required autofocus>
+
+    <label for="login-password">{{ t.login.password }}</label>
+    <input type="password" id="login-password" name="password" autocomplete="current-password" required>
+
+    <label class="check"><input type="checkbox" name="remember" value="1"{{?remember_checked}} checked{{/remember_checked}}> {{ t.login.remember }}</label>
+
+    <button type="submit" class="primary block"><span class="icon icon-login" aria-hidden="true"></span>{{ t.login.submit }}</button>
+</form>

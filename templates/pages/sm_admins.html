@@ -1,0 +1,110 @@
+{{?show_list}}<section class="panel">
+    <div class="panel-head">
+        <form class="search" method="get" action="index.php" role="search">
+            <input type="hidden" name="section" value="sm_admins">
+            <input type="search" name="q" value="{{ search }}" placeholder="{{ t.sm_admins.search_placeholder }}" aria-label="{{ t.common.search }}">
+            <button type="submit"><span class="icon icon-search" aria-hidden="true"></span>{{ t.common.search }}</button>
+            {{?has_search}}<a class="btn ghost" href="index.php?section=sm_admins">{{ t.common.reset }}</a>{{/has_search}}
+        </form>
+        <a class="btn primary" href="index.php?section=sm_admins&action=create"><span class="icon icon-plus" aria-hidden="true"></span>{{ t.sm_admins.create_button }}</a>
+    </div>
+
+    {{?has_admins}}<div class="table-scroll">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{ t.sm_admins.name }}</th>
+                    <th>{{ t.sm_admins.identity }}</th>
+                    <th>{{ t.sm.flags_title }}</th>
+                    <th>{{ t.sm.immunity }}</th>
+                    <th>{{ t.sm_admins.groups }}</th>
+                    <th class="actions-col">{{ t.common.actions }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#admins}}<tr>
+                    <td><strong>{{ name }}</strong>{{?has_password}} <span class="icon icon-key icon-inline" title="{{ t.sm_admins.password_set }}" aria-label="{{ t.sm_admins.password_set }}"></span>{{/has_password}}</td>
+                    <td><span class="muted">{{ authtype }}</span><br><code class="identity">{{ identity }}</code></td>
+                    <td>{{?has_no_flags}}<span class="muted">–</span>{{/has_no_flags}}<span class="sm-flags">{{#flags}}<span class="sm-flag" title="{{ name }}">{{ letter }}</span>{{/flags}}</span></td>
+                    <td>{{ immunity }}</td>
+                    <td>{{?has_no_groups}}<span class="muted">–</span>{{/has_no_groups}}<span class="pills">{{#groups}}<span class="pill pill-small">{{ name }}</span>{{/groups}}</span></td>
+                    <td class="actions-cell"><div class="actions">
+                        <a class="icon-button" href="index.php?section=sm_admins&action=edit&id={{ id }}" title="{{ t.common.edit }}" aria-label="{{ t.common.edit }}: {{ name }}"><span class="icon icon-edit" aria-hidden="true"></span></a>
+                        <button class="icon-button danger" type="button" data-dialog-open="delete-admin-{{ id }}" title="{{ t.common.delete }}" aria-label="{{ t.common.delete }}: {{ name }}"><span class="icon icon-delete" aria-hidden="true"></span></button>
+                        <dialog id="delete-admin-{{ id }}" class="dialog">
+                            <h2>{{ t.sm_admins.delete_title }}</h2>
+                            <p>{{ delete_question }}</p>
+                            <form method="post" action="index.php?section=sm_admins" class="dialog-actions">
+                                <input type="hidden" name="admin_id" value="{{ id }}">
+                                <button type="button" class="ghost" data-dialog-close="delete-admin-{{ id }}">{{ t.common.cancel }}</button>
+                                <button type="submit" class="danger" name="delete_admin" value="1"><span class="icon icon-delete" aria-hidden="true"></span>{{ t.common.delete }}</button>
+                            </form>
+                        </dialog>
+                    </div></td>
+                </tr>{{/admins}}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="list-foot">
+        <span class="muted">{{ count_text }}</span>
+        {{?pager.has_pages}}<nav class="pager" aria-label="{{ t.common.pages }}">{{?pager.has_previous}}<a href="{{ pager.previous_url }}" rel="prev">‹ {{ t.common.previous }}</a>{{/pager.has_previous}}{{#pager.links}}{{?is_gap}}<span class="pager-gap">…</span>{{/is_gap}}{{?is_page}}{{?current}}<span class="current" aria-current="page">{{ number }}</span>{{/current}}{{?is_other}}<a href="{{ url }}">{{ number }}</a>{{/is_other}}{{/is_page}}{{/pager.links}}{{?pager.has_next}}<a href="{{ pager.next_url }}" rel="next">{{ t.common.next }} ›</a>{{/pager.has_next}}</nav>{{/pager.has_pages}}
+    </div>{{/has_admins}}
+    {{?has_no_admins}}<p class="muted">{{ t.sm_admins.none_found }}</p>{{/has_no_admins}}
+</section>{{/show_list}}
+
+{{?show_form}}<section class="panel">
+    <h2>{{ form_title }}</h2>
+    {{?has_errors}}<div class="alert error" role="alert"><ul class="plain">{{#errors}}<li>{{ text }}</li>{{/errors}}</ul></div>{{/has_errors}}
+
+    <form method="post" action="{{ form_action }}" class="form">
+        <input type="hidden" name="admin_id" value="{{ admin_id }}">
+
+        <h3>{{ t.sm_admins.general }}</h3>
+        <div class="form-grid">
+            <div>
+                <label for="admin-name">{{ t.sm_admins.name }}</label>
+                <input type="text" id="admin-name" name="name" value="{{ form.name }}" maxlength="65" required>
+                <p class="hint">{{ t.sm_admins.name_hint }}</p>
+            </div>
+            <div>
+                <label for="admin-immunity">{{ t.sm.immunity }}</label>
+                <input type="number" id="admin-immunity" name="immunity" value="{{ form.immunity }}" min="0" max="4294967295" required>
+                <p class="hint">{{ t.sm_admins.immunity_hint }}</p>
+            </div>
+            <div>
+                <label for="admin-authtype">{{ t.sm_admins.authtype }}</label>
+                <select id="admin-authtype" name="authtype">{{#authtypes}}<option value="{{ value }}"{{?selected}} selected{{/selected}}>{{ label }}</option>{{/authtypes}}</select>
+            </div>
+            <div>
+                <label for="admin-identity">{{ t.sm_admins.identity }}</label>
+                <input type="text" id="admin-identity" name="identity" value="{{ form.identity }}" maxlength="65" required spellcheck="false" autocomplete="off">
+                <p class="hint">{{ t.sm_admins.identity_hint }}</p>
+            </div>
+            <div>
+                <label for="admin-password">{{ t.sm_admins.password }}</label>
+                <input type="password" id="admin-password" name="password" maxlength="65" autocomplete="new-password">
+                <p class="hint">{{?has_password}}<span class="pill pill-small">{{ t.sm_admins.password_set }}</span> {{ t.sm_admins.password_keep_hint }}{{/has_password}}{{?has_no_password}}{{ t.sm_admins.password_hint }}{{/has_no_password}}</p>
+                {{?has_password}}<label class="check"><input type="checkbox" name="remove_password" value="1"{{?form.remove_password}} checked{{/form.remove_password}}> {{ t.sm_admins.remove_password }}</label>{{/has_password}}
+            </div>
+        </div>
+
+        <h3>{{ t.sm.flags_title }}</h3>
+        <p class="hint">{{ t.sm_admins.flags_hint }}</p>
+        <div class="check-grid">
+            {{#flag_rows}}<label class="check sm-flag-check"><input type="checkbox" name="flags[]" value="{{ letter }}"{{?checked}} checked{{/checked}}><span class="sm-flag" aria-hidden="true">{{ letter }}</span><span class="check-text"><strong>{{ name }}</strong><small>{{ description }}</small></span></label>{{/flag_rows}}
+        </div>
+
+        <h3>{{ t.sm_admins.groups }}</h3>
+        {{?has_groups}}<p class="hint">{{ t.sm_admins.groups_hint }}</p>
+        <div class="check-grid">
+            {{#group_rows}}<label class="check"><input type="checkbox" name="groups[]" value="{{ id }}"{{?checked}} checked{{/checked}}><span class="check-text"><strong>{{ name }}</strong><small>{{ t.sm.immunity }} {{ immunity_level }} · <span class="sm-flags">{{#flags}}<span class="sm-flag sm-flag-small">{{ letter }}</span>{{/flags}}</span></small></span></label>{{/group_rows}}
+        </div>{{/has_groups}}
+        {{?has_no_groups}}<p class="muted">{{ t.sm_admins.no_groups }}</p>{{/has_no_groups}}
+
+        <div class="form-actions">
+            <button type="submit" class="primary" name="{{ submit_name }}" value="1"><span class="icon icon-save" aria-hidden="true"></span>{{ t.common.save }}</button>
+            <a class="btn ghost" href="index.php?section=sm_admins">{{ t.common.back }}</a>
+        </div>
+    </form>
+</section>{{/show_form}}

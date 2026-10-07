@@ -1,0 +1,59 @@
+<section class="panel profile-head">
+    <span class="avatar avatar-large" aria-hidden="true">{{ initials }}</span>
+    <div>
+        <h2>{{ username }} {{?is_owner}}<span class="pill pill-accent">{{ t.common.owner }}</span>{{/is_owner}}</h2>
+        <p class="muted">{{ t.profile.member_since }} {{ member_since }}</p>
+    </div>
+</section>
+
+<div class="grid-2">
+    <section class="panel">
+        <h2>{{ t.profile.account }}</h2>
+        {{?has_errors}}<div class="alert error" role="alert"><ul class="plain">{{#errors}}<li>{{ text }}</li>{{/errors}}</ul></div>{{/has_errors}}
+        <form method="post" action="index.php?section=profile" class="form">
+            <label for="profile-username">{{ t.users.username }}</label>
+            <input type="text" id="profile-username" value="{{ username }}" disabled>
+            <p class="hint">{{ t.profile.username_hint }}</p>
+
+            <label for="profile-email">{{ t.users.email }}</label>
+            <input type="email" id="profile-email" name="email" value="{{ email }}" maxlength="150" required>
+
+            <label for="profile-language">{{ t.common.language }}</label>
+            <select id="profile-language" name="language">{{#languages}}<option value="{{ code }}"{{?selected}} selected{{/selected}}>{{ name }}</option>{{/languages}}</select>
+
+            {{?has_theme_choice}}<label for="profile-theme">{{ t.common.theme }}</label>
+            <select id="profile-theme" name="theme">{{#themes}}<option value="{{ name }}"{{?selected}} selected{{/selected}}>{{ label }}</option>{{/themes}}</select>{{/has_theme_choice}}
+
+            <div class="form-actions">
+                <button type="submit" class="primary" name="save_profile" value="1"><span class="icon icon-save" aria-hidden="true"></span>{{ t.common.save }}</button>
+            </div>
+        </form>
+    </section>
+
+    <section class="panel">
+        <h2>{{ t.profile.password }}</h2>
+        {{?has_password_errors}}<div class="alert error" role="alert"><ul class="plain">{{#password_errors}}<li>{{ text }}</li>{{/password_errors}}</ul></div>{{/has_password_errors}}
+        <form method="post" action="index.php?section=profile" class="form">
+            <label for="profile-current-password">{{ t.profile.current_password }}</label>
+            <input type="password" id="profile-current-password" name="current_password" autocomplete="current-password" required>
+
+            <label for="profile-new-password">{{ t.profile.new_password }}</label>
+            <input type="password" id="profile-new-password" name="new_password" autocomplete="new-password" minlength="8" required>
+            <p class="hint">{{ t.users.password_hint }}</p>
+
+            <label for="profile-new-password-repeat">{{ t.users.password_repeat }}</label>
+            <input type="password" id="profile-new-password-repeat" name="new_password_repeat" autocomplete="new-password" minlength="8" required>
+
+            <div class="form-actions">
+                <button type="submit" class="primary" name="change_password" value="1"><span class="icon icon-key" aria-hidden="true"></span>{{ t.profile.change_password }}</button>
+            </div>
+        </form>
+    </section>
+</div>
+
+<section class="panel">
+    <h2>{{ t.home.your_permissions }}</h2>
+    {{?is_owner}}<p class="muted">{{ t.home.owner_hint }}</p>{{/is_owner}}
+    {{?has_permissions}}<div class="pills">{{#permissions}}<span class="pill">{{ label }}</span>{{/permissions}}</div>{{/has_permissions}}
+    {{?has_no_permissions}}<p class="muted">{{ t.home.no_permissions }}</p>{{/has_no_permissions}}
+</section>

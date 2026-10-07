@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-labelledby="title">
+  <title id="title">Sourcemod webadmin plus</title>
+  <defs>
+    <linearGradient id="tile" x2="1" y2="1"><stop stop-color="var(--logo-from, #1685e6)"/><stop offset="1" stop-color="var(--logo-to, #28c9b6)"/></linearGradient>
+    <mask id="clear-plus"><rect width="100" height="100" fill="#fff"/><path d="M76 61h9v10h10v9H85v10h-9V80H66v-9h10Z" fill="#000" stroke="#000" stroke-width="7" stroke-linejoin="round"/></mask>
+  </defs>
+  <rect width="100" height="100" rx="25" fill="url(#tile)"/>
+  <g transform="translate(1 1) scale(0.9)">
+  <g fill="var(--logo-symbol, #ffffff)" mask="url(#clear-plus)">
+    <path d="M50 12 18 24v27c0 20 12 32 32 42 20-10 32-22 32-42V24Z" fill="none" stroke="var(--logo-symbol, #ffffff)" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M46 30 30 36v15l10 5v7l-10-5v10l16 8V50l-10-5v-3l10-4Z"/><path d="M51 30v46l8-5V47l8 8 7-8v17l8-5V30L67 44Z"/>
+  </g>
+  <path d="M76 61h9v10h10v9H85v10h-9V80H66v-9h10Z" fill="var(--logo-plus, #42edbb)" stroke="var(--logo-plus-border, #147e96)" stroke-width="7" stroke-linejoin="miter" paint-order="stroke fill"/>
+  </g>
+</svg>
