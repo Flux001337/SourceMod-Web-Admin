@@ -1,0 +1,2 @@
+# Nur fürs Repo (README-Screenshots), nicht im Release-Zip (git archive)
+docs/ export-ignore

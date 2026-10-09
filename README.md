@@ -19,8 +19,19 @@
 No framework, no Composer, no build step: plain PHP 8, MariaDB/MySQL via PDO, a small template system of its own and a
 single JavaScript file. Upload it, open the installer, done.
 
+## Screenshots
+
+<p align="center">
+  <a href="docs/screenshots/console.png"><img src="docs/screenshots/thumbs/console.png" alt="RCON console with command buttons" width="32%"></a>
+  <a href="docs/screenshots/plugins.png"><img src="docs/screenshots/thumbs/plugins.png" alt="Plugins of a server via RCON" width="32%"></a>
+  <a href="docs/screenshots/admin-edit.png"><img src="docs/screenshots/thumbs/admin-edit.png" alt="Editing a SourceMod admin" width="32%"></a>
+  <br>
+  <sub>RCON console with command buttons · Plugins of a server via RCON · Editing a SourceMod admin (click to enlarge)</sub>
+</p>
+
 ## Contents
 
+- [Screenshots](#screenshots)
 - [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
