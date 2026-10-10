@@ -55,6 +55,9 @@ single JavaScript file. Upload it, open the installer, done.
 - **Overrides** for commands and command groups.
 - **Export** of `admins.cfg`, `admin_groups.cfg`, `admin_overrides.cfg` and `admins_simple.ini`: download them, or upload
   them to all servers via FTP and run `sm_reloadadmins` right after.
+- **Can be switched off** under Settings if you manage your admins elsewhere, e.g. with **SourceBans** or another admin
+  system. The interface then only handles plugins, extensions, servers and the RCON console, so it works alongside
+  SourceBans without touching its admins.
 
 ### Plugins and extensions
 
