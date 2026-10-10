@@ -151,7 +151,7 @@ DEALLOCATE PREPARE wa_stmt;
 
 -- version / db_version: app/Version.php (der Installer setzt sie; ein Update ändert sie).
 INSERT IGNORE INTO `wa_settings` (`setting_key`, `setting_value`) VALUES
-    ('version', '3.0.0-dev'),
+    ('version', '3.0.1-dev'),
     ('db_version', '5'),
     ('site_title', 'SourceMod Web Admin'),
     ('site_subtitle', ''),

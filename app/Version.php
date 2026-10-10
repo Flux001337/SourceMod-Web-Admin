@@ -9,6 +9,6 @@ declare(strict_types=1);
  */
 final class Version
 {
-    public const APP = '3.0.0-dev';
+    public const APP = '3.0.1-dev';
     public const DB = 5;
 }

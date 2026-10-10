@@ -7,7 +7,7 @@
   </picture>
 </p>
 
-<h1 align="center">SourceMod Web Admin Plus 3.0.0-dev</h1>
+<h1 align="center">SourceMod Web Admin Plus 3.0.1-dev</h1>
 
 <p align="center">
   Manage SourceMod admins, plugins and game servers from the browser.<br>
@@ -174,7 +174,7 @@ half-finished is left behind.
 5. Delete `install/` again.
 
 The update only adds and changes what the new version needs; your data stays. It can be started again if it is
-interrupted. The current version is `3.0.0-dev`, database version `5` (continuing the numbering of the old SMWA).
+interrupted. The current version is `3.0.1-dev`, database version `5` (continuing the numbering of the old SMWA).
 
 ## Configuration
 
