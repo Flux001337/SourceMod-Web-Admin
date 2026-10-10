@@ -41,7 +41,9 @@
     "pages": "Страницы",
     "previous": "Назад",
     "next": "Далее",
-    "showing": "{from}–{to} из {total}"
+    "showing": "{from}–{to} из {total}",
+    "switched_off": "выкл.",
+    "permission_disabled": "Выключено в настройках: пользователь сохраняет это право, но страницы недоступны."
   },
   "errors": {
     "forbidden_title": "Доступ запрещён",
@@ -162,7 +164,10 @@
     "servers": "Серверы",
     "server_query_timeout": "Тайм-аут запроса к серверу (секунды)",
     "server_query_timeout_hint": "Сколько ждать ответа (статус, RCON, FTP).",
-    "error_server_query_timeout": "Тайм-аут должен быть от 1 до 10 секунд."
+    "error_server_query_timeout": "Тайм-аут должен быть от 1 до 10 секунд.",
+    "sourcemod": "SourceMod",
+    "sql_admins_enabled": "Управлять SQL-админами (админы, группы, переопределения, экспорт)",
+    "sql_admins_enabled_hint": "Если выключено, интерфейс управляет только плагинами, расширениями, серверами и консолью. Пользователи сохраняют право, но страницы недоступны."
   },
   "sm": {
     "tables_missing_title": "Отсутствуют таблицы SourceMod",

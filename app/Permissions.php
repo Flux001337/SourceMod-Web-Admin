@@ -17,8 +17,17 @@ final class Permissions
      */
     public const ALL = ['users', 'permissions', 'settings', 'sqladmins', 'servers', 'games', 'plugincontrol', 'console'];
 
-    public function __construct(private readonly Database $db)
+    /**
+     * @param list<string> $disabled Rechte abgeschalteter Bereiche (z. B. "sqladmins", Einstellung sql_admins_enabled).
+     *                               Die Benutzer behalten sie, die Bereiche stehen aber niemandem zur Verfügung.
+     */
+    public function __construct(private readonly Database $db, private readonly array $disabled = [])
     {
+    }
+
+    public function isDisabled(string $permission): bool
+    {
+        return in_array($permission, $this->disabled, true);
     }
 
     /** @return list<string> */

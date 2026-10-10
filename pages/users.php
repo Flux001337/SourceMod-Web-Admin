@@ -246,6 +246,7 @@ if ($action === 'create' || $action === 'edit')
             'key' => $permission,
             'label' => $lang->t('permissions.' . $permission),
             'checked' => in_array($permission, $currentPermissions, true),
+            'is_disabled' => $permissions->isDisabled($permission),
             // Rechte, die man selbst nicht hat, bleiben sichtbar, lassen sich aber nicht ändern.
             'locked' => !$mayEditPermissions || !in_array($permission, $grantable, true),
         ];
@@ -345,7 +346,10 @@ foreach ($rows as $row)
         'language' => $language['name'] ?? $lang->t('common.default_option'),
         'flag' => $language['flag'] ?? '',
         'has_flag' => $language !== null,
-        'permissions' => array_map(static fn (string $p): array => ['label' => $lang->t('permissions.' . $p)], $userPermissions),
+        'permissions' => array_map(static fn (string $p): array => [
+            'label' => $lang->t('permissions.' . $p),
+            'is_disabled' => $permissions->isDisabled($p),
+        ], $userPermissions),
         'has_no_permissions' => !$row['is_owner'] && $userPermissions === [],
         'last_login' => $row['last_login_at'] !== null ? date('d.m.Y H:i', strtotime((string) $row['last_login_at'])) : '–',
         'can_edit' => Permissions::canEditUser($actor, $actorPermissions, $row, $userPermissions)

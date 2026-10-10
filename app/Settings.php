@@ -15,6 +15,7 @@ final class Settings
         'users_per_page' => '15',
         'sm_per_page' => '15',
         'server_query_timeout' => '2',
+        'sql_admins_enabled' => '1',
     ];
 
     /** @var array<string, string>|null */

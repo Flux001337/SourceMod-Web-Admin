@@ -41,7 +41,9 @@
     "pages": "Pages",
     "previous": "Previous",
     "next": "Next",
-    "showing": "Showing {from} to {to} of {total}"
+    "showing": "Showing {from} to {to} of {total}",
+    "switched_off": "off",
+    "permission_disabled": "Switched off under Settings: the user keeps this permission, but its pages are not available."
   },
   "errors": {
     "forbidden_title": "Access denied",
@@ -162,7 +164,10 @@
     "servers": "Servers",
     "server_query_timeout": "Server query timeout (seconds)",
     "server_query_timeout_hint": "How long to wait for an answer (status, RCON, FTP).",
-    "error_server_query_timeout": "The timeout must be between 1 and 10 seconds."
+    "error_server_query_timeout": "The timeout must be between 1 and 10 seconds.",
+    "sourcemod": "SourceMod",
+    "sql_admins_enabled": "Manage SQL admins (admins, groups, overrides, export)",
+    "sql_admins_enabled_hint": "Switched off, the interface only manages plugins, extensions, servers and the console. Users keep the permission, but the pages are not available."
   },
   "sm": {
     "tables_missing_title": "SourceMod tables missing",

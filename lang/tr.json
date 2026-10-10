@@ -41,7 +41,9 @@
     "pages": "Sayfalar",
     "previous": "Önceki",
     "next": "Sonraki",
-    "showing": "{total} kayıttan {from}–{to} arası"
+    "showing": "{total} kayıttan {from}–{to} arası",
+    "switched_off": "kapalı",
+    "permission_disabled": "Ayarlar'da kapatıldı: kullanıcı bu yetkiyi korur, ancak sayfaları kullanılamaz."
   },
   "errors": {
     "forbidden_title": "Erişim engellendi",
@@ -162,7 +164,10 @@
     "servers": "Sunucular",
     "server_query_timeout": "Sunucu sorgusu zaman aşımı (saniye)",
     "server_query_timeout_hint": "Yanıt için ne kadar beklenecek (durum, RCON, FTP).",
-    "error_server_query_timeout": "Zaman aşımı 1 ile 10 saniye arasında olmalıdır."
+    "error_server_query_timeout": "Zaman aşımı 1 ile 10 saniye arasında olmalıdır.",
+    "sourcemod": "SourceMod",
+    "sql_admins_enabled": "SQL adminlerini yönet (adminler, gruplar, override'lar, dışa aktarma)",
+    "sql_admins_enabled_hint": "Kapalıyken arayüz yalnızca eklentileri, uzantıları, sunucuları ve konsolu yönetir. Kullanıcılar yetkiyi korur, ancak sayfalar kullanılamaz."
   },
   "sm": {
     "tables_missing_title": "SourceMod tabloları eksik",

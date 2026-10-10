@@ -136,6 +136,8 @@ ul.plain { margin: 0; padding-left: 18px; }
     color: var(--accent); font-size: .82rem; font-weight: 700; white-space: nowrap; }
 .pill-small { padding: 2px 9px; font-size: .74rem; }
 .pill-accent { background: var(--yellow); color: var(--text-on-accent); }
+/* Recht eines Bereichs, der unter Einstellungen ausgeschaltet ist. */
+.pill-off { background: var(--error-bg); color: var(--text); cursor: help; }
 .avatar { display: grid; place-items: center; flex: none; width: 40px; height: 40px; border-radius: 50%;
     background: var(--surface-active); color: var(--text); font-size: .85rem; font-weight: 700; }
 .avatar-small { width: 30px; height: 30px; font-size: .7rem; }

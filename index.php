@@ -115,7 +115,9 @@ if ((int) $settings->get('db_version') < Version::DB)
     throw new RuntimeException('Datenbank-Update nötig: den Ordner install/ der neuen Version hochladen und aufrufen.');
 }
 
-$permissions = new Permissions($db);
+// Abgeschaltete SQL-Admins (Einstellungen): Admins, Gruppen, Overrides und Export gibt es dann für niemanden; das Recht
+// "sqladmins" bleibt den Benutzern erhalten.
+$permissions = new Permissions($db, $settings->get('sql_admins_enabled') === '1' ? [] : ['sqladmins']);
 $auth = new Auth($db, $permissions);
 $auth->restoreRememberedLogin();
 $rateLimiter = new RateLimiter($db, (string) ($config['security']['master_key'] ?? ''));
@@ -150,10 +152,14 @@ $message = static function (string $title, string $text, int $status = 200) use 
 
 $forbidden = static fn (): array => $message($lang->t('errors.forbidden_title'), $lang->t('errors.forbidden_text'), 403);
 
-// Gemeinsame Prüfung der SourceMod-Seiten: Recht "sqladmins" und vorhandene SourceMod-Tabellen. null = alles in Ordnung.
-// Fehlen die Tabellen, eine Warnung mit Anleitung (sm_create_adm_tables auf dem Gameserver, auf Wunsch direkt aus der
-// Konsole mit der Gruppe "SQL Admins", console/sql-admin-manager.json).
-$sourcemodGuard = static function () use ($auth, $sourcemod, $forbidden, $lang, $template, $config, $db, $currentUrl): ?array {
+// Gemeinsame Prüfung der SourceMod-Seiten: eingeschaltet, Recht "sqladmins" und vorhandene SourceMod-Tabellen. null = alles
+// in Ordnung. Fehlen die Tabellen, eine Warnung mit Anleitung (sm_create_adm_tables auf dem Gameserver, auf Wunsch direkt
+// aus der Konsole mit der Gruppe "SQL Admins", console/sql-admin-manager.json).
+$sourcemodGuard = static function () use ($auth, $permissions, $sourcemod, $forbidden, $message, $lang, $template, $config, $db, $currentUrl): ?array {
+    if ($permissions->isDisabled('sqladmins'))
+    {
+        return $message($lang->t('errors.not_found_title'), $lang->t('errors.not_found_text'), 404);
+    }
     if (!$auth->hasPermission('sqladmins'))
     {
         return $forbidden();

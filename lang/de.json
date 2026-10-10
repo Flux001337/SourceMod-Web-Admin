@@ -41,7 +41,9 @@
     "pages": "Seiten",
     "previous": "Zurück",
     "next": "Weiter",
-    "showing": "{from} bis {to} von {total}"
+    "showing": "{from} bis {to} von {total}",
+    "switched_off": "aus",
+    "permission_disabled": "Unter Einstellungen ausgeschaltet: Der Benutzer behält das Recht, die Seiten stehen aber nicht zur Verfügung."
   },
   "errors": {
     "forbidden_title": "Zugriff verweigert",
@@ -162,7 +164,10 @@
     "servers": "Server",
     "server_query_timeout": "Timeout der Server-Abfrage (Sekunden)",
     "server_query_timeout_hint": "So lange wird auf eine Antwort gewartet (Status, RCON, FTP).",
-    "error_server_query_timeout": "Der Timeout muss zwischen 1 und 10 Sekunden liegen."
+    "error_server_query_timeout": "Der Timeout muss zwischen 1 und 10 Sekunden liegen.",
+    "sourcemod": "SourceMod",
+    "sql_admins_enabled": "SQL-Admins verwalten (Admins, Gruppen, Overrides, Export)",
+    "sql_admins_enabled_hint": "Ausgeschaltet verwaltet die Oberfläche nur Plugins, Erweiterungen, Server und die Konsole. Die Benutzer behalten das Recht, die Seiten stehen aber nicht zur Verfügung."
   },
   "sm": {
     "tables_missing_title": "SourceMod-Tabellen fehlen",

@@ -41,7 +41,9 @@
     "pages": "Sider",
     "previous": "Forrige",
     "next": "Næste",
-    "showing": "Viser {from} til {to} af {total}"
+    "showing": "Viser {from} til {to} af {total}",
+    "switched_off": "fra",
+    "permission_disabled": "Slået fra under Indstillinger: brugeren beholder rettigheden, men siderne er ikke tilgængelige."
   },
   "errors": {
     "forbidden_title": "Adgang nægtet",
@@ -162,7 +164,10 @@
     "servers": "Servere",
     "server_query_timeout": "Timeout for serverforespørgsler (sekunder)",
     "server_query_timeout_hint": "Hvor længe der ventes på svar (status, RCON, FTP).",
-    "error_server_query_timeout": "Timeouten skal være mellem 1 og 10 sekunder."
+    "error_server_query_timeout": "Timeouten skal være mellem 1 og 10 sekunder.",
+    "sourcemod": "SourceMod",
+    "sql_admins_enabled": "Administrer SQL-admins (admins, grupper, overrides, eksport)",
+    "sql_admins_enabled_hint": "Slået fra administrerer brugerfladen kun plugins, udvidelser, servere og konsollen. Brugerne beholder rettigheden, men siderne er ikke tilgængelige."
   },
   "sm": {
     "tables_missing_title": "SourceMod-tabeller mangler",

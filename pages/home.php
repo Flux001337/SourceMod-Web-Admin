@@ -34,7 +34,7 @@ foreach ($tiles as $tile)
 $permissionView = [];
 foreach ($auth->permissions() as $permission)
 {
-    $permissionView[] = ['label' => $lang->t('permissions.' . $permission)];
+    $permissionView[] = ['label' => $lang->t('permissions.' . $permission), 'is_disabled' => $permissions->isDisabled($permission)];
 }
 
 $userCount = (int) $pdo->query('SELECT COUNT(*) FROM ' . $db->table('users'))->fetchColumn();

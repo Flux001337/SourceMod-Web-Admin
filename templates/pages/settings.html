@@ -23,6 +23,10 @@
             </div>{{/has_theme_choice}}
         </div>
 
+        <h3>{{ t.settings.sourcemod }}</h3>
+        <label class="check"><input type="checkbox" name="sql_admins_enabled" value="1"{{?sql_admins_checked}} checked{{/sql_admins_checked}}> {{ t.settings.sql_admins_enabled }}</label>
+        <p class="hint">{{ t.settings.sql_admins_enabled_hint }}</p>
+
         <h3>{{ t.settings.lists }}</h3>
         <div class="form-grid">
             <div>

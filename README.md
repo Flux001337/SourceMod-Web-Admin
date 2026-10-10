@@ -191,7 +191,10 @@ interrupted. The current version is `3.0.0-dev`, database version `5` (continuin
 Local deviations, e.g. a development database, go into `config/config.local.php`. It overrides `config/config.php`.
 
 The site title, subtitle, default language, theme, entries per page and the server query timeout are set in the
-interface under **Settings**.
+interface under **Settings**. There you can also switch off the **SQL admins** (admins, groups, overrides and export) to
+use the interface only for plugins, extensions, servers and the RCON console. The SourceMod tables are then not needed.
+Users keep the `sqladmins` permission (shown in red with a hint), but its pages are not available until the SQL admins
+are switched on again.
 
 ## Console buttons: a guide
 
@@ -447,7 +450,7 @@ Permissions belong directly to a user:
 | `users` | Create, edit and delete users | UserEditUsers |
 | `permissions` | Grant permissions | UserEditPermissions |
 | `settings` | Interface settings | UserEditInterfacesettings |
-| `sqladmins` | SourceMod admins, groups, overrides, export | UserSQLAdmins |
+| `sqladmins` | SourceMod admins, groups, overrides, export (unless switched off under Settings) | UserSQLAdmins |
 | `servers` | Servers with RCON and FTP access | UserServersettings |
 | `games` | Games (game folders and icons) | UserEditMods |
 | `plugincontrol` | The servers' SourceMod plugins and extensions | UserPlugincontrol |

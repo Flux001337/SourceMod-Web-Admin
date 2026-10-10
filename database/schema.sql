@@ -159,4 +159,5 @@ INSERT IGNORE INTO `wa_settings` (`setting_key`, `setting_value`) VALUES
     ('site_theme', 'Midnight'),
     ('users_per_page', '15'),
     ('sm_per_page', '15'),
-    ('server_query_timeout', '2');
+    ('server_query_timeout', '2'),
+    ('sql_admins_enabled', '1');

@@ -202,7 +202,8 @@ final class Auth
 
     public function hasPermission(string $permission): bool
     {
-        return in_array($permission, $this->permissions(), true);
+        // Abgeschaltete Bereiche gibt es für niemanden, auch wenn der Benutzer das Recht hat.
+        return in_array($permission, $this->permissions(), true) && !$this->permissionStore->isDisabled($permission);
     }
 
     /**

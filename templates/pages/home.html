@@ -14,7 +14,7 @@
     <section class="panel">
         <h2>{{ t.home.your_permissions }}</h2>
         {{?is_owner}}<p><span class="pill pill-accent">{{ t.common.owner }}</span> <span class="muted">{{ t.home.owner_hint }}</span></p>{{/is_owner}}
-        {{?has_permissions}}<div class="pills">{{#permissions}}<span class="pill">{{ label }}</span>{{/permissions}}</div>{{/has_permissions}}
+        {{?has_permissions}}<div class="pills">{{#permissions}}<span class="pill{{?is_disabled}} pill-off{{/is_disabled}}"{{?is_disabled}} title="{{ t.common.permission_disabled }}"{{/is_disabled}}>{{ label }}</span>{{/permissions}}</div>{{/has_permissions}}
         {{?has_no_permissions}}<p class="muted">{{ t.home.no_permissions }}</p>{{/has_no_permissions}}
     </section>
 

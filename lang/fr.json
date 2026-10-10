@@ -41,7 +41,9 @@
     "pages": "Pages",
     "previous": "Précédent",
     "next": "Suivant",
-    "showing": "{from} à {to} sur {total}"
+    "showing": "{from} à {to} sur {total}",
+    "switched_off": "désactivé",
+    "permission_disabled": "Désactivé dans les paramètres : l'utilisateur garde ce droit, mais les pages ne sont pas disponibles."
   },
   "errors": {
     "forbidden_title": "Accès refusé",
@@ -162,7 +164,10 @@
     "servers": "Serveurs",
     "server_query_timeout": "Délai de requête des serveurs (secondes)",
     "server_query_timeout_hint": "Durée d'attente d'une réponse (statut, RCON, FTP).",
-    "error_server_query_timeout": "Le délai doit être compris entre 1 et 10 secondes."
+    "error_server_query_timeout": "Le délai doit être compris entre 1 et 10 secondes.",
+    "sourcemod": "SourceMod",
+    "sql_admins_enabled": "Gérer les admins SQL (admins, groupes, overrides, export)",
+    "sql_admins_enabled_hint": "Désactivé, l'interface ne gère que les plugins, les extensions, les serveurs et la console. Les utilisateurs gardent le droit, mais les pages ne sont pas disponibles."
   },
   "sm": {
     "tables_missing_title": "Tables SourceMod manquantes",

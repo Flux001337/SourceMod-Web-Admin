@@ -18,6 +18,7 @@ $values = [
     'users_per_page' => $settings->get('users_per_page'),
     'sm_per_page' => $settings->get('sm_per_page'),
     'server_query_timeout' => $settings->get('server_query_timeout'),
+    'sql_admins_enabled' => $settings->get('sql_admins_enabled'),
 ];
 
 if ($isPost && isset($_POST['save_settings']))
@@ -31,6 +32,7 @@ if ($isPost && isset($_POST['save_settings']))
         'users_per_page' => trim((string) ($_POST['users_per_page'] ?? '')),
         'sm_per_page' => trim((string) ($_POST['sm_per_page'] ?? '')),
         'server_query_timeout' => trim((string) ($_POST['server_query_timeout'] ?? '')),
+        'sql_admins_enabled' => isset($_POST['sql_admins_enabled']) ? '1' : '0',
     ];
 
     if ($values['site_title'] === '' || mb_strlen($values['site_title']) > 80)
@@ -80,6 +82,7 @@ return [
         'has_errors' => $errors !== [],
         'errors' => array_map(static fn (string $error): array => ['text' => $error], $errors),
         'values' => $values,
+        'sql_admins_checked' => $values['sql_admins_enabled'] === '1',
         'languages' => $lang->options($values['default_language']),
         'has_theme_choice' => count($themes) > 1,
         'themes' => Themes::options($values['site_theme']),
