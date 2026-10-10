@@ -12,3 +12,5 @@ old/
 # Hochgeladene Game-Icons
 assets/uploads/games/*
 !assets/uploads/games/.keep
+# Release-Zips und Changelog für GitHub, nur lokal
+release/
